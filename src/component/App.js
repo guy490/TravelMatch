@@ -4,9 +4,6 @@ import axios from '../api';
 
 class App extends React.Component{
 
-    componentDidMount(){
-        this.getQuery();
-    }
     getQuery = async () => {
         const response = await axios.get("/",{
          params:{
@@ -21,13 +18,10 @@ class App extends React.Component{
     }
 
 
-    render(){
-        return <div>App</div>
-    }
+    return <div>App</div>
+}
 }
 // const App = () =>{
 
-//     return <div>App</div>
-// }
 
 export default App;
