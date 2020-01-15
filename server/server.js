@@ -39,6 +39,7 @@ app.get("/:photoReference", async (req, res) => {
     .get(PHOTOS_URL, {
       params: {
         maxwidth: "400",
+        maxheight: "400",
         photoreference: req.params.photoReference,
         key: API_KEY
       }
@@ -46,8 +47,7 @@ app.get("/:photoReference", async (req, res) => {
     .catch(err => {
       console.log(err);
     });
-  console.log(photo.res.responseUrl);
-  // res.send(photo.data.results);
+  res.send(photo.request.res.responseUrl);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

@@ -1,17 +1,24 @@
 import "../styles/PlaceCard.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Rating } from "semantic-ui-react";
 import server from "../api";
 
 const PlaceCard = ({ place }) => {
+  const [imageLink, setImageLink] = useState("");
+
+  useEffect(() => {
+    getPhoto(place);
+  }, [place]);
   const getPhoto = async place => {
     if (place.hasOwnProperty("photos")) {
       let photoReference = place.photos[0].photo_reference;
       let response = await server.get(`/${photoReference}`);
-      console.log(response.data);
-      return response.data;
+      setImageLink(response.data);
+      return;
     }
-    return null;
+    setImageLink(
+      "https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
+    );
   };
 
   const checkOpennings = place => {
@@ -32,7 +39,7 @@ const PlaceCard = ({ place }) => {
   return (
     <div className="item">
       <div className="image">
-        <img alt="" src={getPhoto(place)}></img>
+        <img alt="background" src={imageLink} />
       </div>
       <div className="content">
         <div className="header">{place.name}</div>
