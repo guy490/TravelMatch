@@ -1,8 +1,9 @@
+import "../styles/App.css";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ShowCategories from "./ShowCategories";
-import ShowSubCategories from "./ShowSubCategories";
-import ShowPlaces from "./ShowPlaces";
+import ShowCategories from "./ShowComponents/ShowCategories";
+import ShowSubCategories from "./ShowComponents/ShowSubCategories";
+import ShowPlaces from "./ShowComponents/ShowPlaces";
 
 const App = () => {
   return (

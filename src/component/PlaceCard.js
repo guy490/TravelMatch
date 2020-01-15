@@ -1,3 +1,4 @@
+import "../styles/PlaceCard.css";
 import React from "react";
 import { Rating } from "semantic-ui-react";
 import server from "../api";
