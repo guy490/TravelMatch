@@ -8,22 +8,22 @@ import ShowPlaces from "./ShowComponents/ShowPlaces";
 const App = () => {
   return (
     <BrowserRouter>
-      <div className="ui container">
-        {/* <Header /> */}
-        <Switch>
-          <Route path="/" exact component={ShowCategories} />
-          <Route
-            path="/ShowPlaces/:category"
-            exact
-            component={ShowSubCategories}
-          />
-          <Route
-            path="/ShowPlaces/:category/:subCategory"
-            exact
-            component={ShowPlaces}
-          />
-        </Switch>
-      </div>
+      {/* <div className="ui container"> */}
+      {/* <Header /> */}
+      <Switch>
+        <Route path="/" exact component={ShowCategories} />
+        <Route
+          path="/ShowPlaces/:category"
+          exact
+          component={ShowSubCategories}
+        />
+        <Route
+          path="/ShowPlaces/:category/:subCategory"
+          exact
+          component={ShowPlaces}
+        />
+      </Switch>
+      {/* </div> */}
     </BrowserRouter>
   );
 };

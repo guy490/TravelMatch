@@ -4,7 +4,7 @@ import Category from "../Category";
 
 const ShowCategories = () => {
   return (
-    <div className="ui">
+    <div /*className="ui"*/>
       <Category linkTo="/ShowPlaces/Restaurants" content="Restaurants" />
       <Category linkTo="/ShowPlaces/Hang-Out" content="Hang-Out" />
       <Category

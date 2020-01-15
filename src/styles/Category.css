@@ -1,0 +1,13 @@
+.background {
+    height: 33vh;
+    background-size: 100% 100%;
+    -webkit-filter: blur(1.5px);
+    filter: blur(1.5px);
+}
+
+
+
+.text {
+    -webkit-filter: blur(0);
+    filter: blur(0);
+}
