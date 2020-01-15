@@ -1,13 +1,35 @@
 .background {
-    height: 33vh;
+    position: absolute;
+    height: 33.33vh;
+    width: 100%;
     background-size: 100% 100%;
-    -webkit-filter: blur(1.5px);
-    filter: blur(1.5px);
+    -webkit-filter: blur(2px);
+    filter: blur(2px);
+    z-index: 0;
 }
 
-
-
 .text {
-    -webkit-filter: blur(0);
-    filter: blur(0);
+    top: 50%;
+    text-align: center;
+    position: relative;
+    font-size: 4vh;
+    color: #756a49;
+    text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    -webkit-filter: blur(0) !important;
+    filter: blur(0) !important;
+    transition: 1s;
+}
+
+.link {
+    height: 33.33vh;
+    transition: 1s;
+}
+
+.link:hover {
+    background-color: white;
+    opacity: 80%;
+}
+
+.link:hover .text {
+    letter-spacing: 0.5em;
 }
