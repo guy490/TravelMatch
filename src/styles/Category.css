@@ -1,10 +1,10 @@
 .background {
     position: absolute;
-    height: 20vh;
+    height: 25vh;
     width: 100%;
     border: 0;
-    -webkit-filter: blur(1px);
-    filter: blur(1px);
+    /* -webkit-filter: blur(1px); */
+    /* filter: blur(1px); */
     transition: 1s;
     z-index: 0;
 }
@@ -13,20 +13,22 @@
     top: 50%;
     text-align: center;
     position: relative;
-    font-size: 4vh;
-    /* color: #756a49; */
-    text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+    font-size: 5vh;
+    font-weight: 900;
+    /* text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, */
+    /* 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; */
     color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .link {
-    height: 20vh;
+    height: 25vh;
     transition: 1s;
 }
 
 .link:hover {
     background-color: white;
-    opacity: 80%;
+    opacity: 75%;
     -webkit-filter: blur(0px);
     filter: blur(0px);
 }

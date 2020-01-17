@@ -1,0 +1,19 @@
+.subCategory {
+    height: 10vh;
+    width: 70%;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 40px;
+    text-align: left;
+}
+
+.SubCategoryLink {
+    height: 10vh;
+}
+
+.icon {
+    width: 8vh;
+    height: 8vh;
+    padding-left: 2vh;
+    padding-top: 1vh;
+}

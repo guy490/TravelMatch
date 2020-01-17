@@ -27,10 +27,17 @@ const ShowSubCategories = ({ match }) => {
     return categoryList.map(subCategory => (
       <Link
         key={subCategory}
-        className="ui button"
-        to={`${match.params.category}/${subCategory}`}
-      >
-        {createButtonName(subCategory)}
+        // className="ui button"
+        className="SubCategoryLink"
+        to={`${match.params.category}/${subCategory}`}>
+        {/* {createButtonName(subCategory)} */}
+        <div className="subCategory">
+          <img
+            className="icon"
+            alt=""
+            src="https://image.flaticon.com/icons/png/128/1322/1322235.png"></img>
+          {createButtonName(subCategory)}
+        </div>
       </Link>
     ));
   };
