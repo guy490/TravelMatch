@@ -35,8 +35,8 @@ const ShowSubCategories = ({ match }) => {
           <img
             className="icon"
             alt=""
-            src="https://image.flaticon.com/icons/png/128/1322/1322235.png"></img>
-          {createButtonName(subCategory)}
+            src="https://image.flaticon.com/icons/svg/608/608857.svg"></img>
+          <span className="title">{createButtonName(subCategory)}</span>
         </div>
       </Link>
     ));

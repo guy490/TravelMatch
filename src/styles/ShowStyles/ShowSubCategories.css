@@ -1,19 +1,32 @@
 .subCategory {
-    height: 10vh;
+
+    height: 13vh;
     width: 70%;
     margin: auto;
     border: 1px solid black;
-    border-radius: 40px;
+    border-radius: 35px;
+    margin-top: 2vh;
+    /* background: linear-gradient(to left, rgba(0, 223, 255, 1), rgba(0, 113, 255, 1)); */
+}
+
+.title {
     text-align: left;
+    font-size: 4vh;
+    color: #000;
+    position: absolute;
 }
 
 .SubCategoryLink {
     height: 10vh;
+
 }
 
 .icon {
-    width: 8vh;
-    height: 8vh;
-    padding-left: 2vh;
-    padding-top: 1vh;
+
+    width: 10vh;
+    height: 10vh;
+    /* margin-left: 3vh; */
+    /* margin-top: 1vh; */
+    margin-bottom: auto;
+
 }
