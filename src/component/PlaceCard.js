@@ -39,7 +39,7 @@ const PlaceCard = ({ place }) => {
   return (
     <div className="item">
       <div className="image">
-        <img alt="background" src={imageLink} />
+        <img className="image-item" alt="Place" src={imageLink} />
       </div>
       <div className="content">
         <div className="header">{place.name}</div>

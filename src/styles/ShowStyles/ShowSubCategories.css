@@ -1,32 +1,33 @@
-.subCategory {
-
+.sub-category {
     height: 13vh;
     width: 70%;
     margin: auto;
-    border: 1px solid black;
+    margin-bottom: 2vh;
+}
+
+.category-set {
+    border: 1px solid #3498DB;
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 35px;
-    margin-top: 2vh;
-    /* background: linear-gradient(to left, rgba(0, 223, 255, 1), rgba(0, 113, 255, 1)); */
+    height: 100%;
+    vertical-align: middle;
+    display: flex;
 }
 
 .title {
-    text-align: left;
+    margin: auto auto auto 0;
     font-size: 4vh;
-    color: #000;
-    position: absolute;
+    color: #3498DB;
 }
 
-.SubCategoryLink {
-    height: 10vh;
-
+.icon-view {
+    width: 5rem;
+    height: 5rem;
+    margin: auto 2% auto 2%;
 }
 
-.icon {
-
-    width: 10vh;
-    height: 10vh;
-    /* margin-left: 3vh; */
-    /* margin-top: 1vh; */
-    margin-bottom: auto;
-
+.background-cover {
+    height: 100vh;
+    padding-top: 2%;
+    background-image: linear-gradient(to bottom right, rgba(0, 220, 255, 0.4), rgba(0, 18, 255, 0.8) 60%);
 }

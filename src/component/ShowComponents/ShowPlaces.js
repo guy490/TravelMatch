@@ -49,10 +49,15 @@ const ShowPlaces = ({ match }) => {
 
   return (
     <div className="ui container">
-      <Link to="/" className="ui button">
-        Back To Select Category
+      <Link to="/" className="ui labeled button basic">
+        <div>
+          <i className="arrow alternate circle left icon"></i>
+          Back
+        </div>
       </Link>
-      <div className="ui divided items">{renderList(listOfPlaces)}</div>
+      <div className="ui divided items unstackable">
+        {renderList(listOfPlaces)}
+      </div>
     </div>
   );
 };

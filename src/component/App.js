@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ShowCategories from "./ShowComponents/ShowCategories";
 import ShowSubCategories from "./ShowComponents/ShowSubCategories";
 import ShowPlaces from "./ShowComponents/ShowPlaces";
+import ShowEvents from "./ShowComponents/ShowEvents";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       {/* <Header /> */}
       <Switch>
         <Route path="/" exact component={ShowCategories} />
+        <Route path="/ShowPlaces/Events" exact component={ShowEvents} />
         <Route
           path="/ShowPlaces/:category"
           exact
