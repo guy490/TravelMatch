@@ -1,23 +1,38 @@
 import "../../styles/ShowStyles/ShowSubCategories.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SubCategory from "../SubCategory";
 import { Link } from "react-router-dom";
 import { getType } from "../utilities";
 
 const ShowSubCategories = ({ match }) => {
+  const [subCategoryDict, setSubCategoryDict] = useState({
+    subCategoryList: [],
+    subCategoryBackground: "",
+    subCategoryColor: ""
+  });
+
+  useEffect(() => {
+    setSubCategoryDict(getType(match.params.category));
+  }, [match]);
+
   const renderCategories = () => {
-    let categoryList = getType(match.params.category);
-    return categoryList.map(subCategory => (
+    return subCategoryDict.subCategoryList.map(subCategory => (
       <SubCategory
         key={subCategory.categoryName}
         category={match.params.category}
         subCategoryName={subCategory.categoryName}
         subCategoryIcon={subCategory.categoryIcon}
+        subCategoryColor={subCategoryDict.subCategoryColor}
       />
     ));
   };
+
   return (
-    <div className="background-cover">
+    <div
+      className="background-cover"
+      style={{
+        backgroundImage: `${subCategoryDict.subCategoryBackground}`
+      }}>
       <Link to="/" className="ui labeled button basic">
         <div>
           <i className="arrow alternate circle left icon"></i>

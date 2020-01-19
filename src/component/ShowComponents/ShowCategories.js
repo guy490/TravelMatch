@@ -9,7 +9,7 @@ const ShowCategories = () => {
         linkTo="/ShowPlaces/Restaurants"
         content="Restaurants"
         backgroundURL="url(https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)"
-        gradientColors="rgba(76, 246, 249,0.5) 99%,rgba(0, 149, 229 ,0.5) 1%"
+        gradientColors="to top right,rgba(76, 246, 249,0.5) 99%,rgba(0, 149, 229 ,0.5) 1%"
       />
       <Category
         linkTo="/ShowPlaces/Hang-Out"

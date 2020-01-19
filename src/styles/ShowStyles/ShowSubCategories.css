@@ -6,7 +6,6 @@
 }
 
 .category-set {
-    border: 1px solid #3498DB;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 35px;
     height: 100%;
@@ -17,17 +16,17 @@
 .title {
     margin: auto auto auto 0;
     font-size: 4vh;
-    color: #3498DB;
 }
 
 .icon-view {
-    width: 5rem;
-    height: 5rem;
+    width: 9vh;
+    height: 9vh;
     margin: auto 2% auto 2%;
 }
 
 .background-cover {
     height: 100vh;
     padding-top: 2%;
-    background-image: linear-gradient(to bottom right, rgba(0, 220, 255, 0.4), rgba(0, 18, 255, 0.8) 60%);
+    background-size: 100% 100%;
+
 }
