@@ -1,4 +1,4 @@
-import "../styles/App.css";
+import "../styles/CategoryApp.css";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ShowCategories from "./ShowComponents/ShowCategories";
@@ -6,7 +6,7 @@ import ShowSubCategories from "./ShowComponents/ShowSubCategories";
 import ShowPlaces from "./ShowComponents/ShowPlaces";
 import ShowEvents from "./ShowComponents/ShowEvents";
 
-const App = () => {
+const CategoryApp = () => {
   return (
     <BrowserRouter>
       {/* <div className="ui container"> */}
@@ -30,4 +30,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default CategoryApp;
