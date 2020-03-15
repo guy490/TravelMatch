@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import server from "../../api";
 import { useHistory } from "react-router-dom";
+import { createDictionaryForm } from "../utilities";
 const countries = require("../../countries.json");
 
 const Register = props => {
@@ -17,22 +18,11 @@ const Register = props => {
     });
   };
 
-  const createDictionaryForm = ({ target }) => {
-    let details = {};
-
-    for (let i = 0; i < target.length - 1; i++) {
-      let name = target[i].name;
-      let value = target[i].value;
-      details[name] = value;
-    }
-    return details;
-  };
-
   const submitForm = async event => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
     server
-      .post("/registerrequest", formData)
+      .post("/register_request", formData)
       .then(function(response) {
         console.log(response);
         history.push("/Login");

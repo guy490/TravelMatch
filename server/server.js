@@ -44,7 +44,7 @@ app.get("/", async (req, res) => {
   res.send(places.data.results);
 });
 
-app.post("/registerrequest", async (req, res) => {
+app.post("/register_request", async (req, res) => {
   const userCredentials = req.body;
   MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
     assert.equal(null, err);
@@ -54,6 +54,23 @@ app.post("/registerrequest", async (req, res) => {
       console.log("Item inserted");
       client.close();
       res.send("DB Updated");
+    });
+  });
+});
+
+app.post("/login_request", async (req, res) => {
+  const userCredentials = req.body;
+  MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
+    assert.equal(null, err);
+    const db = client.db(dbName);
+    db.collection("users").findOne(userCredentials, function(err, result) {
+      assert.equal(null, err);
+      if (result !== null) {
+        res.send("Login completed!");
+      } else {
+        res.status("404").send("Login error");
+      }
+      client.close();
     });
   });
 });
