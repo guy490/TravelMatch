@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import server from "../../api";
+import { useHistory } from "react-router-dom";
 const countries = require("../../countries.json");
 
 const Register = props => {
+  let history = useHistory();
   const [country, setCountry] = useState(countries[106].name);
 
   const generateCountries = () => {
@@ -14,15 +16,36 @@ const Register = props => {
       );
     });
   };
-  const submitForm = event => {
-    console.log(event.target.firstname.value);
-    debugger;
-    // await server.post("/register-request");
+
+  const createDictionaryForm = ({ target }) => {
+    let details = {};
+
+    for (let i = 0; i < target.length - 1; i++) {
+      let name = target[i].name;
+      let value = target[i].value;
+      details[name] = value;
+    }
+    return details;
   };
+
+  const submitForm = async event => {
+    event.preventDefault();
+    let formData = createDictionaryForm(event);
+    server
+      .post("/registerrequest", formData)
+      .then(function(response) {
+        console.log(response);
+        history.push("/Login");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
   const createForm = () => {
     return (
       <div>
-        <form className="ui form" onSubmit={submitForm}>
+        <form className="ui form" onSubmit={submitForm} action="/Login">
           <div className="field">
             <label>First name</label>
             <input type="text" name="firstname" placeholder="First Name" />
@@ -51,12 +74,13 @@ const Register = props => {
             <input type="password" name="password" placeholder="Password" />
           </div>
           <button className="ui button" type="submit">
-            Login
+            Register
           </button>
         </form>
       </div>
     );
   };
+
   return <div>{createForm()}</div>;
 };
 

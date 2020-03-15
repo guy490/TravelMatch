@@ -1,5 +1,7 @@
 const express = require("express");
 const axios = require("axios");
+const bodyParser = require("body-parser");
+const assert = require("assert");
 const mongodb = require("mongodb");
 const app = express();
 
@@ -11,15 +13,17 @@ const PLACES_URL =
 const PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo";
 
 const MongoClient = mongodb.MongoClient;
-const uri =
-  "mongodb+srv://TravelMatch:Aa123456@cluster0-bcqmj.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
+const url = "mongodb+srv://TravelMatch:Aa123456@cluster0-bcqmj.mongodb.net/";
+const dbName = "TravelMatch";
 
 app.use(function(req, res, next) {
   // Website you wish to allow to connect
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
   const { latitude, longitude, type } = req.query;
@@ -40,19 +44,18 @@ app.get("/", async (req, res) => {
   res.send(places.data.results);
 });
 
-app.post("/register-request", async (req, res) => {
-  console.log(req);
-  // client.connect(err => {
-  //   const collection = client.db("test").collection("devices");
-  //   collection.insertMany([{ a: 1 }, { a: 2 }, { a: 3 }], function(
-  //     err,
-  //     result
-  //   ) {
-  //     console.log("Inserted 3 documents into the collection");
-  //   });
-  //   client.close();
-  // });
-  res.send("DB updated");
+app.post("/registerrequest", async (req, res) => {
+  const userCredentials = req.body;
+  MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
+    assert.equal(null, err);
+    const db = client.db(dbName);
+    db.collection("users").insertOne(userCredentials, function(err, result) {
+      assert.equal(null, err);
+      console.log("Item inserted");
+      client.close();
+      res.send("DB Updated");
+    });
+  });
 });
 
 app.get("/:photoReference", async (req, res) => {
