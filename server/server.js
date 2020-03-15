@@ -7,7 +7,8 @@ const app = express();
 
 const port = 3001;
 
-const API_KEY = process.env.TravelMatchApiKey;
+console.log(process.env.TravelMatchAPIKey);
+const API_KEY = process.env.TravelMatchAPIKey;
 const PLACES_URL =
   "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 const PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo";
