@@ -7,13 +7,18 @@ const app = express();
 
 const port = 3001;
 
-const API_KEY = "AIzaSyA6N00_LlCQHniVf7kXU6Xy67DOzqc646U";
+const API_KEY = process.env.TravelMatchApiKey;
 const PLACES_URL =
   "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 const PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo";
 
 const MongoClient = mongodb.MongoClient;
-const url = "mongodb+srv://TravelMatch:Aa123456@cluster0-bcqmj.mongodb.net/";
+const url =
+  "mongodb+srv://" +
+  process.env.TravelMatchMongoUser +
+  ":" +
+  process.env.TravelMatchMongoPassword +
+  "@cluster0-bcqmj.mongodb.net/";
 const dbName = "TravelMatch";
 
 app.use(function(req, res, next) {
