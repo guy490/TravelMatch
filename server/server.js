@@ -35,9 +35,9 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
   const { latitude, longitude, type } = req.query;
-  const places = await axios
+  axios
     .get(PLACES_URL, {
       params: {
         location: `${latitude},${longitude}`,
@@ -47,11 +47,12 @@ app.get("/", async (req, res) => {
         key: API_KEY
       }
     })
+    .then(response => {
+      res.send(response.data.results);
+    })
     .catch(err => {
       console.log(err);
     });
-
-  res.send(places.data.results);
 });
 
 app.post("/register_request", async (req, res) => {
@@ -85,8 +86,8 @@ app.post("/login_request", async (req, res) => {
   });
 });
 
-app.get("/:photoReference", async (req, res) => {
-  const photo = await axios
+app.get("/:photoReference", (req, res) => {
+  axios
     .get(PHOTOS_URL, {
       params: {
         maxwidth: "400",
@@ -95,10 +96,14 @@ app.get("/:photoReference", async (req, res) => {
         key: API_KEY
       }
     })
+    .then(response => {
+      res.send(response.request.res.responseUrl);
+    })
     .catch(err => {
-      console.log(err);
+      res.send(
+        "https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
+      );
     });
-  res.send(photo.request.res.responseUrl);
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
