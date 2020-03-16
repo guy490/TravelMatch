@@ -6,7 +6,7 @@ import Register from "./Register/Register";
 const UserManagementApp = () => {
   return (
     <Switch>
-      <Route path="/Login" exact component={Login} />
+      <Route path="/" exact component={Login} />
       <Route path="/Register" exact component={Register} />
     </Switch>
   );

@@ -4,8 +4,9 @@ import CategoryApp from "./SelectCategory/CategoryApp";
 import { BrowserRouter } from "react-router-dom";
 
 const App = () => {
+  console.log(process.env.PUBLIC_URL);
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={`${process.env.PUBLIC_URL}/`}>
       <CategoryApp />
       <UserManagementApp />
     </BrowserRouter>

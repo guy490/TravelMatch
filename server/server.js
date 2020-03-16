@@ -24,7 +24,11 @@ const dbName = "TravelMatch";
 
 app.use(function(req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  const allowedOrigins = ["http://localhost:3000", "https://guy490.github.io"];
+  const origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   next();
 });

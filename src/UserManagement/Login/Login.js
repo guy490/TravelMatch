@@ -14,7 +14,7 @@ const Login = () => {
       .post("/login_request", formData)
       .then(function(response) {
         alert("Login sucessful");
-        history.push("/");
+        history.push("/Category");
       })
       .catch(function(error) {
         alert("username or password are incorrect");

@@ -9,7 +9,7 @@ import ShowEvents from "./component/ShowComponents/ShowEvents";
 const CategoryApp = () => {
   return (
     <Switch>
-      <Route path="/" exact component={ShowCategories} />
+      <Route path="/Category" exact component={ShowCategories} />
       <Route path="/ShowPlaces/Events" exact component={ShowEvents} />
       <Route path="/ShowPlaces/:category" exact component={ShowSubCategories} />
       <Route
