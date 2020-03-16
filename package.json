@@ -1,6 +1,6 @@
 {
     "homepage": "http://guy490.github.io/TravelMatch",
-    "name": "nearplaces",
+    "name": "travelmatch",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
