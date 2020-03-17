@@ -1,25 +1,20 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
+const { mongoInsert, mongoFind } = require("./MongoDBConfig");
 const express = require("express");
 const axios = require("axios");
 const bodyParser = require("body-parser");
-const assert = require("assert");
-const mongodb = require("mongodb");
-const app = express();
+const bcrypt = require("bcrypt");
 
+const app = express();
 const port = 3001;
 
 const API_KEY = process.env.TravelMatchAPIKey;
 const PLACES_URL =
   "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
 const PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo";
-
-const MongoClient = mongodb.MongoClient;
-const url =
-  "mongodb+srv://" +
-  process.env.TravelMatchMongoUser +
-  ":" +
-  process.env.TravelMatchMongoPassword +
-  "@cluster0-bcqmj.mongodb.net/";
-const dbName = "TravelMatch";
 
 app.use(function(req, res, next) {
   // Website you wish to allow to connect
@@ -56,33 +51,30 @@ app.get("/", (req, res) => {
 
 app.post("/register_request", async (req, res) => {
   const userCredentials = req.body;
-  MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
-    assert.equal(null, err);
-    const db = client.db(dbName);
-    db.collection("users").insertOne(userCredentials, function(err, result) {
-      assert.equal(null, err);
-      console.log("Item inserted");
-      client.close();
-      res.send("DB Updated");
-    });
-  });
+  try {
+    userCredentials.password = await bcrypt.hash(userCredentials.password, 10);
+  } catch {
+    res.status("404").send("Encryption failed");
+  }
+  mongoInsert(userCredentials, res);
 });
 
 app.post("/login_request", async (req, res) => {
   const userCredentials = req.body;
-  MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
-    assert.equal(null, err);
-    const db = client.db(dbName);
-    db.collection("users").findOne(userCredentials, function(err, result) {
-      assert.equal(null, err);
-      if (result !== null) {
-        res.send("Login completed!");
-      } else {
-        res.status("404").send("Login error");
-      }
-      client.close();
-    });
-  });
+  const user = await mongoFind(userCredentials.username);
+  if (user == null) {
+    res.status("404").send("Login Error");
+    return;
+  }
+  try {
+    if (await bcrypt.compare(userCredentials.password, user.password)) {
+      res.send("Login complete");
+    } else {
+      res.status("404").send("Login Error");
+    }
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 app.get("/:photoReference", (req, res) => {

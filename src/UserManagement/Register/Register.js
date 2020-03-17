@@ -25,7 +25,7 @@ const Register = props => {
       .post("/register_request", formData)
       .then(function(response) {
         console.log(response);
-        history.push("/Login");
+        history.push("/");
       })
       .catch(function(error) {
         console.log(error);
