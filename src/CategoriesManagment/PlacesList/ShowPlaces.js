@@ -1,8 +1,7 @@
-import "../../styles/ShowStyles/ShowPlaces.css";
+import "./styles/ShowPlaces.css";
 import React, { useState, useEffect } from "react";
-import PlaceCard from "../PlaceCard";
-import { Link } from "react-router-dom";
-import server from "../../../api";
+import PlaceCard from "./components/PlaceCard";
+import server from "../../api";
 
 const ShowPlaces = ({ match }) => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
@@ -49,12 +48,6 @@ const ShowPlaces = ({ match }) => {
 
   return (
     <div className="ui container">
-      <Link to="/" className="ui labeled button basic">
-        <div>
-          <i className="arrow alternate circle left icon"></i>
-          Back
-        </div>
-      </Link>
       <div className="ui divided items unstackable">
         {renderList(listOfPlaces)}
       </div>

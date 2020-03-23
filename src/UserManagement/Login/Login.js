@@ -13,10 +13,15 @@ const Login = () => {
     server
       .post("/login_request", formData)
       .then(function(response) {
+        localStorage.setItem(
+          "Username",
+          JSON.parse(response.config.data).username
+        );
         alert("Login sucessful");
         history.push("/Category");
       })
-      .catch(function(error) {
+      .catch(error => {
+        console.log(error);
         alert("username or password are incorrect");
       });
   };

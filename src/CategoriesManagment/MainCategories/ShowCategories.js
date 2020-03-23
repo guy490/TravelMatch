@@ -1,6 +1,6 @@
-import "../../styles/ShowStyles/ShowCategories.css";
+import "./styles/ShowCategories.css";
 import React from "react";
-import Category from "../Category";
+import Category from "./components/Category";
 
 const ShowCategories = () => {
   return (

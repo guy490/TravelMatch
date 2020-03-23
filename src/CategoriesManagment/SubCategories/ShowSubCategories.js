@@ -1,6 +1,6 @@
-import "../../styles/ShowStyles/ShowSubCategories.css";
+import "./styles/ShowSubCategories.css";
 import React, { useEffect, useState } from "react";
-import SubCategory from "../SubCategory";
+import SubCategory from "./components/SubCategory";
 import { Link } from "react-router-dom";
 import { getType } from "../utilities";
 
@@ -32,7 +32,8 @@ const ShowSubCategories = ({ match }) => {
       className="background-cover"
       style={{
         backgroundImage: `${subCategoryDict.subCategoryBackground}`
-      }}>
+      }}
+    >
       <Link to="/" className="ui labeled button basic">
         <div>
           <i className="arrow alternate circle left icon"></i>
