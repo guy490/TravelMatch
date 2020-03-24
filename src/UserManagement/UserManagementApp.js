@@ -1,12 +1,23 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
 
-const UserManagementApp = () => {
+const UserManagementApp = ({ signIn }) => {
   return (
     <Switch>
-      <Route path="/" exact component={Login} />
+      <Route
+        path="/"
+        exact
+        render={() => {
+          const username = localStorage.getItem("Username");
+          if (username) {
+            return <Redirect to={{ pathname: "/Category" }} />;
+          } else {
+            return <Login />;
+          }
+        }}
+      />
       <Route path="/Register" exact component={Register} />
     </Switch>
   );

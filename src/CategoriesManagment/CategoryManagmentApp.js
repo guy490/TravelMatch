@@ -5,7 +5,7 @@ import ShowCategories from "./MainCategories/ShowCategories";
 import ShowSubCategories from "./SubCategories/ShowSubCategories";
 import ShowPlaces from "./PlacesList/ShowPlaces";
 import ShowEvents from "./ShowEvents";
-import { ProtectedRoute } from "../Generals/ProtectedRoute";
+import ProtectedRoute from "../Generals/ProtectedRoute";
 
 const CategoryApp = () => {
   return (

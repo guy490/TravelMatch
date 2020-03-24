@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import server from "../../api";
 import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../utilities";
+import { connect } from "react-redux";
+import { signIn } from "../../Actions";
 
-const Login = () => {
+const Login = ({ signIn }) => {
   let history = useHistory();
 
   const submitForm = async event => {
@@ -13,10 +15,11 @@ const Login = () => {
     server
       .post("/login_request", formData)
       .then(function(response) {
-        localStorage.setItem(
-          "Username",
-          JSON.parse(response.config.data).username
-        );
+        const username = JSON.parse(response.config.data).username;
+
+        localStorage.setItem("Username", username);
+        signIn({ username });
+
         alert("Login sucessful");
         history.push("/Category");
       })
@@ -52,4 +55,4 @@ const Login = () => {
   return <div>{createForm()}</div>;
 };
 
-export default Login;
+export default connect(null, { signIn })(Login);

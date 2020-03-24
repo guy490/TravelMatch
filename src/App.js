@@ -8,8 +8,10 @@ const App = () => {
   return (
     <BrowserRouter basename={`${process.env.PUBLIC_URL}/`}>
       <NavBar />
-      <CategoryApp />
-      <UserManagementApp />
+      <div style={{ paddingTop: 45 + "px" }}>
+        <CategoryApp />
+        <UserManagementApp />
+      </div>
     </BrowserRouter>
   );
 };

@@ -1,12 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { signOut } from "../Actions";
 
-const NavBar = () => {
+const NavBar = ({ userProfile, signOut }) => {
   const logoutUser = () => {
     localStorage.clear();
+    signOut();
   };
+
+  const logoutButton = () => {
+    if (localStorage.getItem("Username")) {
+      return (
+        <Link to="/" className="item" onClick={logoutUser}>
+          Logout
+        </Link>
+      );
+    }
+  };
+
   return (
-    <div className="ui secondary menu fixed">
+    <div
+      className="ui secondary menu fixed"
+      style={{ backgroundColor: "white", width: 100 + "%" }}
+    >
       <Link to="/" className="item">
         <div>
           <i className="arrow alternate circle left icon"></i>
@@ -14,30 +31,22 @@ const NavBar = () => {
         </div>
       </Link>
       <a className="item" href=" ">
-        Back
-      </a>
-      <a className="item" href=" ">
         Home
       </a>
-      <a className="item" href=" ">
-        Messages
-      </a>
-      <a className="item" href=" ">
-        Friends
-      </a>
       <div className="right menu">
-        <div className="item">
-          <div className="ui icon input">
-            <input type="text" placeholder="Search..." />
-            <i className="search link icon"></i>
-          </div>
-        </div>
-        <button className="ui item" onClick={logoutUser}>
-          Logout
-        </button>
+        <span className="item" href=" ">
+          {userProfile.username}
+        </span>
+        {logoutButton()}
       </div>
     </div>
   );
 };
 
-export default NavBar;
+const mapStateToProps = state => {
+  return {
+    userProfile: state.profileReducer
+  };
+};
+
+export default connect(mapStateToProps, { signOut })(NavBar);

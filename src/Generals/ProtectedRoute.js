@@ -1,12 +1,16 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { signIn } from "../Actions";
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
+const ProtectedRoute = ({  signIn ,component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props => {
-        if (localStorage.getItem("Username")) {
+        const username = localStorage.getItem("Username");
+        if (username) {
+          signIn({ username });
           return <Component {...props} />;
         } else {
           return <Redirect to={{ pathname: "/" }} />;
@@ -16,4 +20,4 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export { ProtectedRoute };
+export default connect(null, { signIn })(ProtectedRoute);
