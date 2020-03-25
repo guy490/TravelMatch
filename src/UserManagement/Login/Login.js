@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import server from "../../api";
+import { server, socket } from "../../api";
 import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../utilities";
 import { connect } from "react-redux";
@@ -8,6 +8,10 @@ import { signIn } from "../../Actions";
 
 const Login = ({ signIn }) => {
   let history = useHistory();
+
+  useEffect(() => {
+    socket.emit("connection", { name: "Guy" });
+  }, []);
 
   const submitForm = async event => {
     event.preventDefault();

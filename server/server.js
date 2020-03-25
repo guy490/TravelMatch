@@ -97,4 +97,13 @@ app.get("/:photoReference", (req, res) => {
     });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+let server = app.listen(port, () =>
+  console.log(`Example app listening on port ${port}!`)
+);
+
+const io = require("socket.io")(server);
+
+io.on("connection", client => {
+  console.log("user connected");
+  client.on("disconnect", () => {});
+});

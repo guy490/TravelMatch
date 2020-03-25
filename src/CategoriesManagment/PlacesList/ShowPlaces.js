@@ -1,7 +1,7 @@
 import "./styles/ShowPlaces.css";
 import React, { useState, useEffect } from "react";
 import PlaceCard from "./components/PlaceCard";
-import server from "../../api";
+import { server } from "../../api";
 
 const ShowPlaces = ({ match }) => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });

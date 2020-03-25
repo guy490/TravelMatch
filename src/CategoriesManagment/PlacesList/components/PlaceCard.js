@@ -1,7 +1,7 @@
 import "../styles/PlaceCard.css";
 import React, { useState, useEffect } from "react";
 import { Rating } from "semantic-ui-react";
-import server from "../../../api";
+import { server } from "../../../api";
 
 const PlaceCard = ({ place }) => {
   const [imageLink, setImageLink] = useState("");
