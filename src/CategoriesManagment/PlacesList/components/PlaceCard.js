@@ -1,7 +1,8 @@
 import "../styles/PlaceCard.css";
 import React, { useState, useEffect } from "react";
 import { Rating } from "semantic-ui-react";
-import { server } from "../../../api";
+import { server, socket } from "../../../api";
+import { Link } from "react-router-dom";
 
 const PlaceCard = ({ place }) => {
   const [imageLink, setImageLink] = useState("");
@@ -36,6 +37,11 @@ const PlaceCard = ({ place }) => {
       </div>
     );
   };
+
+  const findMatches = () => {
+    socket.emit("newRequest",{})
+  };
+
   return (
     <div className="item">
       <div className="image">
@@ -58,6 +64,11 @@ const PlaceCard = ({ place }) => {
             />
           </div>
         </div>
+        <Link to="/Matches">
+          <button className="ui button green" onClick={findMatches}>
+            Find Match
+          </button>
+        </Link>
       </div>
     </div>
   );

@@ -2,6 +2,8 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+// RESTFUL
+
 const { mongoInsert, mongoFind } = require("./MongoDBConfig");
 const express = require("express");
 const axios = require("axios");
@@ -68,7 +70,8 @@ app.post("/login_request", async (req, res) => {
   }
   try {
     if (await bcrypt.compare(userCredentials.password, user.password)) {
-      res.send("Login complete");
+      delete user.password;
+      res.send(user);
     } else {
       res.status("404").send("Login Error");
     }
@@ -100,6 +103,10 @@ app.get("/:photoReference", (req, res) => {
 let server = app.listen(port, () =>
   console.log(`Example app listening on port ${port}!`)
 );
+
+// -------------------------------------------------------------- //
+
+// WEB_SOCKET
 
 const io = require("socket.io")(server);
 

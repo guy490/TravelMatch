@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { server, socket } from "../../api";
+import { server } from "../../api";
 import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../utilities";
 import { connect } from "react-redux";
@@ -9,20 +9,16 @@ import { signIn } from "../../Actions";
 const Login = ({ signIn }) => {
   let history = useHistory();
 
-  useEffect(() => {
-    socket.emit("connection", { name: "Guy" });
-  }, []);
-
   const submitForm = async event => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
     server
       .post("/login_request", formData)
       .then(function(response) {
-        const username = JSON.parse(response.config.data).username;
+        const userCredentials = response.data;
 
-        localStorage.setItem("Username", username);
-        signIn({ username });
+        localStorage.setItem("Username", userCredentials.username);
+        signIn(userCredentials);
 
         alert("Login sucessful");
         history.push("/Category");
