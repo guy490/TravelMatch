@@ -3,8 +3,9 @@ import React, { useState, useEffect } from "react";
 import { Rating } from "semantic-ui-react";
 import { server, socket } from "../../../api";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-const PlaceCard = ({ place }) => {
+const PlaceCard = ({ place, userCredentials }) => {
   const [imageLink, setImageLink] = useState("");
 
   useEffect(() => {
@@ -39,7 +40,11 @@ const PlaceCard = ({ place }) => {
   };
 
   const findMatches = () => {
-    socket.emit("newRequest",{})
+    socket.emit("newRequest", {
+      id: userCredentials.id,
+      placeID: place.id,
+      location: {}
+    });
   };
 
   return (
@@ -73,5 +78,8 @@ const PlaceCard = ({ place }) => {
     </div>
   );
 };
+const mapStateToProps = state => {
+  return { userCredentials: state.profileReducer };
+};
 
-export default PlaceCard;
+export default connect(mapStateToProps)(PlaceCard);
