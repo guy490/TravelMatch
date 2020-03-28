@@ -17,7 +17,10 @@ const Login = ({ signIn }) => {
       .then(function(response) {
         const userCredentials = response.data;
 
-        localStorage.setItem("Username", userCredentials.username);
+        localStorage.setItem(
+          "User_Credentials",
+          JSON.stringify(userCredentials)
+        );
         signIn(userCredentials);
 
         alert("Login sucessful");

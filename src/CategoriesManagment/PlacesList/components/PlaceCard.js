@@ -5,7 +5,7 @@ import { server, socket } from "../../../api";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-const PlaceCard = ({ place, userCredentials }) => {
+const PlaceCard = ({ place, userCredentials, location }) => {
   const [imageLink, setImageLink] = useState("");
 
   useEffect(() => {
@@ -41,9 +41,9 @@ const PlaceCard = ({ place, userCredentials }) => {
 
   const findMatches = () => {
     socket.emit("newRequest", {
-      id: userCredentials.id,
+      id: userCredentials._id,
       placeID: place.id,
-      location: {}
+      location
     });
   };
 
@@ -79,7 +79,10 @@ const PlaceCard = ({ place, userCredentials }) => {
   );
 };
 const mapStateToProps = state => {
-  return { userCredentials: state.profileReducer };
+  return {
+    userCredentials: state.profileReducer,
+    location: state.locationReducer
+  };
 };
 
 export default connect(mapStateToProps)(PlaceCard);

@@ -1,28 +1,28 @@
 import "./styles/ShowPlaces.css";
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import PlaceCard from "./components/PlaceCard";
 import { server } from "../../api";
+import { updateLocation } from "../../Actions";
 
-const ShowPlaces = ({ match }) => {
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+const ShowPlaces = ({ match, updateLocation, location }) => {
   const [listOfPlaces, setListOfPlaces] = useState([]);
 
   useEffect(() => {
+    const getCurrentLocationOfUser = () => {
+      navigator.geolocation.getCurrentPosition(position => {
+        updateLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        });
+      });
+    };
     getCurrentLocationOfUser();
-  }, []);
+  }, [updateLocation]);
   useEffect(() => {
     let type = match.params.subCategory;
     getQuery(location, type);
   }, [location, match]);
-
-  const getCurrentLocationOfUser = () => {
-    navigator.geolocation.getCurrentPosition(position => {
-      setLocation({
-        latitude: position.coords.latitude,
-        longitude: position.coords.longitude
-      });
-    });
-  };
 
   const getQuery = async ({ latitude, longitude }, type) => {
     const response = await server.get("/", {
@@ -55,4 +55,8 @@ const ShowPlaces = ({ match }) => {
   );
 };
 
-export default ShowPlaces;
+const mapStateToProps = state => {
+  return { location: state.locationReducer };
+};
+
+export default connect(mapStateToProps, { updateLocation })(ShowPlaces);

@@ -1,6 +1,11 @@
 module.exports = io => {
   io.on("connection", client => {
-    console.log("user connected");
-    client.on("disconnect", () => {});
+    console.log("User Connected");
+    client.on("newRequest", userDetails => {
+      console.log(userDetails);
+    });
+    client.on("disconnect", () => {
+      console.log("User Disconnected");
+    });
   });
 };

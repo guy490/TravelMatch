@@ -3,14 +3,16 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { signIn } from "../Actions";
 
-const ProtectedRoute = ({  signIn ,component: Component, ...rest }) => {
+const ProtectedRoute = ({ signIn, component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props => {
-        const username = localStorage.getItem("Username");
-        if (username) {
-          signIn({ username });
+        const userCredentials = JSON.parse(
+          localStorage.getItem("User_Credentials")
+        );
+        if (userCredentials) {
+          signIn(userCredentials);
           return <Component {...props} />;
         } else {
           return <Redirect to={{ pathname: "/" }} />;

@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-const profileReducer = (state = { username: null }, action) => {
+const profileReducer = (state = {}, action) => {
   switch (action.type) {
     case "SIGN_IN":
       return { ...state, ...action.payload };
@@ -11,6 +11,19 @@ const profileReducer = (state = { username: null }, action) => {
   }
 };
 
+const locationReducer = (
+  state = { latitude: null, longitude: null },
+  action
+) => {
+  switch (action.type) {
+    case "UPDATE_LOCATION":
+      return { ...state, ...action.payload };
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
-  profileReducer
+  profileReducer,
+  locationReducer
 });
