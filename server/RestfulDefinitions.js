@@ -1,4 +1,8 @@
-const { mongoInsert, mongoFind } = require("./MongoDBConfig");
+const {
+  mongoInsertUser,
+  mongoFindUser,
+  mongoInsertMatch
+} = require("./MongoDBConfig");
 
 module.exports = app => {
   const axios = require("axios");
@@ -56,12 +60,12 @@ module.exports = app => {
     } catch {
       res.status("404").send("Encryption failed");
     }
-    mongoInsert(userCredentials, res);
+    mongoInsertUser(userCredentials, res);
   });
 
   app.post("/login_request", async (req, res) => {
     const userCredentials = req.body;
-    const user = await mongoFind(userCredentials.username);
+    const user = await mongoFindUser(userCredentials.username);
     if (user == null) {
       res.status("404").send("Login Error");
       return;
@@ -76,6 +80,12 @@ module.exports = app => {
     } catch (e) {
       console.log(e);
     }
+  });
+
+  app.post("/match_request", async (req, res) => {
+    const matchDetails = req.body;
+    console.log(matchDetails);
+    mongoInsertMatch(matchDetails, res);
   });
 
   app.get("/:photoReference", (req, res) => {

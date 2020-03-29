@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { server } from "../../api";
 import { useHistory } from "react-router-dom";
-import { createDictionaryForm } from "../utilities";
+import { createDictionaryForm } from "../../utilities";
 const countries = require("./countries.json");
 
 const Register = props => {

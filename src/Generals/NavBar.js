@@ -1,4 +1,5 @@
 import React from "react";
+import { getUserCredentials } from "../utilities";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../Actions";
@@ -10,7 +11,7 @@ const NavBar = ({ userProfile, signOut }) => {
   };
 
   const logoutButton = () => {
-    if (localStorage.getItem("Username")) {
+    if (getUserCredentials()) {
       return (
         <Link to="/" className="item" onClick={logoutUser}>
           Logout
@@ -22,8 +23,7 @@ const NavBar = ({ userProfile, signOut }) => {
   return (
     <div
       className="ui secondary menu fixed"
-      style={{ backgroundColor: "white", width: 100 + "%" }}
-    >
+      style={{ backgroundColor: "white", width: 100 + "%" }}>
       <Link to="/" className="item">
         <div>
           <i className="arrow alternate circle left icon"></i>

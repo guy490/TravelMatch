@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { server } from "../../api";
 import { useHistory } from "react-router-dom";
-import { createDictionaryForm } from "../utilities";
+import { createDictionaryForm } from "../../utilities";
 import { connect } from "react-redux";
-import { signIn } from "../../Actions";
+import { signIn } from "../../Redux/Actions";
 
 const Login = ({ signIn }) => {
   let history = useHistory();

@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { getUserCredentials } from "../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../Actions";
 
@@ -8,9 +9,7 @@ const ProtectedRoute = ({ signIn, component: Component, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        const userCredentials = JSON.parse(
-          localStorage.getItem("User_Credentials")
-        );
+        const userCredentials = JSON.parse(getUserCredentials());
         if (userCredentials) {
           signIn(userCredentials);
           return <Component {...props} />;
