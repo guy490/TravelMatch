@@ -82,12 +82,6 @@ module.exports = app => {
     }
   });
 
-  app.post("/match_request", async (req, res) => {
-    const matchDetails = req.body;
-    console.log(matchDetails);
-    mongoInsertMatch(matchDetails, res);
-  });
-
   app.get("/:photoReference", (req, res) => {
     axios
       .get(PHOTOS_URL, {
@@ -107,4 +101,12 @@ module.exports = app => {
         );
       });
   });
+
+  app.post("/match_request", async (req, res) => {
+    const matchDetails = req.body;
+    console.log(matchDetails);
+    mongoInsertMatch(matchDetails, res);
+  });
+
+  app.get("/getMatches", (req, res) => {});
 };

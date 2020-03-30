@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { getUserCredentials } from "../utilities";
 import { connect } from "react-redux";
-import { signIn } from "../Actions";
+import { signIn } from "../Redux/Actions";
 
 const ProtectedRoute = ({ signIn, component: Component, ...rest }) => {
   return (

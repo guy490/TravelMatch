@@ -2,7 +2,7 @@ import React from "react";
 import { getUserCredentials } from "../utilities";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { signOut } from "../Actions";
+import { signOut } from "../Redux/Actions";
 
 const NavBar = ({ userProfile, signOut }) => {
   const logoutUser = () => {

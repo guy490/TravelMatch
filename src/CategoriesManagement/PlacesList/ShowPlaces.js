@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PlaceCard from "./components/PlaceCard";
 import { server } from "../../api";
-import { updateLocation } from "../../Actions";
+import { updateLocation } from "../../Redux/Actions";
 
 const ShowPlaces = ({ match, updateLocation, location }) => {
   const [listOfPlaces, setListOfPlaces] = useState([]);

@@ -1,8 +1,9 @@
 import React from "react";
 import UserManagementApp from "./UserManagement/UserManagementApp";
-import CategoryApp from "./CategoriesManagment/CategoryManagmentApp";
+import CategoryApp from "./CategoriesManagement/CategoryManagmentApp";
 import { BrowserRouter } from "react-router-dom";
 import NavBar from "./Generals/NavBar";
+import MatchManagementApp from "./MatchManagement/MatchManagementApp";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <div style={{ paddingTop: 45 + "px" }}>
         <CategoryApp />
         <UserManagementApp />
+        <MatchManagementApp />
       </div>
     </BrowserRouter>
   );

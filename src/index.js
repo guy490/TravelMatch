@@ -3,7 +3,7 @@ import React from "react";
 import App from "./App";
 import { Provider } from "react-redux";
 import { createStore, compose } from "redux";
-import reducers from "./Reducers"; // default going to index.js
+import reducers from "./Redux/Reducers"; // default going to index.js
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

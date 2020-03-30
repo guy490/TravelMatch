@@ -51,5 +51,22 @@ const mongoInsertMatch = (userMatchData, ressponse) => {
     });
   });
 };
+const mongoFindMatch = async placeID => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true })
+    .then(async client => {
+      const db = client.db(dbName);
+      return await db
+        .collection("match")
+        .findOne({ placeID })
+        .then(res => res)
+        .catch(err => null);
+    })
+    .catch(err => null);
+};
 
-module.exports = { mongoInsertUser, mongoFindUser, mongoInsertMatch };
+module.exports = {
+  mongoInsertUser,
+  mongoFindUser,
+  mongoInsertMatch,
+  mongoFindMatch
+};
