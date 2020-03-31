@@ -1,7 +1,8 @@
 const {
   mongoInsertUser,
   mongoFindUser,
-  mongoInsertMatch
+  mongoInsertMatch,
+  mongoFindMatch
 } = require("./MongoDBConfig");
 
 module.exports = app => {
@@ -82,6 +83,11 @@ module.exports = app => {
     }
   });
 
+  app.get("/get_matches", async (req, res) => {
+    const matchDetails = req.query;
+    console.log(await mongoFindMatch(matchDetails.placeID));
+  });
+
   app.get("/:photoReference", (req, res) => {
     axios
       .get(PHOTOS_URL, {
@@ -104,9 +110,6 @@ module.exports = app => {
 
   app.post("/match_request", async (req, res) => {
     const matchDetails = req.body;
-    console.log(matchDetails);
     mongoInsertMatch(matchDetails, res);
   });
-
-  app.get("/getMatches", (req, res) => {});
 };

@@ -52,16 +52,15 @@ const mongoInsertMatch = (userMatchData, ressponse) => {
   });
 };
 const mongoFindMatch = async placeID => {
+  console.log(placeID);
   return await MongoClient.connect(url, { useUnifiedTopology: true })
     .then(async client => {
       const db = client.db(dbName);
-      return await db
-        .collection("match")
-        .findOne({ placeID })
-        .then(res => res)
-        .catch(err => null);
+      return await db.collection("match").find({ placeID });
+      // .then(res => res)
+      // .catch(err => err);
     })
-    .catch(err => null);
+    .catch(err => err);
 };
 
 module.exports = {

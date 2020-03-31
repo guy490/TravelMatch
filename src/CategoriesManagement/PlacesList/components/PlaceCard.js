@@ -4,8 +4,9 @@ import { Rating } from "semantic-ui-react";
 import { server } from "../../../api";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { createMatch } from "../../../Redux/Actions";
 
-const PlaceCard = ({ place, userCredentials, location }) => {
+const PlaceCard = ({ place, userCredentials, location, createMatch }) => {
   const [imageLink, setImageLink] = useState("");
 
   useEffect(() => {
@@ -45,6 +46,7 @@ const PlaceCard = ({ place, userCredentials, location }) => {
       placeID: place.id,
       location
     };
+    createMatch(matchUserDetails);
     server
       .post("/match_request", matchUserDetails)
       .then(function(response) {
@@ -94,4 +96,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(PlaceCard);
+export default connect(mapStateToProps, { createMatch })(PlaceCard);

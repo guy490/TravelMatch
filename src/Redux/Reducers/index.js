@@ -15,15 +15,24 @@ const locationReducer = (
   state = { latitude: null, longitude: null },
   action
 ) => {
-  switch (action.type) {
-    case "UPDATE_LOCATION":
-      return { ...state, ...action.payload };
-    default:
-      return state;
+  if (action.type === "UPDATE_LOCATION") {
+    return { ...state, ...action.payload };
   }
+  return state;
+};
+
+const matchReducer = (
+  state = { id: null, placeID: null, location: null },
+  action
+) => {
+  if (action.type === "CREATE_MATCH") {
+    return { ...state, ...action.payload };
+  }
+  return state;
 };
 
 export default combineReducers({
   profileReducer,
-  locationReducer
+  locationReducer,
+  matchReducer
 });
