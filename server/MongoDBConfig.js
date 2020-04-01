@@ -24,13 +24,26 @@ const mongoInsertUser = (userCredentials, ressponse) => {
   });
 };
 
-const mongoFindUser = async username => {
+const mongoFindUserByUserName = async username => {
   return await MongoClient.connect(url, { useUnifiedTopology: true })
     .then(async client => {
       const db = client.db(dbName);
       return await db
         .collection("users")
         .findOne({ username })
+        .then(res => res)
+        .catch(err => null);
+    })
+    .catch(err => null);
+};
+
+const mongoFindUserByID = async userID => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true })
+    .then(async client => {
+      const db = client.db(dbName);
+      return await db
+        .collection("users")
+        .findOne({ _id: mongodb.ObjectID(userID) })
         .then(res => res)
         .catch(err => null);
     })
@@ -52,20 +65,21 @@ const mongoInsertMatch = (userMatchData, ressponse) => {
   });
 };
 const mongoFindMatch = async placeID => {
-  console.log(placeID);
   return await MongoClient.connect(url, { useUnifiedTopology: true })
     .then(async client => {
       const db = client.db(dbName);
-      return await db.collection("match").find({ placeID });
-      // .then(res => res)
-      // .catch(err => err);
+      return await db
+        .collection("match")
+        .find({ placeID })
+        .toArray();
     })
     .catch(err => err);
 };
 
 module.exports = {
   mongoInsertUser,
-  mongoFindUser,
+  mongoFindUserByUserName,
   mongoInsertMatch,
-  mongoFindMatch
+  mongoFindMatch,
+  mongoFindUserByID
 };

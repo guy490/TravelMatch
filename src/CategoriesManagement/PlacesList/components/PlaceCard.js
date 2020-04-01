@@ -42,7 +42,7 @@ const PlaceCard = ({ place, userCredentials, location, createMatch }) => {
 
   const findMatches = () => {
     let matchUserDetails = {
-      id: userCredentials._id,
+      userID: userCredentials._id,
       placeID: place.id,
       location
     };

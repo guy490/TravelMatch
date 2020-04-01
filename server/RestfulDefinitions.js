@@ -1,8 +1,9 @@
 const {
   mongoInsertUser,
-  mongoFindUser,
+  mongoFindUserByUserName,
   mongoInsertMatch,
-  mongoFindMatch
+  mongoFindMatch,
+  mongoFindUserByID
 } = require("./MongoDBConfig");
 
 module.exports = app => {
@@ -66,7 +67,7 @@ module.exports = app => {
 
   app.post("/login_request", async (req, res) => {
     const userCredentials = req.body;
-    const user = await mongoFindUser(userCredentials.username);
+    const user = await mongoFindUserByUserName(userCredentials.username);
     if (user == null) {
       res.status("404").send("Login Error");
       return;
@@ -85,7 +86,13 @@ module.exports = app => {
 
   app.get("/get_matches", async (req, res) => {
     const matchDetails = req.query;
-    console.log(await mongoFindMatch(matchDetails.placeID));
+    const matchList = await mongoFindMatch(matchDetails.placeID);
+    let userMatchingList = matchList.map(async match => {
+      return await mongoFindUserByID(match.userID);
+    });
+    userMatchingList = await Promise.all(userMatchingList);
+    delete userMatchingList["password"];
+    res.send(userMatchingList);
   });
 
   app.get("/:photoReference", (req, res) => {

@@ -13,8 +13,8 @@ const DisplayMatches = ({ matchDetails }) => {
       setMatchList(response.data);
     };
     fetchMatches();
-  }, [matchDetails, matchList]);
-  return <div>{console.log(matchDetails)}</div>;
+  }, [matchDetails]);
+  return <div>{console.log(matchList)}</div>;
 };
 
 const mapStateToProps = state => {
