@@ -4,6 +4,7 @@ import CategoryApp from "./CategoriesManagement/CategoryManagmentApp";
 import { BrowserRouter } from "react-router-dom";
 import NavBar from "./Generals/NavBar";
 import MatchManagementApp from "./MatchManagement/MatchManagementApp";
+import ProfileManagementApp from "./ProfileManagement/ProfileManagementApp";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <CategoryApp />
         <UserManagementApp />
         <MatchManagementApp />
+        <ProfileManagementApp />
       </div>
     </BrowserRouter>
   );

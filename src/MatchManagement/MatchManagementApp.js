@@ -1,8 +1,7 @@
-import "./MatchManagementApp.css";
 import React from "react";
 import { Switch } from "react-router-dom";
 import ProtectedRoute from "../Generals/ProtectedRoute";
-import DisplayMatches from "./DisplayMatches";
+import DisplayMatches from "./DisplayMatches/DisplayMatches";
 
 const MatchManagementApp = () => {
   return (
