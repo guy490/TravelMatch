@@ -14,6 +14,7 @@ const DisplayMatches = ({ match }) => {
       componentIsMounted.current = false;
     };
   }, []);
+
   useEffect(() => {
     const fetchMatches = async () => {
       const response = await server.get("/get_matches", {
@@ -68,6 +69,7 @@ const DisplayMatches = ({ match }) => {
       );
     });
   };
+
   return <div className="ui celled list">{renderMatches()}</div>;
 };
 

@@ -6,14 +6,15 @@ import { server } from "../../api";
 import { updateLocation } from "../../Redux/Actions";
 
 const ShowPlaces = ({ match, updateLocation, location }) => {
-  const [listOfPlaces, setListOfPlaces] = useState([]);
   const componentIsMounted = useRef(true);
+  const [listOfPlaces, setListOfPlaces] = useState([]);
 
   useEffect(() => {
     return () => {
       componentIsMounted.current = false;
     };
   }, []);
+
   useEffect(() => {
     const getCurrentLocationOfUser = () => {
       navigator.geolocation.getCurrentPosition(position => {
@@ -25,6 +26,7 @@ const ShowPlaces = ({ match, updateLocation, location }) => {
     };
     getCurrentLocationOfUser();
   }, [updateLocation]);
+
   useEffect(() => {
     let type = match.params.subCategory;
     getQuery(location, type);
