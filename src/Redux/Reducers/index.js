@@ -21,18 +21,7 @@ const locationReducer = (
   return state;
 };
 
-const matchReducer = (
-  state = { id: null, placeID: null, location: null },
-  action
-) => {
-  if (action.type === "CREATE_MATCH") {
-    return { ...state, ...action.payload };
-  }
-  return state;
-};
-
 export default combineReducers({
   profileReducer,
-  locationReducer,
-  matchReducer
+  locationReducer
 });

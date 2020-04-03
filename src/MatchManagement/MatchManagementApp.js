@@ -6,7 +6,11 @@ import DisplayMatches from "./DisplayMatches/DisplayMatches";
 const MatchManagementApp = () => {
   return (
     <Switch>
-      <ProtectedRoute path="/Matches" exact component={DisplayMatches} />
+      <ProtectedRoute
+        path="/Matches/:userID&:placeID&:latitude&:longitude"
+        exact
+        component={DisplayMatches}
+      />
     </Switch>
   );
 };

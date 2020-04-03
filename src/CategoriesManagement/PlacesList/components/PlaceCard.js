@@ -4,14 +4,28 @@ import { Rating } from "semantic-ui-react";
 import { server } from "../../../api";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { createMatch } from "../../../Redux/Actions";
 
-const PlaceCard = ({ place, userCredentials, location, createMatch }) => {
+const PlaceCard = ({ place, userCredentials, location }) => {
   const [imageLink, setImageLink] = useState("");
+  const [matchUserDetails, setmatchUserDetails] = useState({
+    userID: null,
+    placeID: null,
+    latitude: null,
+    longitude: null
+  });
 
   useEffect(() => {
     getPhoto(place);
   }, [place]);
+
+  useEffect(() => {
+    setmatchUserDetails({
+      userID: userCredentials._id,
+      placeID: place.id,
+      ...location
+    });
+  }, [userCredentials, place, location]);
+
   const getPhoto = async place => {
     if (place.hasOwnProperty("photos")) {
       let photoReference = place.photos[0].photo_reference;
@@ -41,12 +55,6 @@ const PlaceCard = ({ place, userCredentials, location, createMatch }) => {
   };
 
   const findMatches = () => {
-    let matchUserDetails = {
-      userID: userCredentials._id,
-      placeID: place.id,
-      location
-    };
-    createMatch(matchUserDetails);
     server
       .post("/match_request", matchUserDetails)
       .then(function(response) {
@@ -80,7 +88,11 @@ const PlaceCard = ({ place, userCredentials, location, createMatch }) => {
             />
           </div>
         </div>
-        <Link to="/Matches">
+        <Link
+          to={{
+            pathname: `/Matches/${matchUserDetails.userID}&${matchUserDetails.placeID}&${matchUserDetails.latitude}&${matchUserDetails.longitude}`
+          }}
+        >
           <button className="ui button green" onClick={findMatches}>
             Find Match
           </button>
@@ -89,6 +101,7 @@ const PlaceCard = ({ place, userCredentials, location, createMatch }) => {
     </div>
   );
 };
+
 const mapStateToProps = state => {
   return {
     userCredentials: state.profileReducer,
@@ -96,4 +109,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { createMatch })(PlaceCard);
+export default connect(mapStateToProps)(PlaceCard);

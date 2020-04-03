@@ -54,14 +54,19 @@ const mongoInsertMatch = (userMatchData, ressponse) => {
   MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
     const db = client.db(dbName);
 
-    db.collection("match").insertOne(userMatchData, function(err, result) {
-      if (result !== null) {
-        ressponse.send("The match insert completed!");
-      } else {
-        ressponse.status("404").send("Match insert error");
+    db.collection("match").updateOne(
+      { userID: userMatchData.userID, placeID: userMatchData.placeID },
+      { ...userMatchData },
+      { upsert: true },
+      function(err, result) {
+        if (result !== null) {
+          ressponse.send("The match insert completed!");
+        } else {
+          ressponse.status("404").send("Match insert error");
+        }
+        client.close();
       }
-      client.close();
-    });
+    );
   });
 };
 const mongoFindMatch = async placeID => {

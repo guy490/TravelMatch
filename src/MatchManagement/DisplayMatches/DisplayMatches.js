@@ -5,27 +5,30 @@ import { server } from "../../api";
 import { SegmentInline } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const DisplayMatches = ({ matchDetails }) => {
+const DisplayMatches = ({ match }) => {
   const [matchList, setMatchList] = useState([]);
 
   useEffect(() => {
     const fetchMatches = async () => {
       const response = await server.get("/get_matches", {
-        params: matchDetails
+        params: match.params
       });
       setMatchList(response.data);
     };
     fetchMatches();
-  }, [matchDetails]);
+  }, [match]);
 
   const renderMatches = () => {
     if (matchList.length === 0) {
       return;
     }
-    return matchList.map(match => {
+    return matchList.map(matchObject => {
+      if (matchObject._id === match.params.userID) {
+        return null;
+      }
       return (
         <div
-          key={match._id}
+          key={matchObject._id}
           style={{ display: SegmentInline }}
           className="item"
         >
@@ -36,17 +39,17 @@ const DisplayMatches = ({ matchDetails }) => {
           />
           <div className="content">
             <a href=" " className="header">
-              {`${match.firstname} ${match.lastname}`}
+              {`${matchObject.firstname} ${matchObject.lastname}`}
             </a>
             <div className="description">
-              {`${match.age} years old`}
+              {`${matchObject.age} years old`}
               <br />
-              {`${match.country}`}
+              {`${matchObject.country}`}
             </div>
           </div>
           <div className="buttons-div">
             <Link
-              to={{ pathname: `/Profile/${match._id}` }}
+              to={{ pathname: `/Profile/${matchObject._id}` }}
               className="ui button blue match-buttons"
             >
               Profile

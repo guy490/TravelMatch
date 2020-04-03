@@ -17,10 +17,3 @@ export const updateLocation = location => {
     payload: location
   };
 };
-
-export const createMatch = matchDetails => {
-  return {
-    type: "CREATE_MATCH",
-    payload: matchDetails
-  };
-};
