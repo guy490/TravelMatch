@@ -1,5 +1,5 @@
 import "../styles/PlaceCard.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Rating } from "semantic-ui-react";
 import { server } from "../../../api";
 import { Link } from "react-router-dom";
@@ -13,6 +13,13 @@ const PlaceCard = ({ place, userCredentials, location }) => {
     latitude: null,
     longitude: null
   });
+  const componentIsMounted = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      componentIsMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     getPhoto(place);
@@ -30,7 +37,9 @@ const PlaceCard = ({ place, userCredentials, location }) => {
     if (place.hasOwnProperty("photos")) {
       let photoReference = place.photos[0].photo_reference;
       let response = await server.get(`/${photoReference}`);
-      setImageLink(response.data);
+      if (componentIsMounted.current) {
+        setImageLink(response.data);
+      }
       return;
     }
     setImageLink(

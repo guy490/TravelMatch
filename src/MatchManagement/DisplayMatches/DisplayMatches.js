@@ -1,5 +1,5 @@
 import "./DisplayMatches.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { server } from "../../api";
 import { SegmentInline } from "semantic-ui-react";
@@ -7,13 +7,21 @@ import { Link } from "react-router-dom";
 
 const DisplayMatches = ({ match }) => {
   const [matchList, setMatchList] = useState([]);
+  const componentIsMounted = useRef(true);
 
+  useEffect(() => {
+    return () => {
+      componentIsMounted.current = false;
+    };
+  }, []);
   useEffect(() => {
     const fetchMatches = async () => {
       const response = await server.get("/get_matches", {
         params: match.params
       });
-      setMatchList(response.data);
+      if (componentIsMounted.current) {
+        setMatchList(response.data);
+      }
     };
     fetchMatches();
   }, [match]);

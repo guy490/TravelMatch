@@ -1,5 +1,5 @@
 import "./styles/ShowPlaces.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import PlaceCard from "./components/PlaceCard";
 import { server } from "../../api";
@@ -7,7 +7,13 @@ import { updateLocation } from "../../Redux/Actions";
 
 const ShowPlaces = ({ match, updateLocation, location }) => {
   const [listOfPlaces, setListOfPlaces] = useState([]);
+  const componentIsMounted = useRef(true);
 
+  useEffect(() => {
+    return () => {
+      componentIsMounted.current = false;
+    };
+  }, []);
   useEffect(() => {
     const getCurrentLocationOfUser = () => {
       navigator.geolocation.getCurrentPosition(position => {
@@ -37,7 +43,9 @@ const ShowPlaces = ({ match, updateLocation, location }) => {
     );
 
     let finalList = sortedData.filter(place => place.hasOwnProperty("rating"));
-    setListOfPlaces(finalList);
+    if (componentIsMounted.current) {
+      setListOfPlaces(finalList);
+    }
   };
 
   const renderList = placesList => {
