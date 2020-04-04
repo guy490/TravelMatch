@@ -10,6 +10,15 @@ This project is on continues development and NOT finished yet.
 
 Updates will be added from time to time.
 
+## Link to the project
+
+- https://guy490.github.io/TravelMatch/
+- First you have to register to the website.
+- After you have registered, you have to select category and sub-category.
+- When you see the places around you there is a "Find Match" button, if you click it, you will find all the people around you is selected this place either.
+- The match is began!
+- Profile button is on development process.
+
 ## What is the project about?
 
 The final distination is to build a PWA website with React that will display as application.
