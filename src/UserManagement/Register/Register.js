@@ -4,12 +4,12 @@ import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../../utilities";
 const countries = require("./countries.json");
 
-const Register = props => {
+const Register = (props) => {
   let history = useHistory();
   const [country, setCountry] = useState(countries[106].name);
 
   const generateCountries = () => {
-    return countries.map(country => {
+    return countries.map((country) => {
       return (
         <option key={country.code} value={country.name}>
           {country.name}
@@ -18,16 +18,16 @@ const Register = props => {
     });
   };
 
-  const submitForm = async event => {
+  const submitForm = async (event) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
     server
       .post("/register_request", formData)
-      .then(function(response) {
+      .then(function (response) {
         console.log(response);
         history.push("/");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
@@ -57,7 +57,7 @@ const Register = props => {
           </div>
           <div className="field">
             <label>Username</label>
-            <input type="text" name="username" placeholder="Uservame" />
+            <input type="text" name="username" placeholder="Username" />
           </div>
           <div className="field">
             <label>Password</label>
