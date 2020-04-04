@@ -12,6 +12,7 @@ Updates will be added from time to time.
 
 ## Link to the project
 
+- The website is developed for Mobile usage only (For now...) so its not PC resposive
 - https://guy490.github.io/TravelMatch/
 - First you have to register to the website.
 - After you have registered, you have to select category and sub-category.
