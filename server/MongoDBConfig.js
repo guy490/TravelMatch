@@ -10,10 +10,13 @@ const url =
 const dbName = "TravelMatch";
 
 const mongoInsertUser = (userCredentials, ressponse) => {
-  MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
+  MongoClient.connect(url, { useUnifiedTopology: true }, function (
+    err,
+    client
+  ) {
     const db = client.db(dbName);
 
-    db.collection("users").insertOne(userCredentials, function(err, result) {
+    db.collection("users").insertOne(userCredentials, function (err, result) {
       if (result !== null) {
         ressponse.send("Register completed!");
       } else {
@@ -24,61 +27,61 @@ const mongoInsertUser = (userCredentials, ressponse) => {
   });
 };
 
-const mongoFindUserByUserName = async username => {
+const mongoFindUserByUserName = async (username) => {
   return await MongoClient.connect(url, { useUnifiedTopology: true })
-    .then(async client => {
+    .then(async (client) => {
       const db = client.db(dbName);
       return await db
         .collection("users")
         .findOne({ username })
-        .then(res => res)
-        .catch(err => null);
+        .then((res) => res)
+        .catch((err) => null);
     })
-    .catch(err => null);
+    .catch((err) => null);
 };
 
-const mongoFindUserByID = async userID => {
+const mongoFindUserByID = async (userID) => {
   return await MongoClient.connect(url, { useUnifiedTopology: true })
-    .then(async client => {
+    .then(async (client) => {
       const db = client.db(dbName);
       return await db
         .collection("users")
         .findOne({ _id: mongodb.ObjectID(userID) })
-        .then(res => res)
-        .catch(err => null);
+        .then((res) => res)
+        .catch((err) => null);
     })
-    .catch(err => null);
+    .catch((err) => null);
 };
 
 const mongoInsertMatch = (userMatchData, ressponse) => {
-  MongoClient.connect(url, { useUnifiedTopology: true }, function(err, client) {
+  MongoClient.connect(url, { useUnifiedTopology: true }, function (
+    err,
+    client
+  ) {
     const db = client.db(dbName);
 
-    db.collection("match").updateOne(
+    db.collection("match").update(
       { userID: userMatchData.userID, placeID: userMatchData.placeID },
       { ...userMatchData },
       { upsert: true },
-      function(err, result) {
+      function (err, result) {
         if (result !== null) {
           ressponse.send("The match insert completed!");
         } else {
-          ressponse.status("404").send("Match insert error");
+          ressponse.status("404").send(err);
         }
         client.close();
       }
     );
   });
 };
-const mongoFindMatch = async placeID => {
+const mongoFindMatch = async (placeID) => {
   return await MongoClient.connect(url, { useUnifiedTopology: true })
-    .then(async client => {
+    .then(async (client) => {
       const db = client.db(dbName);
-      return await db
-        .collection("match")
-        .find({ placeID })
-        .toArray();
+      return await db.collection("match").find({ placeID }).toArray();
     })
-    .catch(err => err);
+    .catch((err) => err);
 };
 
 module.exports = {
@@ -86,5 +89,5 @@ module.exports = {
   mongoFindUserByUserName,
   mongoInsertMatch,
   mongoFindMatch,
-  mongoFindUserByID
+  mongoFindUserByID,
 };
