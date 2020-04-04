@@ -2,14 +2,9 @@ import axios from "axios";
 import openSocket from "socket.io-client";
 
 const server = axios.create({
-  baseURL:
-    process.env.REACT_APP_LOCALHOST_RESTFUL ||
-    "https://travel-match-project.herokuapp.com/",
+  baseURL: process.env.REACT_APP_LOCALHOST_RESTFUL,
 });
 
-const socket = openSocket(
-  process.env.REACT_APP_LOCALHOST_WEBSOCKET ||
-    "wss://travel-match-project.herokuapp.com/"
-);
+const socket = openSocket(process.env.REACT_APP_LOCALHOST_WEBSOCKET);
 
 export { server, socket };
