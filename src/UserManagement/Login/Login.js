@@ -9,12 +9,12 @@ import { signIn } from "../../Redux/Actions";
 const Login = ({ signIn }) => {
   let history = useHistory();
 
-  const submitForm = async event => {
+  const submitForm = async (event) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
     server
       .post("/login_request", formData)
-      .then(function(response) {
+      .then(function (response) {
         const userCredentials = response.data;
 
         localStorage.setItem(
@@ -23,10 +23,10 @@ const Login = ({ signIn }) => {
         );
         signIn(userCredentials);
 
-        alert("Login sucessful");
+        alert("Login Successful");
         history.push("/Category");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         alert("username or password are incorrect");
       });

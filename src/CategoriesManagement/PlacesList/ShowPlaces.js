@@ -1,12 +1,19 @@
 import "./styles/ShowPlaces.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import PlaceCard from "./components/PlaceCard";
 import { server } from "../../api";
 import { updateLocation } from "../../Redux/Actions";
 
 const ShowPlaces = ({ match, updateLocation, location }) => {
+  const componentIsMounted = useRef(true);
   const [listOfPlaces, setListOfPlaces] = useState([]);
+
+  useEffect(() => {
+    return () => {
+      componentIsMounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     const getCurrentLocationOfUser = () => {
@@ -19,6 +26,7 @@ const ShowPlaces = ({ match, updateLocation, location }) => {
     };
     getCurrentLocationOfUser();
   }, [updateLocation]);
+
   useEffect(() => {
     let type = match.params.subCategory;
     getQuery(location, type);
@@ -37,7 +45,9 @@ const ShowPlaces = ({ match, updateLocation, location }) => {
     );
 
     let finalList = sortedData.filter(place => place.hasOwnProperty("rating"));
-    setListOfPlaces(finalList);
+    if (componentIsMounted.current) {
+      setListOfPlaces(finalList);
+    }
   };
 
   const renderList = placesList => {

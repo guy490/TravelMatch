@@ -2,9 +2,9 @@ import axios from "axios";
 import openSocket from "socket.io-client";
 
 const server = axios.create({
-  baseURL: "http://localhost:3001"
+  baseURL: process.env.REACT_APP_LOCALHOST_RESTFUL,
 });
 
-const socket = openSocket("ws://localhost:3001");
+const socket = openSocket(process.env.REACT_APP_LOCALHOST_WEBSOCKET);
 
 export { server, socket };

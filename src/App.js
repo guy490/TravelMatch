@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import NavBar from "./Generals/NavBar";
 import MatchManagementApp from "./MatchManagement/MatchManagementApp";
 import ProfileManagementApp from "./ProfileManagement/ProfileManagementApp";
-
+import ChatManagmentApp from "./ChatManagement/ChatManagementApp";
 const App = () => {
   return (
     <BrowserRouter basename={`${process.env.PUBLIC_URL}/`}>
@@ -15,6 +15,7 @@ const App = () => {
         <UserManagementApp />
         <MatchManagementApp />
         <ProfileManagementApp />
+        <ChatManagmentApp />
       </div>
     </BrowserRouter>
   );
