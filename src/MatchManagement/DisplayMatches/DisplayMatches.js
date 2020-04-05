@@ -18,7 +18,7 @@ const DisplayMatches = ({ match }) => {
   useEffect(() => {
     const fetchMatches = async () => {
       const response = await server.get("/get_matches", {
-        params: match.params
+        params: match.params,
       });
       if (componentIsMounted.current) {
         setMatchList(response.data);
@@ -31,7 +31,7 @@ const DisplayMatches = ({ match }) => {
     if (matchList.length === 0) {
       return;
     }
-    return matchList.map(matchObject => {
+    return matchList.map((matchObject) => {
       if (matchObject._id === match.params.userID) {
         return null;
       }
@@ -63,7 +63,12 @@ const DisplayMatches = ({ match }) => {
             >
               Profile
             </Link>
-            <div className="ui button green match-buttons">Chat</div>
+            <Link
+              to={{ pathname: `/Chat/${matchObject._id}` }}
+              className="ui button green match-buttons"
+            >
+              Chat
+            </Link>
           </div>
         </div>
       );
@@ -73,7 +78,7 @@ const DisplayMatches = ({ match }) => {
   return <div className="ui celled list">{renderMatches()}</div>;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return { matchDetails: state.matchReducer };
 };
 

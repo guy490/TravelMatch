@@ -11,7 +11,7 @@ const PlaceCard = ({ place, userCredentials, location }) => {
     userID: null,
     placeID: null,
     latitude: null,
-    longitude: null
+    longitude: null,
   });
   const componentIsMounted = useRef(true);
 
@@ -29,11 +29,11 @@ const PlaceCard = ({ place, userCredentials, location }) => {
     setmatchUserDetails({
       userID: userCredentials._id,
       placeID: place.id,
-      ...location
+      ...location,
     });
   }, [userCredentials, place, location]);
 
-  const getPhoto = async place => {
+  const getPhoto = async (place) => {
     if (place.hasOwnProperty("photos")) {
       let photoReference = place.photos[0].photo_reference;
       let response = await server.get(`/${photoReference}`);
@@ -47,7 +47,7 @@ const PlaceCard = ({ place, userCredentials, location }) => {
     );
   };
 
-  const checkOpennings = place => {
+  const checkOpennings = (place) => {
     let placeStatus = {};
     if (place.hasOwnProperty("opening_hours")) {
       placeStatus = place.opening_hours.open_now
@@ -66,19 +66,23 @@ const PlaceCard = ({ place, userCredentials, location }) => {
   const findMatches = () => {
     server
       .post("/match_request", matchUserDetails)
-      .then(function(response) {
+      .then(function (response) {
         console.log(response);
         //history.push("/");
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   };
 
   return (
     <div className="item">
-      <div className="image">
-        <img className="image-item" alt="Place" src={imageLink} />
+      <div className="image image-placecard">
+        <img
+          className="image-item image-item-placecard"
+          alt="Place"
+          src={imageLink}
+        />
       </div>
       <div className="content">
         <div className="header">{place.name}</div>
@@ -99,7 +103,7 @@ const PlaceCard = ({ place, userCredentials, location }) => {
         </div>
         <Link
           to={{
-            pathname: `/Matches/${matchUserDetails.userID}&${matchUserDetails.placeID}&${matchUserDetails.latitude}&${matchUserDetails.longitude}`
+            pathname: `/Matches/${matchUserDetails.userID}&${matchUserDetails.placeID}&${matchUserDetails.latitude}&${matchUserDetails.longitude}`,
           }}
         >
           <button className="ui button green" onClick={findMatches}>
@@ -111,10 +115,10 @@ const PlaceCard = ({ place, userCredentials, location }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userCredentials: state.profileReducer,
-    location: state.locationReducer
+    location: state.locationReducer,
   };
 };
 

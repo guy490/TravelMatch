@@ -3,10 +3,10 @@ const {
   mongoFindUserByUserName,
   mongoInsertMatch,
   mongoFindMatch,
-  mongoFindUserByID
+  mongoFindUserByID,
 } = require("./MongoDBConfig");
 
-module.exports = app => {
+module.exports = (app) => {
   const axios = require("axios");
   const bodyParser = require("body-parser");
   const bcrypt = require("bcrypt");
@@ -16,11 +16,11 @@ module.exports = app => {
     "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
   const PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo";
 
-  app.use(function(req, res, next) {
+  app.use(function (req, res, next) {
     // Website you wish to allow to connect
     const allowedOrigins = [
       "http://localhost:3000",
-      "https://guy490.github.io"
+      "https://guy490.github.io",
     ];
     const origin = req.headers.origin;
     if (allowedOrigins.indexOf(origin) > -1) {
@@ -41,13 +41,13 @@ module.exports = app => {
           radius: "15000",
           type,
           rankby: "prominence",
-          key: API_KEY
-        }
+          key: API_KEY,
+        },
       })
-      .then(response => {
+      .then((response) => {
         res.send(response.data.results);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       });
   });
@@ -87,12 +87,20 @@ module.exports = app => {
   app.get("/get_matches", async (req, res) => {
     const matchDetails = req.query;
     const matchList = await mongoFindMatch(matchDetails.placeID);
-    let userMatchingList = matchList.map(async match => {
-      return await mongoFindUserByID(match.userID);
+    let userMatchingList = matchList.map(async (match) => {
+      const user = await mongoFindUserByID(match.userID);
+      delete user["password"];
+      return user;
     });
     userMatchingList = await Promise.all(userMatchingList);
-    delete userMatchingList["password"];
     res.send(userMatchingList);
+  });
+
+  app.get("/get_profile", async (req, res) => {
+    const user = req.query;
+    let userProfile = await mongoFindUserByID(user.userID);
+    delete userProfile["password"];
+    res.send(userProfile);
   });
 
   app.get("/:photoReference", (req, res) => {
@@ -102,13 +110,13 @@ module.exports = app => {
           maxwidth: "400",
           maxheight: "400",
           photoreference: req.params.photoReference,
-          key: API_KEY
-        }
+          key: API_KEY,
+        },
       })
-      .then(response => {
+      .then((response) => {
         res.send(response.request.res.responseUrl);
       })
-      .catch(err => {
+      .catch((err) => {
         res.send(
           "https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
         );
