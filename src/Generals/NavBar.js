@@ -3,11 +3,13 @@ import { getUserCredentials } from "../utilities";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../Redux/Actions";
+import { socket } from "../api";
 
 const NavBar = ({ userProfile, signOut }) => {
   const logoutUser = () => {
     localStorage.clear();
     signOut();
+    socket.emit("removeFromClientList", userProfile._id);
   };
 
   const logoutButton = () => {
@@ -43,9 +45,9 @@ const NavBar = ({ userProfile, signOut }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userProfile: state.profileReducer
+    userProfile: state.profileReducer,
   };
 };
 

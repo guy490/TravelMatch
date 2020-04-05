@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../../Redux/Actions";
+import { socket } from "../../api";
 
 const Login = ({ signIn }) => {
   let history = useHistory();
@@ -21,6 +22,8 @@ const Login = ({ signIn }) => {
           "User_Credentials",
           JSON.stringify(userCredentials)
         );
+        socket.emit("addToClientList", userCredentials._id);
+
         signIn(userCredentials);
 
         alert("Login Successful");

@@ -23,5 +23,5 @@ const locationReducer = (
 
 export default combineReducers({
   profileReducer,
-  locationReducer
+  locationReducer,
 });

@@ -1,0 +1,15 @@
+.top-view {
+    display: flex;
+    height: 100%;
+}
+
+
+
+@media only screen and (max-width: 767px) {
+
+    .chat-view {
+        margin-left: 0;
+        width: 100%;
+    }
+
+}

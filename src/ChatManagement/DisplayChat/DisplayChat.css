@@ -1,0 +1,29 @@
+@media only screen and (max-width: 767px) {
+    .ui.container {
+        height: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .chat {
+        padding-top: 0;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .ui.placeholder.segment {
+        height: 100% !important;
+    }
+
+    .buttom-view {
+        height: 50%;
+    }
+
+    .head-view {
+        height: 50%;
+    }
+
+    .text-area {
+        height: 30%;
+    }
+}
