@@ -5,7 +5,14 @@ import Comment from "./Comment";
 
 const Chat = () => {
   const [messages, setMessages] = useState([]);
-  useEffect(() => {}, []);
+  useEffect(() => {
+    socket.on("receiveMessage", (message) => {
+      console.log(message);
+    });
+    return () => {
+      socket.off("receiveMessage");
+    };
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
