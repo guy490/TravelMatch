@@ -6,8 +6,8 @@ import Comment from "./Comment";
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    socket.on("receiveMessage", (message) => {
-      console.log(message);
+    socket.on("receiveMessage", (messages) => {
+      setMessages(JSON.parse(messages));
     });
     return () => {
       socket.off("receiveMessage");

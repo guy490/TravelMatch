@@ -6,7 +6,11 @@ import DisplayChat from "./DisplayChat/DisplayChat";
 const ChatManagementApp = () => {
   return (
     <Switch>
-      <ProtectedRoute path="/Chat/:userID" exact component={DisplayChat} />
+      <ProtectedRoute
+        path="/Chat/:userID&:username"
+        exact
+        component={DisplayChat}
+      />
     </Switch>
   );
 };

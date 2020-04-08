@@ -3,12 +3,14 @@ import React from "react";
 import { socket } from "../../api";
 import { connect } from "react-redux";
 
-const TextArea = ({ destinationUserID, userProfile }) => {
+const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
   const onSubmit = (event) => {
     if (event.key === "Enter") {
       const message = {
-        senderName: userProfile.username, // (a,b) === (b,a)
-        receiverName: destinationUserID,
+        senderID: userProfile._id,
+        senderName: userProfile.username,
+        receiverID: destinationUserID,
+        receiverName: destinationUsername,
         date: new Date(),
         text: event.target.value,
         image:

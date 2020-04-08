@@ -41,9 +41,8 @@ const DisplayProfile = ({ match }) => {
         />
       </div>
       <Link
-        to={{ pathname: `/Chat/${userProfile._id}` }}
-        className="ui button green match-buttons"
-      >
+        to={{ pathname: `/Chat/${userProfile._id}&${userProfile.username}` }}
+        className="ui button green match-buttons">
         Chat
       </Link>
       <div className="content profile-content">

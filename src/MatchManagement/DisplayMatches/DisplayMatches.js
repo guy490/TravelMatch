@@ -39,8 +39,7 @@ const DisplayMatches = ({ match }) => {
         <div
           key={matchObject._id}
           style={{ display: SegmentInline }}
-          className="item"
-        >
+          className="item">
           <img
             alt=" "
             className="ui avatar image profile-image"
@@ -59,14 +58,14 @@ const DisplayMatches = ({ match }) => {
           <div className="buttons-div">
             <Link
               to={{ pathname: `/Profile/${matchObject._id}` }}
-              className="ui button blue match-buttons"
-            >
+              className="ui button blue match-buttons">
               Profile
             </Link>
             <Link
-              to={{ pathname: `/Chat/${matchObject._id}` }}
-              className="ui button green match-buttons"
-            >
+              to={{
+                pathname: `/Chat/${matchObject._id}&${matchObject.username}`,
+              }}
+              className="ui button green match-buttons">
               Chat
             </Link>
           </div>

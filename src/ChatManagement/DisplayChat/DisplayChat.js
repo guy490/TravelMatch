@@ -14,7 +14,10 @@ const DisplayChat = ({ match }) => {
           <div className="ui divider"></div>
           <div className="buttom-view">
             <div className="text-area">
-              <TextArea destinationUserID={match.params.userID} />
+              <TextArea
+                destinationUserID={match.params.userID}
+                destinationUsername={match.params.username}
+              />
             </div>
           </div>
         </div>

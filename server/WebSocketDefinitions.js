@@ -5,34 +5,49 @@ module.exports = (io) => {
   io.on("connection", (client) => {
     console.log("User Connected");
     client.on("sendMessage", (stringyMessageDetails) => {
-      // let messageDetails = JSON.parse(stringyMessageDetails);
-      // const sender = messageDetails.senderName;
-      // const receiver = messageDetails.receiverName;
-      // delete messageDetails["senderName"];
-      // delete messageDetails["receiverName"];
-      // if (messageList.length === 0) {
-      //   messageList.push({
-      //     paricipants: { user1: sender, user2: receiver },
-      //     messages: [messageDetails],
-      //   });
-      // } else {
-      //   let index = messageList.findIndex(
-      //     (conversation) =>
-      //       (conversation.participants.user1 === sender &&
-      //         conversation.participants.user2 === receiver) ||
-      //       (conversation.participants.user1 === receiver &&
-      //         conversation.participants.user2 === sender)
-      //   );
-      //   if (index !== -1) {
-      //     messageList[index].messages.push(messageDetails);
-      //   } else {
-      //     messageList.push({
-      //       paricipants: { user1: sender, user2: receiver },
-      //       messages: [messageDetails],
-      //     });
-      //   }
-      // }
-      io.to(client.id).emit("receiveMessage", "HEY");
+      let messageDetails = JSON.parse(stringyMessageDetails);
+      const senderName = messageDetails.senderName;
+      const receiverName = messageDetails.receiverName;
+      const socketIndex = clientList.findIndex(
+        (user) => user.userID === messageDetails.receiverID
+      );
+      const receiverSocketID = clientList[socketIndex].clientID;
+      let index;
+
+      if (messageList.length === 0) {
+        messageList.push({
+          participants: { user1: senderName, user2: receiverName },
+          messages: [messageDetails],
+        });
+
+        index = messageList.length - 1;
+      } else {
+        index = messageList.findIndex(
+          (conversation) =>
+            (conversation.participants.user1 === senderName &&
+              conversation.participants.user2 === receiverName) ||
+            (conversation.participants.user1 === receiverName &&
+              conversation.participants.user2 === senderName)
+        );
+
+        if (index !== -1) {
+          messageList[index].messages.push(messageDetails);
+        } else {
+          messageList.push({
+            paricipants: { user1: senderName, user2: receiverName },
+            messages: [messageDetails],
+          });
+          index = messageList.length - 1;
+        }
+      }
+      io.to(client.id).emit(
+        "receiveMessage",
+        JSON.stringify(messageList[index].messages)
+      );
+      io.to(receiverSocketID).emit(
+        "receiveMessage",
+        JSON.stringify(messageList[index].messages)
+      );
     });
 
     client.on("addToClientList", (userID) => {
