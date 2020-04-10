@@ -56,9 +56,13 @@ module.exports = (io) => {
 
     client.on("updateClientList", (userID) => {
       let index = clientList.findIndex((user) => user.userID === userID);
-      let clientID = clientList[index].clientID;
-      if (clientID !== client.id) {
-        clientList[index].clientID = client.id;
+      if (clientList !== -1) {
+        let clientID = clientList[index].clientID;
+        if (clientID !== client.id) {
+          clientList[index].clientID = client.id;
+        }
+      } else {
+        clientList.push({ userID, clientID: client.id });
       }
     });
 
