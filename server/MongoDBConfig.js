@@ -48,9 +48,9 @@ const mongoFindUserByID = async (userID) => {
         .collection("users")
         .findOne({ _id: mongodb.ObjectID(userID) })
         .then((res) => res)
-        .catch((err) => null);
+        .catch((err) => err);
     })
-    .catch((err) => null);
+    .catch((err) => err);
 };
 
 const mongoInsertMatch = (userMatchData, ressponse) => {
