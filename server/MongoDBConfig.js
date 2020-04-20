@@ -84,10 +84,42 @@ const mongoFindMatch = async (placeID) => {
     .catch((err) => err);
 };
 
+const mongoFindMyMatchesByUserID = async (userID) => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true })
+    .then(async (client) => {
+      const db = client.db(dbName);
+      return await db.collection("match").find({ userID }).toArray();
+    })
+    .catch((err) => err);
+};
+
+const mongoDeleteMatch = (userMatchData, ressponse) => {
+  MongoClient.connect(url, { useUnifiedTopology: true }, function (
+    err,
+    client
+  ) {
+    const db = client.db(dbName);
+    db.collection("match").deleteOne(
+      { userID: userMatchData.userID, placeID: userMatchData.placeID },
+      {},
+      function (err, result) {
+        if (result !== null) {
+          ressponse.send("The match delete completed!");
+        } else {
+          ressponse.status("404").send(err);
+        }
+        client.close();
+      }
+    );
+  });
+};
+
 module.exports = {
   mongoInsertUser,
   mongoFindUserByUserName,
   mongoInsertMatch,
   mongoFindMatch,
   mongoFindUserByID,
+  mongoFindMyMatchesByUserID,
+  mongoDeleteMatch,
 };

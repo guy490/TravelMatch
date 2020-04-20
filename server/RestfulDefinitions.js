@@ -4,6 +4,8 @@ const {
   mongoInsertMatch,
   mongoFindMatch,
   mongoFindUserByID,
+  mongoFindMyMatchesByUserID,
+  mongoDeleteMatch,
 } = require("./MongoDBConfig");
 
 module.exports = (app) => {
@@ -14,6 +16,8 @@ module.exports = (app) => {
   const API_KEY = process.env.TravelMatchAPIKey;
   const PLACES_URL =
     "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
+  const PLACE_DETAILS_URL =
+    "https://maps.googleapis.com/maps/api/place/details/json";
   const PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo";
 
   app.use(function (req, res, next) {
@@ -94,6 +98,35 @@ module.exports = (app) => {
     });
     userMatchingList = await Promise.all(userMatchingList);
     res.send(userMatchingList);
+  });
+
+  app.get("/get_my_matches", async (req, res) => {
+    const matchDetails = req.query;
+    const matchList = await mongoFindMyMatchesByUserID(matchDetails.userID);
+    let userMatchingList = matchList.map(async (match) => {
+      return axios
+        .get(PLACE_DETAILS_URL, {
+          params: {
+            key: API_KEY,
+            fields: "name,photos,place_id",
+            place_id: match.placeID,
+          },
+        })
+        .then((response) => {
+          return response.data.result;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    userMatchingList = await Promise.all(userMatchingList);
+
+    res.send(userMatchingList);
+  });
+
+  app.post("/delete_match_request", async (req, res) => {
+    const matchDetails = req.body;
+    mongoDeleteMatch(matchDetails, res);
   });
 
   app.get("/get_profile", async (req, res) => {

@@ -1,11 +1,10 @@
-import "./DisplayMatches.css";
+import "./DisplayMyMatches.css";
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { server } from "../../api";
 import { SegmentInline } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 
-const DisplayMatches = ({ match }) => {
+const DisplayMyMatches = ({ match }) => {
   const [matchList, setMatchList] = useState([]);
   const componentIsMounted = useRef(true);
 
@@ -17,7 +16,7 @@ const DisplayMatches = ({ match }) => {
 
   useEffect(() => {
     const fetchMatches = async () => {
-      const response = await server.get("/get_matches", {
+      const response = await server.get("/get_my_matches", {
         params: match.params,
       });
       if (componentIsMounted.current) {
@@ -27,50 +26,54 @@ const DisplayMatches = ({ match }) => {
     fetchMatches();
   }, [match]);
 
+  const deleteMatch = async (placeID) => {
+    server
+      .post("/delete_match_request", {
+        ...match.params,
+        placeID,
+      })
+      .then(function (response) {
+        let index = matchList.findIndex((place) => place.place_id === placeID);
+        setMatchList([
+          ...matchList.slice(0, index),
+          ...matchList.slice(index + 1, matchList.length),
+        ]);
+        alert("Deletion Successful");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("Deletion failed");
+      });
+  };
+
   const renderMatches = () => {
     if (matchList.length === 0) {
       return;
     }
-    return matchList.map((matchObject) => {
-      if (matchObject._id === match.params.userID) {
-        return null;
-      }
+    return matchList.map((place) => {
       return (
         <div
-          key={matchObject._id}
+          key={place.place_id}
           style={{ display: SegmentInline }}
           className="item"
         >
-          <img
+          {/* <img
             alt=" "
             className="ui avatar image profile-image"
             src="https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
-          />
+          /> */}
           <div className="content">
             <a href=" " className="header">
-              {`${matchObject.firstname} ${matchObject.lastname}`}
+              {`${place.name}`}
             </a>
-            <div className="description">
-              {`${matchObject.age} years old`}
-              <br />
-              {`${matchObject.country}`}
-            </div>
           </div>
           <div className="buttons-div">
-            <Link
-              to={{ pathname: `/Profile/${matchObject._id}` }}
-              className="ui button blue match-buttons"
+            <button
+              onClick={() => deleteMatch(place.place_id)}
+              className="ui button red match-buttons"
             >
-              Profile
-            </Link>
-            <Link
-              to={{
-                pathname: `/Chat/${matchObject._id}&${matchObject.username}`,
-              }}
-              className="ui button green match-buttons"
-            >
-              Chat
-            </Link>
+              Delete
+            </button>
           </div>
         </div>
       );
@@ -84,4 +87,4 @@ const mapStateToProps = (state) => {
   return { matchDetails: state.matchReducer };
 };
 
-export default connect(mapStateToProps)(DisplayMatches);
+export default connect(mapStateToProps)(DisplayMyMatches);

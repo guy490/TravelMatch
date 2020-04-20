@@ -1,11 +1,12 @@
 import React from "react";
 import { getUserCredentials } from "../utilities";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../Redux/Actions";
 import { socket } from "../api";
 
 const NavBar = ({ userProfile, signOut }) => {
+  const history = useHistory();
   const logoutUser = () => {
     localStorage.clear();
     signOut();
@@ -15,7 +16,12 @@ const NavBar = ({ userProfile, signOut }) => {
   const logoutButton = () => {
     if (getUserCredentials()) {
       return (
-        <Link to="/" className="item" onClick={logoutUser}>
+        <Link
+          to="/"
+          className="item"
+          onClick={logoutUser}
+          style={{ width: 50 + "%" }}
+        >
           Logout
         </Link>
       );
@@ -25,18 +31,30 @@ const NavBar = ({ userProfile, signOut }) => {
   return (
     <div
       className="ui secondary menu fixed"
-      style={{ backgroundColor: "white", width: 100 + "%" }}>
-      <Link to="/" className="item">
+      style={{ backgroundColor: "white", width: 100 + "%" }}
+    >
+      <button
+        onClick={history.goBack}
+        className="item"
+        style={{ width: 10 + "%" }}
+      >
         <div>
           <i className="arrow alternate circle left icon"></i>
           Back
         </div>
-      </Link>
-      <a className="item" href=" ">
+      </button>
+      <Link to="/" className="item" href=" " style={{ width: 10 + "%" }}>
         Home
-      </a>
-      <div className="right menu">
-        <span className="item" href=" ">
+      </Link>
+      <Link
+        to={`/MyMatches/${userProfile._id}`}
+        className="item"
+        style={{ width: 20 + "%" }}
+      >
+        <div>My Matches</div>
+      </Link>
+      <div className="right menu" style={{ width: 50 + "%" }}>
+        <span className="item" href=" " style={{ width: 50 + "%" }}>
           {userProfile.username}
         </span>
         {logoutButton()}

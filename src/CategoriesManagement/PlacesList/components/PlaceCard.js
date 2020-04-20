@@ -28,7 +28,7 @@ const PlaceCard = ({ place, userCredentials, location }) => {
   useEffect(() => {
     setmatchUserDetails({
       userID: userCredentials._id,
-      placeID: place.id,
+      placeID: place.place_id,
       ...location,
     });
   }, [userCredentials, place, location]);
@@ -68,7 +68,6 @@ const PlaceCard = ({ place, userCredentials, location }) => {
       .post("/match_request", matchUserDetails)
       .then(function (response) {
         console.log(response);
-        //history.push("/");
       })
       .catch(function (error) {
         console.log(error);
