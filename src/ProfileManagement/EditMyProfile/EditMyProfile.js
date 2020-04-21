@@ -3,15 +3,16 @@ import CreateInfoForm from "../../Generals/CreateInfoForm";
 import { server } from "../../api";
 import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../../utilities";
+import { connect } from "react-redux";
 
-const Register = () => {
+const EditMyProfile = ({ currentUserProfile }) => {
   let history = useHistory();
 
   const submitForm = async (event) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
     server
-      .post("/register_request", formData)
+      .post("/update_request", formData)
       .then(function (response) {
         console.log(response);
         history.push("/");
@@ -20,15 +21,14 @@ const Register = () => {
         console.log(error);
       });
   };
-  const passwordField = () => (
-    <div className="field">
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Password" />
-    </div>
-  );
+
   return (
-    <CreateInfoForm submitForm={submitForm} passwordField={passwordField} />
+    <CreateInfoForm submitForm={submitForm} userData={currentUserProfile} />
   );
 };
 
-export default Register;
+const mapStateToProps = (state) => {
+  return { currentUserProfile: state.profileReducer };
+};
+
+export default connect(mapStateToProps)(EditMyProfile);

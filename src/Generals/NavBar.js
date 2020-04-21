@@ -54,9 +54,14 @@ const NavBar = ({ userProfile, signOut }) => {
         <div>My Matches</div>
       </Link>
       <div className="right menu" style={{ width: 50 + "%" }}>
-        <span className="item" href=" " style={{ width: 50 + "%" }}>
+        <Link
+          to={`/Profile/${userProfile._id}`}
+          className="item"
+          href=" "
+          style={{ width: 50 + "%" }}
+        >
           {userProfile.username}
-        </span>
+        </Link>
         {logoutButton()}
       </div>
     </div>

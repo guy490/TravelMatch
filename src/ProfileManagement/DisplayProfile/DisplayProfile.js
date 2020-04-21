@@ -2,9 +2,11 @@ import "./DisplayProfile.css";
 import React, { useEffect, useState, useRef } from "react";
 import { server } from "../../api";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-const DisplayProfile = ({ match }) => {
+const DisplayProfile = ({ match, currentUserProfile }) => {
   const [userProfile, setUserProfile] = useState({
+    _id: "",
     firstname: "",
     lastname: "",
     joined: "",
@@ -32,6 +34,34 @@ const DisplayProfile = ({ match }) => {
     fetchProfile();
   }, [match]);
 
+  const renderButtons = () => {
+    if (userProfile._id === "") {
+      return;
+    }
+    if (userProfile._id !== currentUserProfile._id) {
+      return (
+        <Link
+          to={{
+            pathname: `/Chat/${userProfile._id}&${userProfile.username}`,
+          }}
+          className="ui button green match-buttons"
+        >
+          Chat
+        </Link>
+      );
+    }
+    return (
+      <Link
+        to={{
+          pathname: `/Edit/${userProfile._id}`,
+        }}
+        className="ui button green match-buttons"
+      >
+        Edit
+      </Link>
+    );
+  };
+
   return (
     <div className="ui card profile-card">
       <div className="image">
@@ -40,11 +70,7 @@ const DisplayProfile = ({ match }) => {
           src="https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
         />
       </div>
-      <Link
-        to={{ pathname: `/Chat/${userProfile._id}&${userProfile.username}` }}
-        className="ui button green match-buttons">
-        Chat
-      </Link>
+      {renderButtons()}
       <div className="content profile-content">
         <h3 href=" " className="header">
           {`${userProfile.firstname} ${userProfile.lastname}`}
@@ -63,4 +89,8 @@ const DisplayProfile = ({ match }) => {
   );
 };
 
-export default DisplayProfile;
+const mapStateToProps = (state) => {
+  return { currentUserProfile: state.profileReducer };
+};
+
+export default connect(mapStateToProps)(DisplayProfile);
