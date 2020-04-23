@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { getUserCredentials } from "../utilities";
+import { getUserCredentialsFromLocalStorage } from "../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../Redux/Actions";
 import { socket } from "../api";
@@ -10,7 +10,7 @@ const ProtectedRoute = ({ signIn, component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        const userCredentials = JSON.parse(getUserCredentials());
+        const userCredentials = getUserCredentialsFromLocalStorage();
         if (userCredentials) {
           socket.emit("updateClientList", userCredentials._id);
           signIn(userCredentials);

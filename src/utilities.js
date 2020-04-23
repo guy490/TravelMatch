@@ -1,4 +1,4 @@
-const getType = category => {
+const getType = (category) => {
   switch (category) {
     case "Restaurants":
       return {
@@ -8,13 +8,13 @@ const getType = category => {
         subCategoryList: [
           {
             categoryName: "restaurant",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/restaurant.png"
+            categoryIcon: process.env.PUBLIC_URL + "/icons/restaurant.png",
           },
           {
             categoryName: "cafe",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/cafe.png"
-          }
-        ]
+            categoryIcon: process.env.PUBLIC_URL + "/icons/cafe.png",
+          },
+        ],
       };
     case "Hang-Out":
       return {
@@ -24,21 +24,21 @@ const getType = category => {
         subCategoryList: [
           {
             categoryName: "bar",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/bar.png"
+            categoryIcon: process.env.PUBLIC_URL + "/icons/bar.png",
           },
           {
             categoryName: "night_club",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/club.png"
+            categoryIcon: process.env.PUBLIC_URL + "/icons/club.png",
           },
           {
             categoryName: "movie_theater",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/movie-theater.png"
+            categoryIcon: process.env.PUBLIC_URL + "/icons/movie-theater.png",
           },
           {
             categoryName: "casino",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/casino.png"
-          }
-        ]
+            categoryIcon: process.env.PUBLIC_URL + "/icons/casino.png",
+          },
+        ],
       };
     case "TouristAttractions":
       return {
@@ -49,28 +49,28 @@ const getType = category => {
           {
             categoryName: "tourist_attraction",
             categoryIcon:
-              process.env.PUBLIC_URL + "/icons/tourist-attraction.png"
+              process.env.PUBLIC_URL + "/icons/tourist-attraction.png",
           },
           {
             categoryName: "aquarium",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/aquarium.png"
+            categoryIcon: process.env.PUBLIC_URL + "/icons/aquarium.png",
           },
           {
             categoryName: "museum",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/museum.png"
+            categoryIcon: process.env.PUBLIC_URL + "/icons/museum.png",
           },
           {
             categoryName: "park",
-            categoryIcon: process.env.PUBLIC_URL + "/icons/park.png"
-          }
-        ]
+            categoryIcon: process.env.PUBLIC_URL + "/icons/park.png",
+          },
+        ],
       };
     case "Events":
       return {
         subCategoryColor: "#0C00FF",
         subCategoryBackground:
           "linear-gradient(to bottom right, rgba(173, 35, 255, 0.7), rgba(199, 144, 255, 0.7) 60%),url(https://images.unsplash.com/photo-1416397202228-6b2eb5b3bb26?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80)",
-        subCategoryList: [{ categoryName: "", categoryIcon: "" }]
+        subCategoryList: [{ categoryName: "", categoryIcon: "" }],
       };
     default:
       return null;
@@ -86,8 +86,20 @@ const createDictionaryForm = ({ target }) => {
   return details;
 };
 
-const getUserCredentials = () => {
-  return localStorage.getItem("User_Credentials");
+const getUserCredentialsFromLocalStorage = () => {
+  return JSON.parse(localStorage.getItem("User_Credentials"));
 };
 
-export { getType, createDictionaryForm, getUserCredentials };
+const setUserCredentialsInLocalStorage = (userCredentials) => {
+  return localStorage.setItem(
+    "User_Credentials",
+    JSON.stringify(userCredentials)
+  );
+};
+
+export {
+  getType,
+  createDictionaryForm,
+  getUserCredentialsFromLocalStorage,
+  setUserCredentialsInLocalStorage,
+};

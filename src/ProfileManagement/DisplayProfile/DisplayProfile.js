@@ -28,6 +28,7 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
         params: match.params,
       });
       if (componentIsMounted.current) {
+        console.log(response.data);
         setUserProfile(response.data);
       }
     };

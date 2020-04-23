@@ -6,6 +6,7 @@ const {
   mongoFindUserByID,
   mongoFindMyMatchesByUserID,
   mongoDeleteMatch,
+  mongoUpdateUserByID,
 } = require("./MongoDBConfig");
 
 module.exports = (app) => {
@@ -66,7 +67,13 @@ module.exports = (app) => {
     } catch {
       res.status("404").send("Encryption failed");
     }
-    mongoInsertUser(userCredentials, res);
+    mongoInsertUser(userCredentials)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.status("404").send(err);
+      });
   });
 
   app.post("/login_request", async (req, res) => {
@@ -86,6 +93,17 @@ module.exports = (app) => {
     } catch (e) {
       console.log(e);
     }
+  });
+
+  app.post("/update_request", async (req, res) => {
+    const userCredentials = req.body;
+    mongoUpdateUserByID(userCredentials)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.status("404").send(err);
+      });
   });
 
   app.get("/get_matches", async (req, res) => {
@@ -126,7 +144,13 @@ module.exports = (app) => {
 
   app.post("/delete_match_request", async (req, res) => {
     const matchDetails = req.body;
-    mongoDeleteMatch(matchDetails, res);
+    mongoDeleteMatch(matchDetails)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.status("404").send(err);
+      });
   });
 
   app.get("/get_profile", async (req, res) => {
@@ -158,6 +182,12 @@ module.exports = (app) => {
 
   app.post("/match_request", async (req, res) => {
     const matchDetails = req.body;
-    mongoInsertMatch(matchDetails, res);
+    mongoInsertMatch(matchDetails)
+      .then((result) => {
+        res.send(result);
+      })
+      .catch((err) => {
+        res.status("404").send(err);
+      });
   });
 };

@@ -1,7 +1,7 @@
 export const signIn = (userDetails) => {
   return {
     type: "SIGN_IN",
-    payload: userDetails, // { "username": null }
+    payload: userDetails,
   };
 };
 

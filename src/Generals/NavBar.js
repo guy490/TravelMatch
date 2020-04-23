@@ -1,5 +1,5 @@
 import React from "react";
-import { getUserCredentials } from "../utilities";
+import { getUserCredentialsFromLocalStorage } from "../utilities";
 import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../Redux/Actions";
@@ -14,7 +14,7 @@ const NavBar = ({ userProfile, signOut }) => {
   };
 
   const logoutButton = () => {
-    if (getUserCredentials()) {
+    if (getUserCredentialsFromLocalStorage()) {
       return (
         <Link
           to="/"

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { server } from "../../api";
 import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../../utilities";
+import { setUserCredentialsInLocalStorage } from "../../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../../Redux/Actions";
 import { socket } from "../../api";
@@ -17,11 +18,7 @@ const Login = ({ signIn }) => {
       .post("/login_request", formData)
       .then(function (response) {
         const userCredentials = response.data;
-
-        localStorage.setItem(
-          "User_Credentials",
-          JSON.stringify(userCredentials)
-        );
+        setUserCredentialsInLocalStorage(userCredentials);
         socket.emit("addToClientList", userCredentials._id);
 
         signIn(userCredentials);
@@ -30,7 +27,6 @@ const Login = ({ signIn }) => {
         history.push("/Category");
       })
       .catch((error) => {
-        console.log(error);
         alert("username or password are incorrect");
       });
   };

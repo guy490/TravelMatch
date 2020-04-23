@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./Login/Login";
 import Register from "./Register/Register";
-import { getUserCredentials } from "../utilities";
+import { getUserCredentialsFromLocalStorage } from "../utilities";
 
 const UserManagementApp = () => {
   return (
@@ -11,7 +11,7 @@ const UserManagementApp = () => {
         path="/"
         exact
         render={() => {
-          const userCredentials = JSON.parse(getUserCredentials());
+          const userCredentials = getUserCredentialsFromLocalStorage();
           if (userCredentials) {
             return <Redirect to={{ pathname: "/Category" }} />;
           } else {

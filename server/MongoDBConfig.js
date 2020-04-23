@@ -9,22 +9,23 @@ const url =
   "@cluster0-bcqmj.mongodb.net/";
 const dbName = "TravelMatch";
 
-const mongoInsertUser = (userCredentials, ressponse) => {
-  MongoClient.connect(url, { useUnifiedTopology: true }, function (
-    err,
-    client
-  ) {
-    const db = client.db(dbName);
+const mongoInsertUser = async (userCredentials) => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true })
+    .then(async (client) => {
+      const db = client.db(dbName);
 
-    db.collection("users").insertOne(userCredentials, function (err, result) {
-      if (result !== null) {
-        ressponse.send("Register completed!");
-      } else {
-        ressponse.status("404").send("Register error");
-      }
-      client.close();
+      return await db
+        .collection("users")
+        .insertOne(userCredentials)
+        .then((result) => result)
+        .catch((err) => {
+          throw err;
+        })
+        .finally(() => client.close());
+    })
+    .catch((err) => {
+      throw err;
     });
-  });
 };
 
 const mongoFindUserByUserName = async (username) => {
@@ -53,27 +54,45 @@ const mongoFindUserByID = async (userID) => {
     .catch((err) => err);
 };
 
-const mongoInsertMatch = (userMatchData, ressponse) => {
-  MongoClient.connect(url, { useUnifiedTopology: true }, function (
-    err,
-    client
-  ) {
-    const db = client.db(dbName);
+const mongoUpdateUserByID = async (userCredentials) => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true })
+    .then(async (client) => {
+      const db = client.db(dbName);
+      return await db
+        .collection("users")
+        .updateOne(
+          { _id: mongodb.ObjectID(userCredentials.userID) },
+          { $set: { ...userCredentials } }
+        )
+        .then((res) => res)
+        .catch((err) => {
+          throw err;
+        })
+        .finally(() => client.close());
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
 
-    db.collection("match").update(
-      { userID: userMatchData.userID, placeID: userMatchData.placeID },
-      { ...userMatchData },
-      { upsert: true },
-      function (err, result) {
-        if (result !== null) {
-          ressponse.send("The match insert completed!");
-        } else {
-          ressponse.status("404").send(err);
-        }
-        client.close();
-      }
-    );
-  });
+const mongoInsertMatch = async (userMatchData) => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true }).then(
+    async (client) => {
+      const db = client.db(dbName);
+      return await db
+        .collection("match")
+        .updateOne(
+          { userID: userMatchData.userID, placeID: userMatchData.placeID },
+          { $set: { ...userMatchData } },
+          { upsert: true }
+        )
+        .then((res) => res)
+        .catch((err) => {
+          throw err;
+        })
+        .finally(() => client.close());
+    }
+  );
 };
 const mongoFindMatch = async (placeID) => {
   return await MongoClient.connect(url, { useUnifiedTopology: true })
@@ -93,25 +112,25 @@ const mongoFindMyMatchesByUserID = async (userID) => {
     .catch((err) => err);
 };
 
-const mongoDeleteMatch = (userMatchData, ressponse) => {
-  MongoClient.connect(url, { useUnifiedTopology: true }, function (
-    err,
-    client
-  ) {
-    const db = client.db(dbName);
-    db.collection("match").deleteOne(
-      { userID: userMatchData.userID, placeID: userMatchData.placeID },
-      {},
-      function (err, result) {
-        if (result !== null) {
-          ressponse.send("The match delete completed!");
-        } else {
-          ressponse.status("404").send(err);
-        }
-        client.close();
-      }
-    );
-  });
+const mongoDeleteMatch = async (userMatchData) => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true })
+    .then(async (client) => {
+      const db = client.db(dbName);
+      return await db
+        .collection("match")
+        .deleteOne({
+          userID: userMatchData.userID,
+          placeID: userMatchData.placeID,
+        })
+        .then((result) => result)
+        .catch((err) => {
+          throw err;
+        })
+        .finally(() => client.close());
+    })
+    .catch((err) => {
+      throw err;
+    });
 };
 
 module.exports = {
@@ -122,4 +141,5 @@ module.exports = {
   mongoFindUserByID,
   mongoFindMyMatchesByUserID,
   mongoDeleteMatch,
+  mongoUpdateUserByID,
 };
