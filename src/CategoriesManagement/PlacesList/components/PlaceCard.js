@@ -1,7 +1,7 @@
 import "../styles/PlaceCard.css";
 import React, { useState, useEffect, useRef } from "react";
 import { Rating } from "semantic-ui-react";
-import { server } from "../../../api";
+import { server, socket } from "../../../api";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -67,6 +67,7 @@ const PlaceCard = ({ place, userCredentials, location }) => {
     server
       .post("/match_request", matchUserDetails)
       .then(function (response) {
+        socket.emit("newMatchInserted");
         console.log(response);
       })
       .catch(function (error) {
