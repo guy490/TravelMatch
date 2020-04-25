@@ -65,7 +65,7 @@ const getType = (category) => {
           },
         ],
       };
-    case "Events":
+    case "Taxi":
       return {
         subCategoryColor: "#0C00FF",
         subCategoryBackground:

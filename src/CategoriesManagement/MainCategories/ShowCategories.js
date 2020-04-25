@@ -24,8 +24,8 @@ const ShowCategories = () => {
         gradientColors="rgba(170, 18, 190,0.5) 99%,rgba(248, 11, 46,0.5) 1%"
       />
       <Category
-        linkTo="/ShowPlaces/Events"
-        content="Events"
+        linkTo="/ShowPlaces/Taxi"
+        content="Taxi"
         backgroundURL="url(https://images.unsplash.com/photo-1460451330947-331de664bf35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)"
         gradientColors="rgba(229, 0, 61,0.5) 98%,rgba(229, 0, 61,0.5) 1%"
       />
