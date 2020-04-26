@@ -1,9 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import { updateLocation } from "../Redux/Actions";
 
-const ShowTaxies = ({ google, updateLocation, location }) => {
+const ShowTaxies = ({ updateLocation, location }) => {
+  const bounds = [
+    [50.505, -29.09],
+    [52.505, 29.09],
+  ];
+
+  const [sourceMarker, setSourceMarker] = useState({ lat: 0, lng: 0 });
+  const [destinationMarker, setDestinationMarker] = useState({
+    lat: null,
+    lng: null,
+  });
+
+  useEffect(() => {
+    setSourceMarker({
+      lat: location.latitude || 0,
+      lng: location.longitude || 0,
+    });
+  }, [location]);
+
   useEffect(() => {
     const getCurrentLocationOfUser = () => {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -16,17 +34,58 @@ const ShowTaxies = ({ google, updateLocation, location }) => {
     getCurrentLocationOfUser();
   }, [updateLocation]);
 
+  const openPopup = (marker) => {
+    if (marker && marker.leafletElement) {
+      window.setTimeout(() => {
+        marker.leafletElement.openPopup();
+      });
+    }
+  };
+
+  const createMarker = (lat, lng, textContent) => {
+    return (
+      <Marker
+        position={[lat, lng]}
+        draggable={true}
+        onDragEnd={changeSourceLocation}
+        ref={openPopup}>
+        <Popup>{textContent}</Popup>
+      </Marker>
+    );
+  };
+
+  const addDestinationMarker = (e) => {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    setDestinationMarker({ lat, lng });
+  };
+  const changeSourceLocation = (e) => {
+    const lat = e.target._latlng.lat;
+    const lng = e.target._latlng.lng;
+    setSourceMarker({ lat, lng });
+  };
+
   return (
     <Map
-      google={google}
-      initialCenter={{
-        lat: location.latitude || 40.854885,
-        lng: location.longitude || -88.081807,
+      onclick={addDestinationMarker}
+      bounds={bounds}
+      viewport={{
+        center: [sourceMarker.lat, sourceMarker.lng],
+        zoom: 14,
       }}
-      zoom={14}>
-      <Marker /*onClick={this.onMarkerClick}*/ name={"Current location"} />
-
-      <InfoWindow /*onClose={onInfoWindowClose}*/></InfoWindow>
+      style={{ width: "100%", height: "600px" }}>
+      <TileLayer
+        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {createMarker(sourceMarker.lat, sourceMarker.lng, "Source")}
+      {destinationMarker.lat !== null && destinationMarker.lng !== null
+        ? createMarker(
+            destinationMarker.lat,
+            destinationMarker.lng,
+            "Destination"
+          )
+        : null}
     </Map>
   );
 };
@@ -35,8 +94,4 @@ const mapStateToProps = (state) => {
   return { location: state.locationReducer };
 };
 
-export default connect(mapStateToProps, { updateLocation })(
-  GoogleApiWrapper({
-    apiKey: process.env.TravelMatchAPIKey,
-  })(ShowTaxies)
-);
+export default connect(mapStateToProps, { updateLocation })(ShowTaxies);
