@@ -13,6 +13,11 @@ const MatchManagementApp = () => {
         component={DisplayMatches}
       />
       <ProtectedRoute
+        path="/Matches/:userID&:srcLat&:srcLng&:dstLat&:dstLng"
+        exact
+        component={DisplayMatches}
+      />
+      <ProtectedRoute
         path="/MyMatches/:userID"
         exact
         component={DisplayMyMatches}

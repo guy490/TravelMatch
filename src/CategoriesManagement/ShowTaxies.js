@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Tooltip, Circle } from "react-leaflet";
 import { updateLocation } from "../Redux/Actions";
 
 const ShowTaxies = ({ updateLocation, location }) => {
@@ -8,17 +8,21 @@ const ShowTaxies = ({ updateLocation, location }) => {
     [50.505, -29.09],
     [52.505, 29.09],
   ];
-
+  const [selectedMarker, setSelectedMarker] = useState("");
   const [sourceMarker, setSourceMarker] = useState({ lat: 0, lng: 0 });
   const [destinationMarker, setDestinationMarker] = useState({
-    lat: null,
-    lng: null,
+    lat: 0,
+    lng: 0,
   });
 
   useEffect(() => {
     setSourceMarker({
       lat: location.latitude || 0,
       lng: location.longitude || 0,
+    });
+    setDestinationMarker({
+      lat: location.latitude + 0.005 || 0,
+      lng: location.longitude - 0.005 || 0,
     });
   }, [location]);
 
@@ -34,40 +38,44 @@ const ShowTaxies = ({ updateLocation, location }) => {
     getCurrentLocationOfUser();
   }, [updateLocation]);
 
-  const openPopup = (marker) => {
+  const openTooltip = (marker) => {
     if (marker && marker.leafletElement) {
       window.setTimeout(() => {
-        marker.leafletElement.openPopup();
+        marker.leafletElement.openTooltip();
       });
     }
+  };
+
+  const testFunction = (textContent) => {
+    setSelectedMarker(textContent);
   };
 
   const createMarker = (lat, lng, textContent) => {
     return (
       <Marker
+        onClick={() => testFunction(textContent)}
         position={[lat, lng]}
-        draggable={true}
-        onDragEnd={changeSourceLocation}
-        ref={openPopup}>
-        <Popup>{textContent}</Popup>
+        ref={openTooltip}>
+        <Tooltip>{textContent}</Tooltip>
       </Marker>
     );
   };
 
-  const addDestinationMarker = (e) => {
+  const changeMarkerPostion = (e, setStateLocation) => {
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
-    setDestinationMarker({ lat, lng });
-  };
-  const changeSourceLocation = (e) => {
-    const lat = e.target._latlng.lat;
-    const lng = e.target._latlng.lng;
-    setSourceMarker({ lat, lng });
+    setStateLocation({ lat, lng });
   };
 
   return (
     <Map
-      onclick={addDestinationMarker}
+      animate={true}
+      onclick={(e) =>
+        changeMarkerPostion(
+          e,
+          selectedMarker === "Source" ? setSourceMarker : setDestinationMarker
+        )
+      }
       bounds={bounds}
       viewport={{
         center: [sourceMarker.lat, sourceMarker.lng],
@@ -78,17 +86,27 @@ const ShowTaxies = ({ updateLocation, location }) => {
         attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <Circle
+        center={[sourceMarker.lat, sourceMarker.lng]}
+        fillColor="blue"
+        radius={500}
+      />
+      <Circle
+        center={[destinationMarker.lat, destinationMarker.lng]}
+        fillColor="blue"
+        radius={500}
+      />
       {createMarker(sourceMarker.lat, sourceMarker.lng, "Source")}
-      {destinationMarker.lat !== null && destinationMarker.lng !== null
-        ? createMarker(
-            destinationMarker.lat,
-            destinationMarker.lng,
-            "Destination"
-          )
-        : null}
+      {createMarker(
+        destinationMarker.lat,
+        destinationMarker.lng,
+        "Destination"
+      )}
     </Map>
   );
 };
+
+// (source2.x - source1.x)^2 + (source2.y - source1.y)^2 <= 500^2 && (destination2.x - destination1.x)^2 + (destination2.y - destination1.y)^2 <= 500^2
 
 const mapStateToProps = (state) => {
   return { location: state.locationReducer };

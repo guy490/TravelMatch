@@ -7,6 +7,7 @@ const {
   mongoFindMyMatchesByUserID,
   mongoDeleteMatch,
   mongoUpdateUserByID,
+  mongoFindMatchByLocation,
 } = require("./MongoDBConfig");
 
 module.exports = (app) => {
@@ -108,7 +109,15 @@ module.exports = (app) => {
 
   app.get("/get_matches", async (req, res) => {
     const matchDetails = req.query;
-    const matchList = await mongoFindMatch(matchDetails.placeID);
+    let matchList;
+    if (matchDetails.placeID !== undefined) {
+      matchList = await mongoFindMatch(matchDetails.placeID);
+    } else {
+      matchList = await mongoFindMatchByLocation({
+        lat: matchDetails.latitude,
+        lng: matchDetails.longitude,
+      });
+    }
     let userMatchingList = matchList.map(async (match) => {
       const user = await mongoFindUserByID(match.userID);
       delete user["password"];
