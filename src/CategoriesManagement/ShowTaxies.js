@@ -23,7 +23,8 @@ const ShowTaxies = ({ google, updateLocation, location }) => {
         lat: location.latitude || 40.854885,
         lng: location.longitude || -88.081807,
       }}
-      zoom={14}>
+      zoom={14}
+    >
       <Marker /*onClick={this.onMarkerClick}*/ name={"Current location"} />
 
       <InfoWindow /*onClose={onInfoWindowClose}*/></InfoWindow>
