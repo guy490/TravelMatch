@@ -133,6 +133,15 @@ const mongoDeleteMatch = async (userMatchData) => {
     });
 };
 
+const mongoFindMatchByLocation = async () => {
+  // return await MongoClient.connect(url, { useUnifiedTopology: true })
+  //   .then(async (client) => {
+  //     const db = client.db(dbName);
+  //     return await db.collection("match").find({ userID }).toArray();
+  //   })
+  //   .catch((err) => err);
+};
+
 module.exports = {
   mongoInsertUser,
   mongoFindUserByUserName,
@@ -142,4 +151,5 @@ module.exports = {
   mongoFindMyMatchesByUserID,
   mongoDeleteMatch,
   mongoUpdateUserByID,
+  mongoFindMatchByLocation,
 };
