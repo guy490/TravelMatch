@@ -1,5 +1,7 @@
 const mongodb = require("mongodb");
 
+const { calcMatchByRadius } = require("./utilities");
+
 const MongoClient = mongodb.MongoClient;
 const url =
   "mongodb+srv://" +
@@ -79,10 +81,18 @@ const mongoInsertMatch = async (userMatchData) => {
   return await MongoClient.connect(url, { useUnifiedTopology: true }).then(
     async (client) => {
       const db = client.db(dbName);
+      let collectionName;
+      let queryParameters = {};
+      if (userMatchData.placeID !== undefined) {
+        collectionName = "placeMatch";
+        queryParameters = { placeID: userMatchData.placeID };
+      } else {
+        collectionName = "locationMatch";
+      }
       return await db
-        .collection("match")
+        .collection(collectionName)
         .updateOne(
-          { userID: userMatchData.userID, placeID: userMatchData.placeID },
+          { userID: userMatchData.userID, ...queryParameters },
           { $set: { ...userMatchData } },
           { upsert: true }
         )
@@ -98,7 +108,27 @@ const mongoFindMatch = async (placeID) => {
   return await MongoClient.connect(url, { useUnifiedTopology: true })
     .then(async (client) => {
       const db = client.db(dbName);
-      return await db.collection("match").find({ placeID }).toArray();
+      return await db.collection("placeMatch").find({ placeID }).toArray();
+    })
+    .catch((err) => err);
+};
+
+const mongoFindMatchByLocation = async (source, destination) => {
+  return await MongoClient.connect(url, { useUnifiedTopology: true })
+    .then(async (client) => {
+      const db = client.db(dbName);
+      const placeMatches = await db
+        .collection("locationMatch")
+        .find()
+        .toArray();
+      return placeMatches.filter((placeMatch) => {
+        const user1 = { source, destination };
+        const user2 = {
+          source: placeMatch.source,
+          destination: placeMatch.destination,
+        };
+        return calcMatchByRadius(user1, user2);
+      });
     })
     .catch((err) => err);
 };
@@ -107,7 +137,7 @@ const mongoFindMyMatchesByUserID = async (userID) => {
   return await MongoClient.connect(url, { useUnifiedTopology: true })
     .then(async (client) => {
       const db = client.db(dbName);
-      return await db.collection("match").find({ userID }).toArray();
+      return await db.collection("placeMatch").find({ userID }).toArray();
     })
     .catch((err) => err);
 };
@@ -117,7 +147,7 @@ const mongoDeleteMatch = async (userMatchData) => {
     .then(async (client) => {
       const db = client.db(dbName);
       return await db
-        .collection("match")
+        .collection("placeMatch")
         .deleteOne({
           userID: userMatchData.userID,
           placeID: userMatchData.placeID,
@@ -131,15 +161,6 @@ const mongoDeleteMatch = async (userMatchData) => {
     .catch((err) => {
       throw err;
     });
-};
-
-const mongoFindMatchByLocation = async () => {
-  // return await MongoClient.connect(url, { useUnifiedTopology: true })
-  //   .then(async (client) => {
-  //     const db = client.db(dbName);
-  //     return await db.collection("match").find({ userID }).toArray();
-  //   })
-  //   .catch((err) => err);
 };
 
 module.exports = {

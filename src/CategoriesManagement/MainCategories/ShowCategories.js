@@ -26,7 +26,7 @@ const ShowCategories = () => {
       <Category
         linkTo="/ShowPlaces/Taxi"
         content="Taxi"
-        backgroundURL="url(https://images.unsplash.com/photo-1460451330947-331de664bf35?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80)"
+        backgroundURL="url(https://images.unsplash.com/photo-1468689210283-44a1b8ba20ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)"
         gradientColors="rgba(229, 0, 61,0.5) 98%,rgba(229, 0, 61,0.5) 1%"
       />
       {/* <Category

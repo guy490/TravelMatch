@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { server, socket } from "../api";
+import { Link } from "react-router-dom";
 import { Map, TileLayer, Marker, Tooltip, Circle } from "react-leaflet";
 import { updateLocation } from "../Redux/Actions";
 
-const ShowTaxies = ({ updateLocation, location }) => {
+const ShowTaxies = ({ updateLocation, location, profile }) => {
   const bounds = [
     [50.505, -29.09],
     [52.505, 29.09],
@@ -38,6 +40,23 @@ const ShowTaxies = ({ updateLocation, location }) => {
     getCurrentLocationOfUser();
   }, [updateLocation]);
 
+  const findMatches = () => {
+    const matchUserDetails = {
+      userID: profile._id,
+      source: sourceMarker,
+      destination: destinationMarker,
+    };
+    server
+      .post("/match_request", matchUserDetails)
+      .then(function (response) {
+        socket.emit("newMatchInserted");
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const openTooltip = (marker) => {
     if (marker && marker.leafletElement) {
       window.setTimeout(() => {
@@ -55,8 +74,7 @@ const ShowTaxies = ({ updateLocation, location }) => {
       <Marker
         onClick={() => testFunction(textContent)}
         position={[lat, lng]}
-        ref={openTooltip}
-      >
+        ref={openTooltip}>
         <Tooltip>{textContent}</Tooltip>
       </Marker>
     );
@@ -69,49 +87,56 @@ const ShowTaxies = ({ updateLocation, location }) => {
   };
 
   return (
-    <Map
-      animate={true}
-      onclick={(e) =>
-        changeMarkerPostion(
-          e,
-          selectedMarker === "Source" ? setSourceMarker : setDestinationMarker
-        )
-      }
-      bounds={bounds}
-      viewport={{
-        center: [sourceMarker.lat, sourceMarker.lng],
-        zoom: 14,
-      }}
-      style={{ width: "100%", height: "600px" }}
-    >
-      <TileLayer
-        attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Circle
-        center={[sourceMarker.lat, sourceMarker.lng]}
-        fillColor="blue"
-        radius={500}
-      />
-      <Circle
-        center={[destinationMarker.lat, destinationMarker.lng]}
-        fillColor="blue"
-        radius={500}
-      />
-      {createMarker(sourceMarker.lat, sourceMarker.lng, "Source")}
-      {createMarker(
-        destinationMarker.lat,
-        destinationMarker.lng,
-        "Destination"
-      )}
-    </Map>
+    <div style={{ textAlign: "center" }}>
+      <Map
+        animate={true}
+        onclick={(e) =>
+          changeMarkerPostion(
+            e,
+            selectedMarker === "Source" ? setSourceMarker : setDestinationMarker
+          )
+        }
+        bounds={bounds}
+        viewport={{
+          center: [sourceMarker.lat, sourceMarker.lng],
+          zoom: 14,
+        }}
+        style={{ width: "100%", height: "550px" }}>
+        <TileLayer
+          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Circle
+          center={[sourceMarker.lat, sourceMarker.lng]}
+          fillColor="blue"
+          radius={500}
+        />
+        <Circle
+          center={[destinationMarker.lat, destinationMarker.lng]}
+          fillColor="blue"
+          radius={500}
+        />
+        {createMarker(sourceMarker.lat, sourceMarker.lng, "Source")}
+        {createMarker(
+          destinationMarker.lat,
+          destinationMarker.lng,
+          "Destination"
+        )}
+      </Map>
+      <Link
+        to={{
+          pathname: `/Matches/${profile._id}&${sourceMarker.lat}&${sourceMarker.lng}&${destinationMarker.lat}&${destinationMarker.lng}`,
+        }}>
+        <button className="ui button green" onClick={findMatches}>
+          Find Match
+        </button>
+      </Link>
+    </div>
   );
 };
 
-// (source2.x - source1.x)^2 + (source2.y - source1.y)^2 <= 500^2 && (destination2.x - destination1.x)^2 + (destination2.y - destination1.y)^2 <= 500^2
-
 const mapStateToProps = (state) => {
-  return { location: state.locationReducer };
+  return { location: state.locationReducer, profile: state.profileReducer };
 };
 
 export default connect(mapStateToProps, { updateLocation })(ShowTaxies);

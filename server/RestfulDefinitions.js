@@ -113,10 +113,10 @@ module.exports = (app) => {
     if (matchDetails.placeID !== undefined) {
       matchList = await mongoFindMatch(matchDetails.placeID);
     } else {
-      matchList = await mongoFindMatchByLocation({
-        lat: matchDetails.latitude,
-        lng: matchDetails.longitude,
-      });
+      matchList = await mongoFindMatchByLocation(
+        { lat: matchDetails.srcLat, lng: matchDetails.srcLng },
+        { lat: matchDetails.dstLat, lng: matchDetails.dstLng }
+      );
     }
     let userMatchingList = matchList.map(async (match) => {
       const user = await mongoFindUserByID(match.userID);

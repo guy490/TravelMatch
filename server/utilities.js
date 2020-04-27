@@ -62,6 +62,17 @@ const removeSocketID = (userID) => {
   ];
 };
 
+const calcMatchByRadius = (user1, user2) => {
+  const subSourceLat = user1.source.lat - user2.source.lat;
+  const subSourceLng = user1.source.lng - user2.source.lng;
+  const subDestinationLat = user1.destination.lat - user2.destination.lat;
+  const subDestinationLng = user1.destination.lng - user2.destination.lng;
+  return (
+    subSourceLat ** 2 + subSourceLng ** 2 <= 500 ** 2 &&
+    subDestinationLat ** 2 + subDestinationLng ** 2 <= 500 ** 2
+  );
+};
+
 module.exports = {
   getSocketIDByUserID,
   addMessageToConversation,
@@ -69,4 +80,5 @@ module.exports = {
   addNewSocketID,
   updateSocketID,
   removeSocketID,
+  calcMatchByRadius,
 };

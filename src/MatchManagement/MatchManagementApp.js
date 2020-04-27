@@ -8,12 +8,12 @@ const MatchManagementApp = () => {
   return (
     <Switch>
       <ProtectedRoute
-        path="/Matches/:userID&:placeID&:latitude&:longitude"
+        path="/Matches/:userID&:srcLat&:srcLng&:dstLat&:dstLng"
         exact
         component={DisplayMatches}
       />
       <ProtectedRoute
-        path="/Matches/:userID&:srcLat&:srcLng&:dstLat&:dstLng"
+        path="/Matches/:userID&:placeID&:latitude&:longitude"
         exact
         component={DisplayMatches}
       />
