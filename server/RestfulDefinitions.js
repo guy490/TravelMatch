@@ -2,7 +2,7 @@ const {
   mongoInsertUser,
   mongoLoginUser,
   mongoInsertMatch,
-  mongoFindMatch,
+  mongoFindMatchByPlace,
   mongoFindUserByID,
   mongoFindMyMatchesByUserID,
   mongoDeleteMatch,
@@ -97,7 +97,7 @@ module.exports = (app) => {
     const matchDetails = req.query;
     let matchList;
     if (matchDetails.placeID !== undefined) {
-      matchList = await mongoFindMatch(matchDetails.placeID);
+      matchList = await mongoFindMatchByPlace(matchDetails.placeID);
     } else {
       matchList = await mongoFindMatchByLocation(
         { lat: matchDetails.srcLat, lng: matchDetails.srcLng },
@@ -116,7 +116,9 @@ module.exports = (app) => {
   app.get("/get_my_matches", async (req, res) => {
     const matchDetails = req.query;
     const matchList = await mongoFindMyMatchesByUserID(matchDetails.userID);
-    let userMatchingList = matchList.map(async (match) => {
+    let userMatchingList = {};
+
+    userMatchingList.placeList = matchList.places.map(async (match) => {
       return axios
         .get(PLACE_DETAILS_URL, {
           params: {
@@ -132,7 +134,8 @@ module.exports = (app) => {
           console.log(err);
         });
     });
-    userMatchingList = await Promise.all(userMatchingList);
+    userMatchingList.placeList = await Promise.all(userMatchingList.placeList);
+    userMatchingList.taxiRequests = matchList.taxies;
 
     res.send(userMatchingList);
   });
@@ -182,7 +185,8 @@ module.exports = (app) => {
         res.send(result);
       })
       .catch((err) => {
-        res.status("404").send(err);
+        console.log(err);
+        res.status("404").send("Internal Server Error");
       });
   });
 };

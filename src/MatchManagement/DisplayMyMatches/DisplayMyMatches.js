@@ -1,11 +1,13 @@
 import "./DisplayMyMatches.css";
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { server } from "../../api";
+import { server, socket } from "../../api";
 import { SegmentInline } from "semantic-ui-react";
 
 const DisplayMyMatches = ({ match }) => {
-  const [matchList, setMatchList] = useState([]);
+  const [placesMatchList, setPlacesMatchList] = useState([]);
+  // const [locationMatchList, setLocationMatchList] = useState([]);
+
   const componentIsMounted = useRef(true);
 
   useEffect(() => {
@@ -16,13 +18,21 @@ const DisplayMyMatches = ({ match }) => {
 
   useEffect(() => {
     const fetchMatches = async () => {
-      const response = await server.get("/get_my_matches", {
-        params: match.params,
-      });
-      if (componentIsMounted.current) {
-        setMatchList(response.data);
-      }
+      server
+        .get("/get_my_matches", {
+          params: match.params,
+        })
+        .then((response) => {
+          if (componentIsMounted.current) {
+            setPlacesMatchList(response.data.placeList);
+            // setLocationMatchList(response.data.taxieRequests);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
+
     fetchMatches();
   }, [match]);
 
@@ -32,13 +42,16 @@ const DisplayMyMatches = ({ match }) => {
         ...match.params,
         placeID,
       })
-      .then(function (response) {
-        let index = matchList.findIndex((place) => place.place_id === placeID);
-        setMatchList([
-          ...matchList.slice(0, index),
-          ...matchList.slice(index + 1, matchList.length),
+      .then(() => {
+        let index = placesMatchList.findIndex(
+          (place) => place.place_id === placeID
+        );
+        setPlacesMatchList([
+          ...placesMatchList.slice(0, index),
+          ...placesMatchList.slice(index + 1, placesMatchList.length),
         ]);
         alert("Deletion Successful");
+        socket.emit("matchDeleted");
       })
       .catch((error) => {
         console.log(error);
@@ -47,10 +60,10 @@ const DisplayMyMatches = ({ match }) => {
   };
 
   const renderMatches = () => {
-    if (matchList.length === 0) {
+    if (placesMatchList.length === 0) {
       return;
     }
-    return matchList.map((place) => {
+    return placesMatchList.map((place) => {
       return (
         <div
           key={place.place_id}

@@ -2,19 +2,19 @@ const mongoose = require("mongoose");
 
 /* ############################ */
 let locationSchema = new mongoose.Schema({
-  latitude: {
+  lat: {
     type: Number,
     required: true,
     validate: {
-      validator: (latitude) => latitude !== null,
+      validator: (lat) => lat !== null,
       message: "The latitude cant be null",
     },
   },
-  longitude: {
+  lng: {
     type: Number,
     required: true,
     validate: {
-      validator: (longitude) => longitude !== null,
+      validator: (lng) => lng !== null,
       message: "The longitude cant be null",
     },
   },
@@ -24,12 +24,8 @@ let locationSchema = new mongoose.Schema({
 /* ############################ */
 let locationMatchSchema = new mongoose.Schema({
   userID: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     required: true,
-    validate: {
-      validator: (userID) => userID.length < 51,
-      message: "The userID must be up to 50 characters",
-    },
   },
   source: locationSchema,
   destination: locationSchema,

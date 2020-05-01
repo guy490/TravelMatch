@@ -30,6 +30,9 @@ module.exports = (io) => {
     client.on("newMatchInserted", () => {
       io.emit("displayNewMatches");
     });
+    client.on("matchDeleted", () => {
+      io.emit("displayNewMatches");
+    });
 
     client.on("addToClientList", (userID) => {
       addNewSocketID(userID, client.id);

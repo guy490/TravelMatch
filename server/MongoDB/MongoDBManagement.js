@@ -1,9 +1,9 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+
 const { calcMatchByRadius } = require("../utilities");
 const userSchema = require("./schemas/userSchema");
 const placeMatchSchema = require("./schemas/placeMatchSchema");
@@ -64,120 +64,109 @@ const mongoUpdateUserByID = async (userCredentials) => {
     });
 };
 
-// const mongoInsertMatch = (userMatchData) => {
+const mongoInsertMatch = async (userMatchData) => {
+  let match_instance;
+  let queryParameters = {};
+  let matchModel = null;
 
-//   var match_instance = new placeMatchModel(userMatchData);
-//   var match_location_instance = new locationMatchModel(userMatchData);
-//   let model = null;
-//   if (userMatchData.placeID !== undefined) {
-//     model = "placeMatch";
-//     queryParameters = { placeID: userMatchData.placeID };
-//   } else {
-//     collectionName = "locationMatch";
-//   }
-//   return matchModel
-//     .findOne({ username: userCredentials.username })
-//     .then((res) => {
-//       if (!res) {
-//         return user_instance.save();
-//       }
-//       const error = new Error("User already exist");
-//       error.name = "UserAlreadyExistError";
-//       throw error;
-//     });
-//   return await MongoClient.connect(url, { useUnifiedTopology: true }).then(
-//     async (client) => {
-//       const db = client.db(dbName);
-//       let collectionName;
-//       let queryParameters = {};
-//       if (userMatchData.placeID !== undefined) {
-//         collectionName = "placeMatch";
-//         queryParameters = { placeID: userMatchData.placeID };
-//       } else {
-//         collectionName = "locationMatch";
-//       }
-//       return await db
-//         .collection(collectionName)
-//         .updateOne(
-//           { userID: userMatchData.userID, ...queryParameters },
-//           { $set: { ...userMatchData } },
-//           { upsert: true }
-//         )
-//         .then((res) => res)
-//         .catch((err) => {
-//           throw err;
-//         })
-//         .finally(() => client.close());
-//     }
-//   );
-// };
-// const mongoFindMatch = async (placeID) => {
-//   return await MongoClient.connect(url, { useUnifiedTopology: true })
-//     .then(async (client) => {
-//       const db = client.db(dbName);
-//       return await db.collection("placeMatch").find({ placeID }).toArray();
-//     })
-//     .catch((err) => err);
-// };
+  if (userMatchData.placeID !== undefined) {
+    matchModel = placeMatchModel;
+    queryParameters = { placeID: userMatchData.placeID };
+  } else {
+    matchModel = locationMatchModel;
+  }
 
-// const mongoFindMatchByLocation = async (source, destination) => {
-//   return await MongoClient.connect(url, { useUnifiedTopology: true })
-//     .then(async (client) => {
-//       const db = client.db(dbName);
-//       const placeMatches = await db
-//         .collection("locationMatch")
-//         .find()
-//         .toArray();
-//       return placeMatches.filter((placeMatch) => {
-//         const user1 = { source, destination };
-//         const user2 = {
-//           source: placeMatch.source,
-//           destination: placeMatch.destination,
-//         };
-//         return calcMatchByRadius(user1, user2);
-//       });
-//     })
-//     .catch((err) => err);
-// };
+  match_instance = new matchModel(userMatchData);
 
-// const mongoFindMyMatchesByUserID = async (userID) => {
-//   return await MongoClient.connect(url, { useUnifiedTopology: true })
-//     .then(async (client) => {
-//       const db = client.db(dbName);
-//       return await db.collection("placeMatch").find({ userID }).toArray();
-//     })
-//     .catch((err) => err);
-// };
+  return matchModel
+    .findOne({ userID: userMatchData.userID, ...queryParameters })
+    .then((match) => {
+      if (!match) {
+        return match_instance.save();
+      } else {
+        Object.assign(match, userMatchData);
+        return match.save();
+      }
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
 
-// const mongoDeleteMatch = async (userMatchData) => {
-//   return await MongoClient.connect(url, { useUnifiedTopology: true })
-//     .then(async (client) => {
-//       const db = client.db(dbName);
-//       return await db
-//         .collection("placeMatch")
-//         .deleteOne({
-//           userID: userMatchData.userID,
-//           placeID: userMatchData.placeID,
-//         })
-//         .then((result) => result)
-//         .catch((err) => {
-//           throw err;
-//         })
-//         .finally(() => client.close());
-//     })
-//     .catch((err) => {
-//       throw err;
-//     });
-// };
+const mongoFindMatchByPlace = async (placeID) => {
+  return await placeMatchModel
+    .find({ placeID })
+    .then((matches) => matches)
+    .catch((err) => {
+      throw err;
+    });
+};
+
+const mongoFindMatchByLocation = async (source, destination) => {
+  return await locationMatchModel
+    .find()
+    .then((allmatches) => {
+      return allmatches.filter((locationMatch) => {
+        const user1 = { source, destination };
+        const user2 = {
+          source: locationMatch.source,
+          destination: locationMatch.destination,
+        };
+        return calcMatchByRadius(user1, user2);
+      });
+    })
+    .catch((err) => {
+      throw err;
+    });
+};
+
+const mongoFindMyMatchesByUserID = async (userID) => {
+  let myMatches = {};
+  myMatches.places = await placeMatchModel
+    .find({ userID })
+    .then((matches) => matches)
+    .catch((err) => {
+      throw err;
+    });
+  myMatches.taxies = await placeMatchModel
+    .find({ userID })
+    .then((matches) => matches)
+    .catch((err) => {
+      throw err;
+    });
+  return myMatches;
+};
+
+const mongoDeleteMatch = async (userMatchData) => {
+  let queryParameters = {};
+  let matchModel = null;
+
+  if (userMatchData.placeID !== undefined) {
+    matchModel = placeMatchModel;
+    queryParameters = { placeID: userMatchData.placeID };
+  } else {
+    matchModel = locationMatchModel;
+  }
+
+  return await matchModel
+    .deleteOne({
+      userID: userMatchData.userID,
+      ...queryParameters,
+    })
+    .then((res) => res)
+    .catch((err) => {
+      throw err;
+    });
+};
 
 module.exports = {
   mongoInsertUser,
   mongoLoginUser,
-  // mongoInsertMatch,
-  // mongoFindMatch,
+  mongoInsertMatch,
   mongoFindUserByID,
-  // mongoFindMyMatchesByUserID,
-  // mongoDeleteMatch,
+  mongoFindMyMatchesByUserID,
+  mongoDeleteMatch,
   mongoUpdateUserByID,
-  // mongoFindMatchByLocation,
+  mongoFindMatchByPlace,
+  mongoFindMatchByLocation,
 };

@@ -71,7 +71,7 @@ const PlaceCard = ({ place, userCredentials, location }) => {
         console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.request.responseText);
       });
   };
 

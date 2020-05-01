@@ -10,12 +10,8 @@ let placeMatchSchema = new mongoose.Schema({
     },
   },
   userID: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     required: true,
-    validate: {
-      validator: (userID) => userID.length < 51,
-      message: "The userID must be up to 50 characters",
-    },
   },
   latitude: {
     type: Number,
