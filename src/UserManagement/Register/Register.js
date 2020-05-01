@@ -17,7 +17,7 @@ const Register = () => {
         history.push("/");
       })
       .catch(function (error) {
-        console.log(error);
+        alert(error.request.responseText);
       });
   };
   const passwordField = () => (

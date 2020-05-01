@@ -1,6 +1,6 @@
 const {
   mongoInsertUser,
-  mongoFindUserByUserName,
+  mongoLoginUser,
   mongoInsertMatch,
   mongoFindMatch,
   mongoFindUserByID,
@@ -8,19 +8,15 @@ const {
   mongoDeleteMatch,
   mongoUpdateUserByID,
   mongoFindMatchByLocation,
-} = require("./MongoDBConfig");
+} = require("./MongoDB/MongoDBManagement");
+
+const { PLACES_URL, PLACE_DETAILS_URL, PHOTOS_URL } = require("./URLs");
 
 module.exports = (app) => {
   const axios = require("axios");
   const bodyParser = require("body-parser");
-  const bcrypt = require("bcrypt");
 
   const API_KEY = process.env.TravelMatchAPIKey;
-  const PLACES_URL =
-    "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
-  const PLACE_DETAILS_URL =
-    "https://maps.googleapis.com/maps/api/place/details/json";
-  const PHOTOS_URL = "https://maps.googleapis.com/maps/api/place/photo";
 
   app.use(function (req, res, next) {
     // Website you wish to allow to connect
@@ -38,7 +34,7 @@ module.exports = (app) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.get("/", (req, res) => {
+  app.get("/get_places", (req, res) => {
     const { latitude, longitude, type } = req.query;
     axios
       .get(PLACES_URL, {
@@ -58,42 +54,32 @@ module.exports = (app) => {
       });
   });
 
-  app.post("/register_request", async (req, res) => {
+  app.post("/register_request", (req, res) => {
     const userCredentials = req.body;
-    try {
-      userCredentials.password = await bcrypt.hash(
-        userCredentials.password,
-        10
-      );
-    } catch {
-      res.status("404").send("Encryption failed");
-    }
     mongoInsertUser(userCredentials)
-      .then((result) => {
-        res.send(result);
+      .then(() => {
+        res.send("User entered successfully!");
       })
       .catch((err) => {
-        res.status("404").send(err);
+        if (
+          err.name === "ValidationError" ||
+          err.name === "UserAlreadyExistError"
+        ) {
+          res.status("404").send(err.message);
+        } else {
+          console.log(err);
+          res.status("500").send("Internal Server Error");
+        }
       });
   });
 
-  app.post("/login_request", async (req, res) => {
+  app.post("/login_request", (req, res) => {
     const userCredentials = req.body;
-    const user = await mongoFindUserByUserName(userCredentials.username);
-    if (user == null) {
-      res.status("404").send("Login Error");
-      return;
-    }
-    try {
-      if (await bcrypt.compare(userCredentials.password, user.password)) {
-        delete user.password;
-        res.send(user);
-      } else {
-        res.status("404").send("Login Error");
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    mongoLoginUser(userCredentials)
+      .then((user) => res.send(user))
+      .catch((err) => {
+        res.status("500").send(err.message);
+      });
   });
 
   app.post("/update_request", async (req, res) => {
@@ -103,7 +89,7 @@ module.exports = (app) => {
         res.send(result);
       })
       .catch((err) => {
-        res.status("404").send(err);
+        res.status("500").send(err.message);
       });
   });
 

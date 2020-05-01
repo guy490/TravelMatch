@@ -24,7 +24,7 @@ const EditMyProfile = ({ currentUserProfile }) => {
         history.push("/");
       })
       .catch(function (error) {
-        console.log(error);
+        alert(error.request.responseText);
       });
   };
 

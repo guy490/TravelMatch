@@ -3,18 +3,30 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // RESTFUL
-const port = process.env.PORT || 3001;
 const express = require("express");
-const app = express();
+const mongoose = require("mongoose");
 
+const app = express();
 require("./RestfulDefinitions")(app);
 
-let server = app.listen(port, () =>
-  console.log(`Example app listening on port ${port}!`)
-);
+const mongoDB =
+  "mongodb+srv://" +
+  process.env.TravelMatchMongoUser +
+  ":" +
+  process.env.TravelMatchMongoPassword +
+  "@" +
+  process.env.TravelMatchMongoURL;
 
-// WEB_SOCKET
+mongoose
+  .connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    const port = process.env.PORT || 3001;
+    let server = app.listen(port, () =>
+      console.log(`TravelMatch app listening on port ${port}!`)
+    );
 
-const io = require("socket.io")(server);
-
-require("./WebSocketDefinitions")(io);
+    // WEB_SOCKET
+    const io = require("socket.io")(server);
+    require("./WebSocketDefinitions")(io);
+  })
+  .catch((err) => console.log(err));

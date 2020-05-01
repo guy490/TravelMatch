@@ -22,12 +22,12 @@ const Login = ({ signIn }) => {
         socket.emit("addToClientList", userCredentials._id);
 
         signIn(userCredentials);
-
+        console.log(response);
         alert("Login Successful");
         history.push("/Category");
       })
       .catch((error) => {
-        alert("username or password are incorrect");
+        alert(error.request.responseText);
       });
   };
 
