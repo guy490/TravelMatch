@@ -128,7 +128,7 @@ const mongoFindMyMatchesByUserID = async (userID) => {
     .catch((err) => {
       throw err;
     });
-  myMatches.taxies = await placeMatchModel
+  myMatches.taxies = await locationMatchModel
     .find({ userID })
     .then((matches) => matches)
     .catch((err) => {

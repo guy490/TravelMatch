@@ -78,7 +78,12 @@ module.exports = (app) => {
     mongoLoginUser(userCredentials)
       .then((user) => res.send(user))
       .catch((err) => {
-        res.status("500").send(err.message);
+        if (err.name === "UserLoginError") {
+          res.status("404").send(err.message);
+        } else {
+          console.log(err);
+          res.status("500").send("Internal Server Error");
+        }
       });
   });
 
