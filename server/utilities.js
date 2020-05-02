@@ -1,3 +1,4 @@
+const turf = require("turf");
 let clientList = [];
 let messageList = [];
 
@@ -63,13 +64,20 @@ const removeSocketID = (userID) => {
 };
 
 const calcMatchByRadius = (user1, user2) => {
-  const subSourceLat = user1.source.lat - user2.source.lat;
-  const subSourceLng = user1.source.lng - user2.source.lng;
-  const subDestinationLat = user1.destination.lat - user2.destination.lat;
-  const subDestinationLng = user1.destination.lng - user2.destination.lng;
+  const user1Source = turf.point([user1.source.lat, user1.source.lng]);
+  const user2Source = turf.point([user2.source.lat, user2.source.lng]);
+  const user1Destination = turf.point([
+    user1.destination.lat,
+    user1.destination.lng,
+  ]);
+  const user2Destination = turf.point([
+    user2.destination.lat,
+    user2.destination.lng,
+  ]);
+
   return (
-    subSourceLat ** 2 + subSourceLng ** 2 <= 500 ** 2 &&
-    subDestinationLat ** 2 + subDestinationLng ** 2 <= 500 ** 2
+    turf.distance(user1Source, user2Source) <= 0.5 && // default distance calclation is by kilometers
+    turf.distance(user1Destination, user2Destination) <= 0.5
   );
 };
 
