@@ -1,18 +1,12 @@
 import "../styles/PlaceCard.css";
 import React, { useState, useEffect, useRef } from "react";
+import FilterModal from "../../../MatchManagement/FilterModal/FilterModal.js";
 import { Rating } from "semantic-ui-react";
-import { server, socket } from "../../../api";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { server } from "../../../api";
 
-const PlaceCard = ({ place, userCredentials, location }) => {
+const PlaceCard = ({ place }) => {
   const [imageLink, setImageLink] = useState("");
-  const [matchUserDetails, setmatchUserDetails] = useState({
-    userID: null,
-    placeID: null,
-    latitude: null,
-    longitude: null,
-  });
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const componentIsMounted = useRef(true);
 
   useEffect(() => {
@@ -24,14 +18,6 @@ const PlaceCard = ({ place, userCredentials, location }) => {
   useEffect(() => {
     getPhoto(place);
   }, [place]);
-
-  useEffect(() => {
-    setmatchUserDetails({
-      userID: userCredentials._id,
-      placeID: place.place_id,
-      ...location,
-    });
-  }, [userCredentials, place, location]);
 
   const getPhoto = async (place) => {
     if (place.hasOwnProperty("photos")) {
@@ -63,17 +49,13 @@ const PlaceCard = ({ place, userCredentials, location }) => {
     );
   };
 
-  const findMatches = () => {
-    server
-      .post("/match_request", matchUserDetails)
-      .then(function (response) {
-        socket.emit("newMatchInserted");
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error.request.responseText);
-      });
-  };
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   return (
     <div className="item">
@@ -101,25 +83,17 @@ const PlaceCard = ({ place, userCredentials, location }) => {
             />
           </div>
         </div>
-        <Link
-          to={{
-            pathname: `/Matches/${matchUserDetails.userID}&${matchUserDetails.placeID}&${matchUserDetails.latitude}&${matchUserDetails.longitude}`,
-          }}
-        >
-          <button className="ui button green" onClick={findMatches}>
-            Find Match
-          </button>
-        </Link>
+        <button className="ui button green" onClick={openModal}>
+          Find Match
+        </button>
       </div>
+      <FilterModal
+        placeID={place.place_id}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+      />
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    userCredentials: state.profileReducer,
-    location: state.locationReducer,
-  };
-};
-
-export default connect(mapStateToProps)(PlaceCard);
+export default PlaceCard;

@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 const EditMyProfile = ({ currentUserProfile }) => {
   let history = useHistory();
 
-  const submitForm = async (event) => {
+  const submitForm = (event) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
 

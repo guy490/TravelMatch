@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { server } from "../../api";
-import { useHistory } from "react-router-dom";
-import { createDictionaryForm } from "../../utilities";
-import { setUserCredentialsInLocalStorage } from "../../utilities";
+import { Link, useHistory } from "react-router-dom";
+import { server, socket } from "../../api";
+import {
+  createDictionaryForm,
+  setUserCredentialsInLocalStorage,
+} from "../../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../../Redux/Actions";
-import { socket } from "../../api";
 
 const Login = ({ signIn }) => {
   let history = useHistory();
