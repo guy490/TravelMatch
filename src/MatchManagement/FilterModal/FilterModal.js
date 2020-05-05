@@ -8,17 +8,14 @@ const countries = require("../../Generals/countries.json");
 
 const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
   let history = useHistory();
-  //   const [participants, setParticipants] = useState();
-  //   const [fromAge, setFromAge] = useState();
-  //   const [toAge, setToAge] = useState();
-  //   const [gender, setGender] = useState(0);
-  //   const [country, setCountry] = useState(countries[106].name);
+
   const [matchUserDetails, setmatchUserDetails] = useState({
     userID: null,
     placeID: null,
     latitude: null,
     longitude: null,
   });
+
   const modalStyles = {
     content: {
       top: "50%",
@@ -120,7 +117,6 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
             {generateCountries()}
           </select>
         </div>
-
         <button className="ui button green" type="submit">
           Find Match
         </button>
