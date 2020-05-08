@@ -190,8 +190,12 @@ module.exports = (app) => {
         res.send(result);
       })
       .catch((err) => {
-        console.log(err);
-        res.status("404").send("Internal Server Error");
+        if (err.name === "ValidationError") {
+          res.status("404").send(err.message);
+        } else {
+          console.log(err);
+          res.status("404").send("Internal Server Error");
+        }
       });
   });
 };

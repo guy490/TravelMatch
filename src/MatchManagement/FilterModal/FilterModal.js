@@ -1,3 +1,4 @@
+import "./FilterModal.css";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import { useHistory } from "react-router-dom";
@@ -40,27 +41,36 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
   const findMatches = async (event) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
-    console.log(formData);
+    delete formData[""];
+    matchUserDetails.attributes = { ...formData };
     server
       .post("/match_request", matchUserDetails)
       .then(function (response) {
         socket.emit("newMatchInserted");
         console.log(response);
-        history.push(`/Matches/${createURLParameters()}`);
+        history.push(
+          `/Matches/${createURLParameters(matchUserDetails, formData)}`
+        );
       })
       .catch(function (error) {
         console.log(error.request.responseText);
       });
   };
 
-  const createURLParameters = () => {
+  const createURLParameters = (matchUserDetails, formData) => {
     let urlParameters = "";
     const keys = Object.keys(matchUserDetails);
+    const formKeys = Object.keys(formData);
     keys.forEach((key, ind) => {
       if (ind < keys.length - 1) {
         urlParameters += matchUserDetails[key] + "&";
+      }
+    });
+    formKeys.forEach((key, ind) => {
+      if (ind < keys.length - 1) {
+        urlParameters += formData[key] + "&";
       } else {
-        urlParameters += matchUserDetails[key];
+        urlParameters += formData[key];
       }
     });
     return urlParameters;
@@ -76,41 +86,80 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
     });
   };
 
+  const getNextSiblings = (elem, classNameFilter) => {
+    var sibs = [];
+
+    while ((elem = elem.nextSibling)) {
+      if (elem.className === classNameFilter) {
+        sibs.push(elem);
+      }
+    }
+    return sibs;
+  };
+
+  const inputHandler = (event) => {
+    const siblings = getNextSiblings(event.target, "inputs");
+    siblings.forEach((el) => {
+      el.disabled = !event.target.checked;
+    });
+  };
+
   return (
     <Modal style={modalStyles} {...props}>
       <form className="ui form" onSubmit={findMatches}>
         <div className="field">
           <label>Number of participants:</label>
+          <input type="checkbox" onChange={inputHandler} />
           <input
+            className="inputs"
             type="number"
             name="participants"
             placeholder="Amount of participants you wish"
+            defaultValue={0}
+            disabled
           />
         </div>
         <div className="field">
           <label>Age range:</label>
-          from
-          <input type="number" name="from-age" placeholder="From Age" />
-          to
-          <input type="number" name="to-age" placeholder="To Age" />
+          <input type="checkbox" onChange={inputHandler} />
+          <div>from</div>
+          <input
+            className="inputs"
+            type="number"
+            name="fromAge"
+            placeholder="From Age"
+            defaultValue={0}
+            disabled
+          />
+          <div>to</div>
+          <input
+            className="inputs"
+            type="number"
+            name="toAge"
+            placeholder="To Age"
+            defaultValue={0}
+            disabled
+          />
         </div>
         <div className="field">
           <label>Gender</label>
-          <select name="gender">
-            <option key="None" value={0}>
+          <input type="checkbox" onChange={inputHandler} />
+          <select className="inputs" name="gender" disabled>
+            <option key="None" value="None">
               None
             </option>
-            <option key="Male" value={1}>
+            <option key="Male" value="Male">
               Male
             </option>
-            <option key="Female" value={2}>
+            <option key="Female" value="Female">
               Female
             </option>
           </select>
         </div>
         <div className="field">
           <label>Country</label>
-          <select name="country">
+          <input type="checkbox" onChange={inputHandler} />
+          <select className="inputs" name="country" disabled>
             <option key="None" value="None">
               None
             </option>
