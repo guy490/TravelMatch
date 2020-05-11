@@ -9,7 +9,6 @@ const {
   mongoUpdateUserByID,
   mongoFindMatchByLocation,
 } = require("./MongoDB/MongoDBManagement");
-const mongoose = require("mongoose");
 
 const { PLACES_URL, PLACE_DETAILS_URL, PHOTOS_URL } = require("./URLs");
 
