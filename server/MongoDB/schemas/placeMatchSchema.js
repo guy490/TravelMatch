@@ -29,13 +29,8 @@ let attributesSchema = new mongoose.Schema({
       message: "The gender cant be null",
     },
   },
-  participants: {
-    type: Number,
-    validate: {
-      validator: (participants) =>
-        (participants >= 0 && participants <= 25) || participants === 0,
-      message: "The number of participants must be beween 0 to 25",
-    },
+  date: {
+    type: Date,
   },
 });
 

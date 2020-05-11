@@ -9,6 +9,7 @@ const {
   mongoUpdateUserByID,
   mongoFindMatchByLocation,
 } = require("./MongoDB/MongoDBManagement");
+const mongoose = require("mongoose");
 
 const { PLACES_URL, PLACE_DETAILS_URL, PHOTOS_URL } = require("./URLs");
 
@@ -101,19 +102,25 @@ module.exports = (app) => {
   app.get("/get_matches", async (req, res) => {
     const matchDetails = req.query;
     let matchList;
+    let userMatchingList;
+
     if (matchDetails.placeID !== undefined) {
-      matchList = await mongoFindMatchByPlace(matchDetails.placeID);
+      matchList = await mongoFindMatchByPlace(matchDetails.placeID, {
+        date: new Date(matchDetails.date),
+      });
     } else {
       matchList = await mongoFindMatchByLocation(
         { lat: matchDetails.srcLat, lng: matchDetails.srcLng },
         { lat: matchDetails.dstLat, lng: matchDetails.dstLng }
       );
     }
-    let userMatchingList = matchList.map(async (match) => {
+
+    userMatchingList = matchList.map(async (match) => {
       const user = await mongoFindUserByID(match.userID);
       delete user["password"];
       return user;
     });
+
     userMatchingList = await Promise.all(userMatchingList);
     res.send(userMatchingList);
   });

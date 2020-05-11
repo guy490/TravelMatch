@@ -16,19 +16,22 @@ const DisplayMatches = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    console.log(match.params);
-    // socket.on("displayNewMatches", async () => {
-    //   const response = await server.get("/get_matches", {
-    //     params: match.params,
-    //   });
-    //   console.log("Accepted");
-    //   if (componentIsMounted.current) {
-    //     setMatchList(response.data);
-    //   }
-    // });
-    // return () => {
-    //   socket.off("displayNewMatches");
-    // };
+    decodeURIComponent(match.params.date);
+    socket.on("displayNewMatches", async () => {
+      const response = await server.get("/get_matches", {
+        params: {
+          ...match.params,
+          date: decodeURIComponent(match.params.date),
+        },
+      });
+      console.log("Accepted");
+      if (componentIsMounted.current) {
+        setMatchList(response.data);
+      }
+    });
+    return () => {
+      socket.off("displayNewMatches");
+    };
   }, [match]);
 
   const renderMatches = () => {

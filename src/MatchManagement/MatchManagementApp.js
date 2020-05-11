@@ -8,7 +8,7 @@ const MatchManagementApp = () => {
   return (
     <Switch>
       <ProtectedRoute
-        path="/Matches/:userID&:placeID&:latitude&:longitude&:patricipants&:fromAge&:toAge&:gender&:country"
+        path="/Matches/:userID&:placeID&:latitude&:longitude&:fromAge&:toAge&:gender&:country&:date"
         exact
         component={DisplayMatches}
       />

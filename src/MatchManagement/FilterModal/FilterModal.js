@@ -1,6 +1,9 @@
 import "./FilterModal.css";
+import "react-datepicker/dist/react-datepicker.css";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
+import { addDays } from "date-fns";
+import DatePicker from "react-datepicker";
 import { useHistory } from "react-router-dom";
 import { server, socket } from "../../api";
 import { connect } from "react-redux";
@@ -9,24 +12,13 @@ const countries = require("../../Generals/countries.json");
 
 const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
   let history = useHistory();
-
+  const [date, setDate] = useState(null);
   const [matchUserDetails, setmatchUserDetails] = useState({
     userID: null,
     placeID: null,
     latitude: null,
     longitude: null,
   });
-
-  const modalStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-    },
-  };
 
   Modal.setAppElement("#root");
 
@@ -42,6 +34,7 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
     delete formData[""];
+    console.log(formData);
     matchUserDetails.attributes = { ...formData };
     server
       .post("/match_request", matchUserDetails)
@@ -67,10 +60,13 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
       }
     });
     formKeys.forEach((key, ind) => {
+      const encodedData =
+        key === "date" ? encodeURIComponent(formData[key]) : formData[key];
+
       if (ind < keys.length - 1) {
-        urlParameters += formData[key] + "&";
+        urlParameters += encodedData + "&";
       } else {
-        urlParameters += formData[key];
+        urlParameters += encodedData;
       }
     });
     return urlParameters;
@@ -105,71 +101,72 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
   };
 
   return (
-    <Modal style={modalStyles} {...props}>
-      <form className="ui form" onSubmit={findMatches}>
-        <div className="field">
-          <label>Number of participants:</label>
-          <input type="checkbox" onChange={inputHandler} />
-          <input
-            className="inputs"
-            type="number"
-            name="participants"
-            placeholder="Amount of participants you wish"
-            defaultValue={0}
-            disabled
-          />
-        </div>
-        <div className="field">
-          <label>Age range:</label>
-          <input type="checkbox" onChange={inputHandler} />
-          <div>from</div>
-          <input
-            className="inputs"
-            type="number"
-            name="fromAge"
-            placeholder="From Age"
-            defaultValue={0}
-            disabled
-          />
-          <div>to</div>
-          <input
-            className="inputs"
-            type="number"
-            name="toAge"
-            placeholder="To Age"
-            defaultValue={0}
-            disabled
-          />
-        </div>
-        <div className="field">
-          <label>Gender</label>
-          <input type="checkbox" onChange={inputHandler} />
-          <select className="inputs" name="gender" disabled>
-            <option key="None" value="None">
-              None
-            </option>
-            <option key="Male" value="Male">
-              Male
-            </option>
-            <option key="Female" value="Female">
-              Female
-            </option>
-          </select>
-        </div>
-        <div className="field">
-          <label>Country</label>
-          <input type="checkbox" onChange={inputHandler} />
-          <select className="inputs" name="country" disabled>
-            <option key="None" value="None">
-              None
-            </option>
-            {generateCountries()}
-          </select>
-        </div>
-        <button className="ui button green" type="submit">
-          Find Match
-        </button>
-      </form>
+    <Modal className="modal" {...props}>
+      <div className="modal-div">
+        <form className="ui form" onSubmit={findMatches}>
+          <div className="field">
+            <label>Age range:</label>
+            <input type="checkbox" onChange={inputHandler} />
+            <div>from</div>
+            <input
+              className="inputs"
+              type="number"
+              name="fromAge"
+              placeholder="From Age"
+              defaultValue={0}
+              disabled
+            />
+            <div>to</div>
+            <input
+              className="inputs"
+              type="number"
+              name="toAge"
+              placeholder="To Age"
+              defaultValue={0}
+              disabled
+            />
+          </div>
+          <div className="field">
+            <label>Gender</label>
+            <input type="checkbox" onChange={inputHandler} />
+            <select className="inputs" name="gender" disabled>
+              <option key="None" value="None">
+                None
+              </option>
+              <option key="Male" value="Male">
+                Male
+              </option>
+              <option key="Female" value="Female">
+                Female
+              </option>
+            </select>
+          </div>
+          <div className="field">
+            <label>Country</label>
+            <input type="checkbox" onChange={inputHandler} />
+            <select className="inputs" name="country" disabled>
+              <option key="None" value="None">
+                None
+              </option>
+              {generateCountries()}
+            </select>
+          </div>
+          <div className="field">
+            <label>Pick a date</label>
+            <DatePicker
+              name="date"
+              selected={date}
+              onChange={(date) => setDate(date)}
+              minDate={new Date()}
+              maxDate={addDays(new Date(), 7)}
+              placeholderText="Select a date"
+            />
+          </div>
+          <button className="ui button green" type="submit">
+            Find Match
+          </button>
+        </form>
+      </div>
     </Modal>
   );
 };

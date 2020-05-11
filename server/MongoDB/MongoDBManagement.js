@@ -93,9 +93,12 @@ const mongoInsertMatch = async (userMatchData) => {
     });
 };
 
-const mongoFindMatchByPlace = async (placeID) => {
+const mongoFindMatchByPlace = async (placeID, { ...filters }) => {
   return await placeMatchModel
-    .find({ placeID })
+    .find({
+      placeID,
+      "attributes.date": filters.date,
+    })
     .then((matches) => matches)
     .catch((err) => {
       throw err;
