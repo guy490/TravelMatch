@@ -34,7 +34,9 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
     delete formData[""];
-    console.log(formData);
+    if (formData.date === "") {
+      formData.date = new Date(null);
+    }
     matchUserDetails.attributes = { ...formData };
     server
       .post("/match_request", matchUserDetails)

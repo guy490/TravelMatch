@@ -16,6 +16,19 @@ const DisplayMatches = ({ match }) => {
   }, []);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const response = await server.get("/get_matches", {
+        params: {
+          ...match.params,
+          date: decodeURIComponent(match.params.date),
+        },
+      });
+      setMatchList(response.data);
+    };
+    fetchData();
+  }, [match]);
+
+  useEffect(() => {
     decodeURIComponent(match.params.date);
     socket.on("displayNewMatches", async () => {
       const response = await server.get("/get_matches", {
@@ -34,14 +47,55 @@ const DisplayMatches = ({ match }) => {
     };
   }, [match]);
 
+  const isValidAge = (fromAge, toAge) => {
+    return (
+      fromAge !== undefined &&
+      toAge !== undefined &&
+      fromAge !== "0" &&
+      toAge !== "0"
+    );
+  };
+  const isValidGender = (gender) => {
+    return gender !== undefined && gender !== "None";
+  };
+  const isValidCountry = (country) => {
+    return country !== undefined && country !== "None";
+  };
+
+  const filterMatchList = (matchList, filters) => {
+    const clonedList = [...matchList];
+    return clonedList.filter((user) => {
+      let isUserValid = true;
+      if (user._id === match.params.userID) {
+        return false;
+      }
+      if (isValidCountry(filters.country)) {
+        isUserValid = isUserValid && filters.country === user.country;
+      }
+
+      if (isValidGender(filters.gender)) {
+        isUserValid = isUserValid && filters.gender === user.gender;
+      }
+
+      if (isValidAge(filters.fromAge, filters.toAge)) {
+        isUserValid =
+          isUserValid &&
+          filters.fromAge <= user.age &&
+          filters.toAge >= user.age;
+      }
+
+      return isUserValid;
+    });
+  };
+
   const renderMatches = () => {
-    if (matchList.length === 0) {
+    const filteredList = filterMatchList(matchList, match.params);
+    console.log(filteredList);
+    if (filteredList.length === 0) {
       return;
     }
-    return matchList.map((matchObject) => {
-      if (matchObject._id === match.params.userID) {
-        return null;
-      }
+
+    return filteredList.map((matchObject) => {
       return (
         <div
           key={matchObject._id}

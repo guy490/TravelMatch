@@ -104,14 +104,20 @@ module.exports = (app) => {
     let userMatchingList;
 
     if (matchDetails.placeID !== undefined) {
-      matchList = await mongoFindMatchByPlace(matchDetails.placeID, {
-        date: new Date(matchDetails.date),
-      });
+      const placeID = matchDetails.placeID;
+      const filters = {
+        date: matchDetails.date,
+      };
+
+      matchList = await mongoFindMatchByPlace(placeID, filters);
     } else {
-      matchList = await mongoFindMatchByLocation(
-        { lat: matchDetails.srcLat, lng: matchDetails.srcLng },
-        { lat: matchDetails.dstLat, lng: matchDetails.dstLng }
-      );
+      const source = { lat: matchDetails.srcLat, lng: matchDetails.srcLng };
+      const destination = {
+        lat: matchDetails.dstLat,
+        lng: matchDetails.dstLng,
+      };
+
+      matchList = await mongoFindMatchByLocation(source, destination);
     }
 
     userMatchingList = matchList.map(async (match) => {

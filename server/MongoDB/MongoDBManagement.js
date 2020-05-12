@@ -115,6 +115,7 @@ const mongoFindMatchByLocation = async (source, destination) => {
           source: locationMatch.source,
           destination: locationMatch.destination,
         };
+
         return calcMatchByRadius(user1, user2);
       });
     })
