@@ -6,7 +6,7 @@ import { SegmentInline } from "semantic-ui-react";
 
 const DisplayMyMatches = ({ match }) => {
   const [placesMatchList, setPlacesMatchList] = useState([]);
-  // const [locationMatchList, setLocationMatchList] = useState([]);
+  const [locationMatchList, setLocationMatchList] = useState([]);
 
   const componentIsMounted = useRef(true);
 
@@ -25,7 +25,7 @@ const DisplayMyMatches = ({ match }) => {
         .then((response) => {
           if (componentIsMounted.current) {
             setPlacesMatchList(response.data.placeList);
-            // setLocationMatchList(response.data.taxieRequests);
+            setLocationMatchList(response.data.taxiRequests);
           }
         })
         .catch((err) => {
@@ -59,16 +59,52 @@ const DisplayMyMatches = ({ match }) => {
       });
   };
 
-  const renderMatches = () => {
+  const renderFilters = (place) => {
+    let placeObject = { ...place };
+    let filters = [];
+    delete placeObject["_id"];
+    const keys = Object.keys(placeObject);
+    const dateObject = new Date(placeObject["date"]);
+    console.log(dateObject);
+    placeObject["date"] =
+      dateObject.getDate() +
+      "/" +
+      (dateObject.getMonth() + 1) +
+      "/" +
+      dateObject.getFullYear();
+    for (const key of keys) {
+      if (
+        placeObject[key] !== "None" &&
+        placeObject[key] !== 0 &&
+        +dateObject !== +new Date(null)
+      )
+        filters.push(
+          <span key={key} className="ui tag label">
+            {key}: {placeObject[key]}
+          </span>
+        );
+    }
+    console.log(filters);
+    return <div className="ui">{filters}</div>;
+  };
+  const renderPlaceMatches = () => {
     if (placesMatchList.length === 0) {
       return;
     }
+
     return placesMatchList.map((place) => {
       return (
-        <div
+        <a
           key={place.place_id}
           style={{ display: SegmentInline }}
           className="item"
+          href={`/Matches/${match.params.userID}&${place.place_id}&${
+            place.latitude
+          }&${place.longitude}&${place.attributes.fromAge}&${
+            place.attributes.toAge
+          }&${place.attributes.gender}&${
+            place.attributes.country
+          }&${encodeURIComponent(place.attributes.date)}`}
         >
           {/* <img
             alt=" "
@@ -76,10 +112,9 @@ const DisplayMyMatches = ({ match }) => {
             src="https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
           /> */}
           <div className="content">
-            <a href=" " className="header">
-              {`${place.name}`}
-            </a>
+            <span className="header">{`${place.name}`}</span>
           </div>
+          {renderFilters(place.attributes)}
           <div className="buttons-div">
             <button
               onClick={() => deleteMatch(place.place_id)}
@@ -88,12 +123,55 @@ const DisplayMyMatches = ({ match }) => {
               Delete
             </button>
           </div>
-        </div>
+        </a>
       );
     });
   };
 
-  return <div className="ui celled list">{renderMatches()}</div>;
+  const renderTaxiMatches = () => {
+    if (locationMatchList.length === 0) {
+      return;
+    }
+
+    return locationMatchList.map((taxi) => {
+      return (
+        <a
+          key={taxi._id}
+          style={{ display: SegmentInline }}
+          className="item"
+          href={`/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`}
+        >
+          <div className="content">
+            <span className="header">Taxi Request from:</span>
+            <div>
+              Latitude: {taxi.source.lat.toFixed(2)}, Longitude:{" "}
+              {taxi.source.lng.toFixed(2)}
+            </div>
+            <span className="header">To:</span>
+            <div>
+              Latitude: {taxi.destination.lat.toFixed(2)}, Longitude:{" "}
+              {taxi.destination.lng.toFixed(2)}
+            </div>
+          </div>
+          {/* <div className="buttons-div">
+            <button
+              onClick={() => deleteMatch(place.place_id)}
+              className="ui button red match-buttons"
+            >
+              Delete
+            </button>
+          </div> */}
+        </a>
+      );
+    });
+  };
+
+  return (
+    <div className="ui celled list">
+      {renderPlaceMatches()}
+      {renderTaxiMatches()}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {

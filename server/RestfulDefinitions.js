@@ -136,7 +136,7 @@ module.exports = (app) => {
     let userMatchingList = {};
 
     userMatchingList.placeList = matchList.places.map(async (match) => {
-      return axios
+      const responseObject = await axios
         .get(PLACE_DETAILS_URL, {
           params: {
             key: API_KEY,
@@ -150,6 +150,10 @@ module.exports = (app) => {
         .catch((err) => {
           console.log(err);
         });
+      responseObject.attributes = { ...match.attributes._doc };
+      responseObject.latitude = match.latitude;
+      responseObject.longitude = match.longitude;
+      return responseObject;
     });
     userMatchingList.placeList = await Promise.all(userMatchingList.placeList);
     userMatchingList.taxiRequests = matchList.taxies;

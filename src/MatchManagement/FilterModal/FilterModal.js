@@ -37,6 +37,7 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
     if (formData.date === "") {
       formData.date = new Date(null);
     }
+    formData.date = new Date(formData.date);
     matchUserDetails.attributes = { ...formData };
     server
       .post("/match_request", matchUserDetails)
@@ -156,6 +157,7 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
           <div className="field">
             <label>Pick a date</label>
             <DatePicker
+              autoComplete="off"
               name="date"
               selected={date}
               onChange={(date) => setDate(date)}
