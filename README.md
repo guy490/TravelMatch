@@ -4,8 +4,6 @@ We are two students of software engineering and this is our **final project**:
 
 Guy Cohen - https://github.com/guy490
 
-s
-
 Benel Aharon - https://github.com/benel2606
 
 This project is on continues development and NOT finished yet, updates will be added from time to time.
