@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { server, socket } from "../../api";
 import { SegmentInline } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 const DisplayMyMatches = ({ match }) => {
   const [placesMatchList, setPlacesMatchList] = useState([]);
@@ -94,17 +95,19 @@ const DisplayMyMatches = ({ match }) => {
 
     return placesMatchList.map((place) => {
       return (
-        <a
+        <Link
+          to={{
+            pathname: `/Matches/${match.params.userID}&${place.place_id}&${
+              place.latitude
+            }&${place.longitude}&${place.attributes.fromAge}&${
+              place.attributes.toAge
+            }&${place.attributes.gender}&${
+              place.attributes.country
+            }&${encodeURIComponent(place.attributes.date)}`,
+          }}
           key={place.place_id}
           style={{ display: SegmentInline }}
           className="item"
-          href={`/Matches/${match.params.userID}&${place.place_id}&${
-            place.latitude
-          }&${place.longitude}&${place.attributes.fromAge}&${
-            place.attributes.toAge
-          }&${place.attributes.gender}&${
-            place.attributes.country
-          }&${encodeURIComponent(place.attributes.date)}`}
         >
           {/* <img
             alt=" "
@@ -123,7 +126,7 @@ const DisplayMyMatches = ({ match }) => {
               Delete
             </button>
           </div>
-        </a>
+        </Link>
       );
     });
   };
@@ -135,11 +138,13 @@ const DisplayMyMatches = ({ match }) => {
 
     return locationMatchList.map((taxi) => {
       return (
-        <a
+        <Link
+          to={{
+            pathname: `/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`,
+          }}
           key={taxi._id}
           style={{ display: SegmentInline }}
           className="item"
-          href={`/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`}
         >
           <div className="content">
             <span className="header">Taxi Request from:</span>
@@ -161,7 +166,7 @@ const DisplayMyMatches = ({ match }) => {
               Delete
             </button>
           </div> */}
-        </a>
+        </Link>
       );
     });
   };
