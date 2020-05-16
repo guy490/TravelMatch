@@ -65,25 +65,30 @@ const DisplayMyMatches = ({ match }) => {
     let filters = [];
     delete placeObject["_id"];
     const keys = Object.keys(placeObject);
-    const dateObject = new Date(placeObject["date"]);
-    console.log(dateObject);
-    placeObject["date"] =
-      dateObject.getDate() +
-      "/" +
-      (dateObject.getMonth() + 1) +
-      "/" +
-      dateObject.getFullYear();
+    placeObject["date"] = new Date(placeObject["date"]);
+
     for (const key of keys) {
       if (
         placeObject[key] !== "None" &&
         placeObject[key] !== 0 &&
-        +dateObject !== +new Date(null)
+        +placeObject[key] !== +new Date(null)
       )
-        filters.push(
-          <span key={key} className="ui tag label">
-            {key}: {placeObject[key]}
-          </span>
-        );
+        if (key === "date") {
+          const day = placeObject[key].getDate();
+          const month = placeObject[key].getMonth();
+          const fullYear = placeObject[key].getFullYear();
+          filters.push(
+            <span key={key} className="ui tag label">
+              {key}:{`${day}/${month}/${fullYear}`}
+            </span>
+          );
+        } else {
+          filters.push(
+            <span key={key} className="ui tag label">
+              {key}: {placeObject[key]}
+            </span>
+          );
+        }
     }
     console.log(filters);
     return <div className="ui">{filters}</div>;
