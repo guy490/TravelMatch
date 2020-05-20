@@ -4,7 +4,10 @@ let messageList = [];
 
 const getSocketIDByUserID = (userID) => {
   const socketIndex = clientList.findIndex((user) => user.userID === userID);
-  return clientList[socketIndex].clientID;
+  if (socketIndex === -1) {
+    return socketIndex;
+  }
+  return clientList[socketIndex].socketID;
 };
 
 const addNewConversation = (conversation) => {
@@ -36,26 +39,49 @@ const addMessageToConversation = (senderName, receiverName, messageDetails) => {
 
 const getMessagesByParticipants = (senderName, receiverName) => {
   let index = findConversationIndex(senderName, receiverName);
+  if (index === -1) {
+    return [];
+  }
   return messageList[index].messages;
+};
+
+const getConversationByReceiver = (receiverName) => {
+  const conversationList = [];
+  messageList.forEach((conversation) => {
+    if (
+      conversation.participants.user2 === receiverName ||
+      conversation.participants.user1 === receiverName
+    ) {
+      conversationList.push(conversation);
+    }
+  });
+  return conversationList;
 };
 
 const addNewSocketID = (userID, socketID) => {
   clientList.push({ userID, socketID });
 };
 
+const removeSocketIDBySocketID = (socketID) => {
+  let index = clientList.findIndex((user) => user.socketID === socketID);
+  clientList = [
+    ...clientList.slice(0, index),
+    ...clientList.slice(index + 1, clientList.length),
+  ];
+};
 const updateSocketID = (userID, socketID) => {
   let index = clientList.findIndex((user) => user.userID === userID);
   if (index !== -1) {
-    let clientID = clientList[index].clientID;
+    let clientID = clientList[index].socketID;
     if (clientID !== socketID) {
-      clientList[index].clientID = socketID;
+      clientList[index].socketID = socketID;
     }
   } else {
     addNewSocketID(userID, socketID);
   }
 };
 
-const removeSocketID = (userID) => {
+const removeSocketIDByUserID = (userID) => {
   let index = clientList.findIndex((user) => user.userID === userID);
   clientList = [
     ...clientList.slice(0, index),
@@ -85,8 +111,9 @@ module.exports = {
   getSocketIDByUserID,
   addMessageToConversation,
   getMessagesByParticipants,
-  addNewSocketID,
   updateSocketID,
-  removeSocketID,
+  removeSocketIDBySocketID,
   calcMatchByRadius,
+  removeSocketIDByUserID,
+  getConversationByReceiver,
 };

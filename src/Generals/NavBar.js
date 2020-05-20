@@ -4,8 +4,11 @@ import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../Redux/Actions";
 import { socket } from "../api";
+import WaitingMessages from "../ChatManagement/WaitingMessages/WaitingMessages";
 
 const NavBar = ({ userProfile, signOut }) => {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
   const history = useHistory();
   const logoutUser = () => {
     localStorage.clear();
@@ -13,6 +16,21 @@ const NavBar = ({ userProfile, signOut }) => {
     socket.emit("removeFromClientList", userProfile._id);
   };
 
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      height: "100%",
+      transform: "translate(-50%, -50%)",
+    },
+    overlay: {
+      // position: "absolute",
+      backgroundColor: "rgba(255, 255, 255, 0)",
+    },
+  };
   const logoutButton = () => {
     if (getUserCredentialsFromLocalStorage()) {
       return (
@@ -28,10 +46,18 @@ const NavBar = ({ userProfile, signOut }) => {
     }
   };
 
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <div
       className="ui secondary menu fixed"
-      style={{ backgroundColor: "white", width: 100 + "%" }}
+      style={{ backgroundColor: "white", width: 100 + "%", zIndex: "120" }}
     >
       <button
         onClick={history.goBack}
@@ -58,12 +84,26 @@ const NavBar = ({ userProfile, signOut }) => {
           to={`/Profile/${userProfile._id}`}
           className="item"
           href=" "
-          style={{ width: 50 + "%" }}
+          style={{ width: 25 + "%" }}
         >
           {userProfile.username}
         </Link>
+        <button
+          onClick={openModal}
+          className="item"
+          style={{ width: 25 + "%" }}
+        >
+          <i className="envelope outline icon"></i>
+        </button>
         {logoutButton()}
       </div>
+      <WaitingMessages
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        receiverName={userProfile.username}
+        closeModal={closeModal}
+      />
     </div>
   );
 };

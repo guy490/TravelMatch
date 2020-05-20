@@ -6,7 +6,7 @@ const Category = ({ linkTo, content, backgroundURL, gradientColors }) => {
   const createCategoryStyle = (imageLink, gradientColors) => {
     return {
       backgroundImage: `linear-gradient(${gradientColors}),${imageLink}`,
-      backgroundSize: "100% 100%"
+      backgroundSize: "100% 100%",
     };
   };
 
@@ -15,8 +15,9 @@ const Category = ({ linkTo, content, backgroundURL, gradientColors }) => {
       <div className="link">
         <div
           className="background"
-          style={createCategoryStyle(backgroundURL, gradientColors)}></div>
-        <div className="text">{content}</div>
+          style={createCategoryStyle(backgroundURL, gradientColors)}
+        ></div>
+        <div className="text text-category">{content}</div>
       </div>
     </Link>
   );

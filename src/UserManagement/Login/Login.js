@@ -19,7 +19,7 @@ const Login = ({ signIn }) => {
       .then(function (response) {
         const userCredentials = response.data;
         setUserCredentialsInLocalStorage(userCredentials);
-        socket.emit("addToClientList", userCredentials._id);
+        socket.emit("updateClientList", userCredentials._id);
 
         signIn(userCredentials);
         console.log(response);

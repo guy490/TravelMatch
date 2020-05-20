@@ -13,6 +13,7 @@ const ProtectedRoute = ({ signIn, component: Component, ...rest }) => {
         const userCredentials = getUserCredentialsFromLocalStorage();
         if (userCredentials) {
           socket.emit("updateClientList", userCredentials._id);
+
           signIn(userCredentials);
           return <Component {...props} />;
         } else {

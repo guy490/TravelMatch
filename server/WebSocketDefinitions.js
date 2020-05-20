@@ -3,13 +3,32 @@ module.exports = (io) => {
     getSocketIDByUserID,
     addMessageToConversation,
     getMessagesByParticipants,
-    addNewSocketID,
+    removeSocketIDBySocketID,
+    removeSocketIDByUserID,
+    getConversationByReceiver,
     updateSocketID,
-    removeSocketID,
   } = require("./utilities");
 
   io.on("connection", (client) => {
     console.log("User Connected");
+    client.on("getMessages", (participants) => {
+      let messageParticipants = JSON.parse(participants);
+      const senderName = messageParticipants.senderName;
+      const receiverName = messageParticipants.receiverName;
+      client.emit(
+        "receiveMessage",
+        JSON.stringify(getMessagesByParticipants(senderName, receiverName))
+      );
+    });
+
+    client.on("getConversationsByReceiver", (receiver) => {
+      let receiverName = JSON.parse(receiver);
+      client.emit(
+        "receiveConversations",
+        JSON.stringify(getConversationByReceiver(receiverName))
+      );
+    });
+
     client.on("sendMessage", (stringyMessageDetails) => {
       let messageDetails = JSON.parse(stringyMessageDetails);
       const senderName = messageDetails.senderName;
@@ -21,10 +40,22 @@ module.exports = (io) => {
         "receiveMessage",
         JSON.stringify(getMessagesByParticipants(senderName, receiverName))
       );
-      io.to(receiverSocketID).emit(
-        "receiveMessage",
-        JSON.stringify(getMessagesByParticipants(senderName, receiverName))
+      io.to(client.id).emit(
+        "receiveConversations",
+        JSON.stringify(getConversationByReceiver(receiverName))
       );
+
+      if (receiverSocketID !== -1) {
+        io.to(receiverSocketID).emit(
+          "receiveMessage",
+          JSON.stringify(getMessagesByParticipants(senderName, receiverName))
+        );
+
+        io.to(receiverSocketID).emit(
+          "receiveConversations",
+          JSON.stringify(getConversationByReceiver(receiverName))
+        );
+      }
     });
 
     client.on("newMatchInserted", () => {
@@ -34,20 +65,16 @@ module.exports = (io) => {
       io.emit("displayNewMatches");
     });
 
-    client.on("addToClientList", (userID) => {
-      addNewSocketID(userID, client.id);
-    });
-
     client.on("updateClientList", (userID) => {
       updateSocketID(userID, client.id);
     });
-
     client.on("removeFromClientList", (userID) => {
-      removeSocketID(userID);
+      removeSocketIDByUserID(userID);
     });
 
     client.on("disconnect", () => {
       console.log("User Disconnected");
+      removeSocketIDBySocketID(client.id);
     });
   });
 };

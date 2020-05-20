@@ -1,9 +1,17 @@
 import "../styles/TextArea.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { socket } from "../../api";
 import { connect } from "react-redux";
 
 const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
+  useEffect(() => {
+    const participants = {
+      senderName: userProfile.username,
+      receiverName: destinationUsername,
+    };
+    socket.emit("getMessages", JSON.stringify(participants));
+  }, [userProfile, destinationUsername]);
+
   const onSubmit = (event) => {
     if (event.key === "Enter") {
       const message = {
