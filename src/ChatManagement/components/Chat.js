@@ -8,7 +8,8 @@ const Chat = () => {
 
   useEffect(() => {
     socket.on("receiveMessage", (messages) => {
-      setMessages(JSON.parse(messages));
+      const parsedMessages = JSON.parse(messages);
+      setMessages(parsedMessages);
     });
     return () => {
       socket.off("receiveMessage");
