@@ -33,23 +33,32 @@ const Login = ({ signIn }) => {
 
   const createForm = () => {
     return (
-      <div>
-        <form className="ui form" onSubmit={submitForm}>
-          <div className="field">
-            <label>Username</label>
-            <input type="text" name="username" placeholder="Username" />
-          </div>
-          <div className="field">
-            <label>Password</label>
-            <input type="password" name="password" placeholder="Password" />
-          </div>
-          <button className="ui button" type="submit">
-            Login
-          </button>
-          <Link to="/Register">
-            <button className="ui button">Register</button>
-          </Link>
-        </form>
+      <div className="login-containter">
+        <div className="login-outer-wrap">
+          <header class="header-login gradient-background-blues">
+            <div class="login-titles">
+              <h2 class="">Login to Travel Match</h2>
+              <p class="title-sub unfocused">Login/Register</p>
+            </div>
+          </header>
+
+          <form /*className="ui form"*/ onSubmit={submitForm}>
+            <div className="field">
+              {/* <label>Username</label> */}
+              <input type="text" name="username" placeholder="Username" />
+            </div>
+            <div className="field">
+              <label>Password</label>
+              <input type="password" name="password" placeholder="Password" />
+            </div>
+            <button className="ui button" type="submit">
+              Login
+            </button>
+            <Link to="/Register">
+              <button className="ui button">Register</button>
+            </Link>
+          </form>
+        </div>
       </div>
     );
   };
