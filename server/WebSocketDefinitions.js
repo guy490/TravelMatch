@@ -7,6 +7,7 @@ module.exports = (io) => {
     removeSocketIDByUserID,
     getConversationByReceiver,
     updateSocketID,
+    setMessagesAsRead,
   } = require("./utilities");
 
   io.on("connection", (client) => {
