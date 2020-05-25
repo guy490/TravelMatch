@@ -50,6 +50,10 @@ let userSchema = new mongoose.Schema({
       message: "The password must be up to 200 characters",
     },
   },
+  profile_image: {
+    type: String,
+    required: true,
+  },
 });
 
 userSchema.pre("save", function (next) {

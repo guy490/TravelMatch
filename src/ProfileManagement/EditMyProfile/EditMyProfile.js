@@ -5,26 +5,39 @@ import { useHistory } from "react-router-dom";
 import {
   createDictionaryForm,
   setUserCredentialsInLocalStorage,
+  uploadProfileImage,
 } from "../../utilities";
 import { connect } from "react-redux";
 
 const EditMyProfile = ({ currentUserProfile }) => {
   let history = useHistory();
 
-  const submitForm = (event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
     let formData = createDictionaryForm(event);
-
     formData.userID = currentUserProfile._id;
+
+    try {
+      formData.profile_image = await uploadProfileImage(event);
+    } catch {
+      delete formData["profile_image"];
+    }
     server
       .post("/update_request", formData)
       .then(function (response) {
-        setUserCredentialsInLocalStorage(formData);
+        setUserCredentialsInLocalStorage({
+          ...currentUserProfile,
+          ...formData,
+        });
         console.log(response);
         history.push("/");
       })
       .catch(function (error) {
-        alert(error.request.responseText);
+        if (error.request !== undefined) {
+          alert(error.request.responseText);
+        } else {
+          alert(error);
+        }
       });
   };
 

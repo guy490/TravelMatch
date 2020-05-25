@@ -28,7 +28,6 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
         params: match.params,
       });
       if (componentIsMounted.current) {
-        console.log(response.data);
         setUserProfile(response.data);
       }
     };
@@ -66,10 +65,7 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
   return (
     <div className="ui card profile-card">
       <div className="image">
-        <img
-          alt="ProfilePicture"
-          src="https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
-        />
+        <img alt="ProfilePicture" src={`${userProfile.profile_image}`} />
       </div>
       {renderButtons()}
       <div className="content profile-content">

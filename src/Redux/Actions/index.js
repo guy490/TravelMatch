@@ -1,4 +1,5 @@
 export const signIn = (userDetails) => {
+  console.log(userDetails);
   return {
     type: "SIGN_IN",
     payload: userDetails,

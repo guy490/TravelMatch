@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const getType = (category) => {
   switch (category) {
     case "Restaurants":
@@ -97,9 +99,28 @@ const setUserCredentialsInLocalStorage = (userCredentials) => {
   );
 };
 
+const uploadProfileImage = async (event) => {
+  const profileImageFile = event.target.querySelector("[name=profile_image]")
+    .files[0];
+  let tempImageData = new FormData();
+  tempImageData.append("image", profileImageFile);
+  const response = await axios.post(
+    "https://api.imgur.com/3/image",
+    tempImageData,
+    {
+      headers: {
+        Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
+        Accept: "application/json",
+      },
+    }
+  );
+  return response.data.data.link;
+};
+
 export {
   getType,
   createDictionaryForm,
   getUserCredentialsFromLocalStorage,
   setUserCredentialsInLocalStorage,
+  uploadProfileImage,
 };

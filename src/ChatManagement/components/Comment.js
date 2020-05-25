@@ -21,7 +21,11 @@ const Comment = (props) => {
     }
     return (
       <div className="avatar">
-        <img src={props.image} alt="" />
+        <img
+          src={props.image}
+          alt=""
+          style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+        />
       </div>
     );
   };
