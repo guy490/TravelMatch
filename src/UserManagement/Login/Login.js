@@ -48,7 +48,7 @@ const Login = ({ signIn }) => {
                 <input
                   type="text"
                   name="username"
-                  placeholder="Type your ugit sername"
+                  placeholder="Type your username"
                   className="my-input"
                 />
               </div>
