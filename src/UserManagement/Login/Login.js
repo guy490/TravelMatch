@@ -48,7 +48,7 @@ const Login = ({ signIn }) => {
                 <input
                   type="text"
                   name="username"
-                  placeholder="Username"
+                  placeholder="Type your username"
                   className="my-input"
                 />
               </div>
@@ -61,7 +61,7 @@ const Login = ({ signIn }) => {
                 <input
                   type="password"
                   name="password"
-                  placeholder="password"
+                  placeholder="Type your password"
                   className="my-input"
                 />
               </div>
