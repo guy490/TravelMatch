@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import ImageUploader from "react-images-upload";
+import axios from "axios";
 const countries = require("./countries.json");
 
 const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
@@ -8,6 +10,7 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
   const [userCountry, setUserCountry] = useState(countries[106].name);
   const [userUsername, setUserUsername] = useState("");
   const [submitButtonName, setSubmitButtonName] = useState("Register");
+  const [imgFile, setImgFile] = useState(null);
 
   useEffect(() => {
     if (userData !== undefined) {
@@ -17,8 +20,28 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
       setUserCountry(userData.country);
       setUserUsername(userData.username);
       setSubmitButtonName("Save");
+      axios({
+        url: userData.profile_image,
+        method: "GET",
+        responseType: "blob",
+      }).then((res) => {
+        const blob = res.data;
+        var file = new File([blob], "imageuploaded");
+
+        setImgFile(file);
+      });
     }
   }, [userData]);
+
+  const onDrop = (picture) => {
+    setImgFile(picture[0]);
+  };
+
+  const getURL = (imgFile) => {
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(imgFile);
+    return imageUrl;
+  };
 
   const generateCountries = () => {
     return countries.map((country) => {
@@ -85,6 +108,25 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
             />
           </div>
           {passwordField !== undefined ? passwordField() : ""}
+          <div className="field">
+            {imgFile !== null ? (
+              <img
+                alt="Media Content"
+                height="200px"
+                width="200px"
+                src={getURL(imgFile)}
+              ></img>
+            ) : null}
+            <ImageUploader
+              name="profile_image"
+              withIcon={false}
+              buttonText="Choose images"
+              onChange={onDrop}
+              singleImage={true}
+              imgExtension={[".jpg", ".jpeg", ".gif", ".png"]}
+              maxFileSize={5242880}
+            />
+          </div>
           <button className="ui button" type="submit">
             {submitButtonName}
           </button>

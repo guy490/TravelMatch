@@ -15,14 +15,13 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
   const onSubmit = (event) => {
     if (event.key === "Enter") {
       const message = {
-        senderID: userProfile._id,
+        senderID: userProfile.userID,
         senderName: userProfile.username,
         receiverID: destinationUserID,
         receiverName: destinationUsername,
         date: new Date(),
         text: event.target.value,
-        image:
-          "https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png",
+        image: userProfile.profile_image,
       };
       event.target.value = "";
       socket.emit("sendMessage", JSON.stringify(message));

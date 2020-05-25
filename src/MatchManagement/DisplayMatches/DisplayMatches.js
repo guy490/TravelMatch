@@ -90,7 +90,6 @@ const DisplayMatches = ({ match }) => {
 
   const renderMatches = () => {
     const filteredList = filterMatchList(matchList, match.params);
-    console.log(filteredList);
     if (filteredList.length === 0) {
       return;
     }
@@ -105,7 +104,7 @@ const DisplayMatches = ({ match }) => {
           <img
             alt=" "
             className="ui avatar image profile-image"
-            src="https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
+            src={`${matchObject.profile_image}`}
           />
           <div className="content">
             <a href=" " className="header">
