@@ -7,6 +7,8 @@ import {
 } from "../../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../../Redux/Actions";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import HttpsOutlinedIcon from "@material-ui/icons/HttpsOutlined";
 
 const Login = ({ signIn }) => {
   let history = useHistory();
@@ -34,28 +36,55 @@ const Login = ({ signIn }) => {
   const createForm = () => {
     return (
       <div className="login-containter">
-        <div className="login-outer-wrap">
-          <header class="header-login gradient-background-blues">
-            <div class="login-titles">
-              <h2 class="">Login to Travel Match</h2>
-              <p class="title-sub unfocused">Login/Register</p>
-            </div>
-          </header>
+        <div className="login-wrap">
+          <form className="login-validate" onSubmit={submitForm}>
+            <span className="login-title">Login to Travel Match</span>
 
-          <form /*className="ui form"*/ onSubmit={submitForm}>
-            <div className="field">
-              {/* <label>Username</label> */}
-              <input type="text" name="username" placeholder="Username" />
+            <div className="wrap-input validate-input">
+              <span className="label-input">Username</span>
+
+              <div className="focus-input">
+                <PermIdentityIcon className="icons" />
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  className="my-input"
+                />
+              </div>
             </div>
-            <div className="field">
-              <label>Password</label>
-              <input type="password" name="password" placeholder="Password" />
+            <div className="wrap-input validate-input">
+              <span className="label-input">Password</span>
+
+              <div className="focus-input">
+                <HttpsOutlinedIcon className="icons" />
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="password"
+                  className="my-input"
+                />
+              </div>
             </div>
-            <button className="ui button" type="submit">
-              Login
-            </button>
+
+            <div className="container-login-form-btn">
+              <div className="wrap-login-form-btn">
+                <div className="login-form-bgbtn"></div>
+                <button className="login-form-btn" type="submit">
+                  Login
+                </button>
+              </div>
+            </div>
+            <div className="text">OR</div>
             <Link to="/Register">
-              <button className="ui button">Register</button>
+              <div className="container-login-form-btn">
+                <div className="wrap-login-form-btn">
+                  <div className="login-form-bgbtn"></div>
+                  <button className="login-form-btn" type="submit">
+                    SIGN UP
+                  </button>
+                </div>
+              </div>
             </Link>
           </form>
         </div>
