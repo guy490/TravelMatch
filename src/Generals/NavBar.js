@@ -37,7 +37,8 @@ const NavBar = ({ userProfile, signOut }) => {
           to="/"
           className="item"
           onClick={logoutUser}
-          style={{ width: "10%" }}>
+          style={{ width: "10%" }}
+        >
           Logout
         </Link>
       );
@@ -50,9 +51,24 @@ const NavBar = ({ userProfile, signOut }) => {
         <Link
           to={`/MyMatches/${userProfile._id}`}
           className="item"
-          style={{ width: "29%" }}>
+          style={{ width: "29%" }}
+        >
           <div>My Matches</div>
         </Link>
+      );
+    }
+  };
+
+  const waitingMessagesButton = () => {
+    if (getUserCredentialsFromLocalStorage()) {
+      return (
+        <WaitingMessages
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+          receiverName={userProfile.username}
+          closeModal={closeModal}
+        />
       );
     }
   };
@@ -68,11 +84,13 @@ const NavBar = ({ userProfile, signOut }) => {
   return (
     <div
       className="ui secondary menu fixed"
-      style={{ backgroundColor: "white", width: 100 + "%", zIndex: "120" }}>
+      style={{ backgroundColor: "white", width: 100 + "%", zIndex: "120" }}
+    >
       <button
         onClick={history.goBack}
         className="item"
-        style={{ width: "6%", paddingRight: "1%" }}>
+        style={{ width: "6%", paddingRight: "1%" }}
+      >
         <div>
           <i className="angle left icon"></i>
         </div>
@@ -81,7 +99,8 @@ const NavBar = ({ userProfile, signOut }) => {
         to="/"
         className="item"
         href=" "
-        style={{ width: "3%", paddingRight: "1%" }}>
+        style={{ width: "3%", paddingRight: "1%" }}
+      >
         <i className="home icon"></i>
       </Link>
       {myMatchesButton()}
@@ -90,7 +109,8 @@ const NavBar = ({ userProfile, signOut }) => {
           to={`/Profile/${userProfile._id}`}
           className="item"
           href=" "
-          style={{ width: "35%", paddingRight: "1%" }}>
+          style={{ width: "35%", paddingRight: "1%" }}
+        >
           {userProfile.username}
         </Link>
         <button onClick={openModal} className="item" style={{ width: "5%" }}>
@@ -98,13 +118,7 @@ const NavBar = ({ userProfile, signOut }) => {
         </button>
         {logoutButton()}
       </div>
-      <WaitingMessages
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        style={customStyles}
-        receiverName={userProfile.username}
-        closeModal={closeModal}
-      />
+      {waitingMessagesButton()}
     </div>
   );
 };
