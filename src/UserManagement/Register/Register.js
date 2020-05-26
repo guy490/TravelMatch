@@ -30,9 +30,17 @@ const Register = () => {
       });
   };
   const passwordField = () => (
-    <div className="field">
-      <label>Password</label>
-      <input type="password" name="password" placeholder="Password" />
+    <div className="wrap-input validate-input">
+      <span className="label-input">Password</span>
+      <div className="focus-input">
+        <i className="lock icon icons"></i>
+        <input
+          type="password"
+          name="password"
+          placeholder="Type your password"
+          className="my-input"
+        />
+      </div>
     </div>
   );
   return (

@@ -7,8 +7,6 @@ import {
 } from "../../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../../Redux/Actions";
-import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import HttpsOutlinedIcon from "@material-ui/icons/HttpsOutlined";
 
 const Login = ({ signIn }) => {
   let history = useHistory();
@@ -35,16 +33,14 @@ const Login = ({ signIn }) => {
 
   const createForm = () => {
     return (
-      <div className="login-containter">
-        <div className="login-wrap">
-          <form className="login-validate" onSubmit={submitForm}>
-            <span className="login-title">Login to Travel Match</span>
-
+      <div className="login-register-containter">
+        <div className="login-register-wrap">
+          <form className="login-register-validate" onSubmit={submitForm}>
+            <span className="login-register-title">Login to Travel Match</span>
             <div className="wrap-input validate-input">
               <span className="label-input">Username</span>
-
               <div className="focus-input">
-                <PermIdentityIcon className="icons" />
+                <i className="user outline icon icons"></i>
                 <input
                   type="text"
                   name="username"
@@ -55,9 +51,8 @@ const Login = ({ signIn }) => {
             </div>
             <div className="wrap-input validate-input">
               <span className="label-input">Password</span>
-
               <div className="focus-input">
-                <HttpsOutlinedIcon className="icons" />
+                <i className="lock icon icons"></i>
                 <input
                   type="password"
                   name="password"
@@ -66,21 +61,20 @@ const Login = ({ signIn }) => {
                 />
               </div>
             </div>
-
-            <div className="container-login-form-btn">
-              <div className="wrap-login-form-btn">
-                <div className="login-form-bgbtn"></div>
-                <button className="login-form-btn" type="submit">
+            <div className="container-form-btn">
+              <div className="wrap-form-btn">
+                <div className="form-bgbtn"></div>
+                <button className="form-btn" type="submit">
                   Login
                 </button>
               </div>
             </div>
             <div className="text">OR</div>
             <Link to="/Register">
-              <div className="container-login-form-btn">
-                <div className="wrap-login-form-btn">
-                  <div className="login-form-bgbtn"></div>
-                  <button className="login-form-btn" type="submit">
+              <div className="container-form-btn">
+                <div className="wrap-form-btn">
+                  <div className="form-bgbtn"></div>
+                  <button className="form-btn" type="submit">
                     SIGN UP
                   </button>
                 </div>
