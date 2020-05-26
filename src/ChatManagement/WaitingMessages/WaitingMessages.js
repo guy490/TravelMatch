@@ -44,8 +44,7 @@ const WaitingMessages = ({ closeModal, receiverName, ...props }) => {
           }}
           className="event waiting-message"
           onClick={() => closeModal()}
-          key={index}
-        >
+          key={index}>
           <div className="content">
             {lastMessage.senderName === receiverName ? (
               <div className="summary">

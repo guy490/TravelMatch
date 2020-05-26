@@ -27,7 +27,6 @@ const NavBar = ({ userProfile, signOut }) => {
       transform: "translate(-50%, -50%)",
     },
     overlay: {
-      // position: "absolute",
       backgroundColor: "rgba(255, 255, 255, 0)",
     },
   };
@@ -38,61 +37,63 @@ const NavBar = ({ userProfile, signOut }) => {
           to="/"
           className="item"
           onClick={logoutUser}
-          style={{ width: 50 + "%" }}
-        >
+          style={{ width: "10%" }}>
           Logout
         </Link>
       );
     }
   };
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  const myMatchesButton = () => {
+    if (getUserCredentialsFromLocalStorage()) {
+      return (
+        <Link
+          to={`/MyMatches/${userProfile._id}`}
+          className="item"
+          style={{ width: "29%" }}>
+          <div>My Matches</div>
+        </Link>
+      );
+    }
+  };
 
-  function closeModal() {
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
     setIsOpen(false);
-  }
+  };
 
   return (
     <div
       className="ui secondary menu fixed"
-      style={{ backgroundColor: "white", width: 100 + "%", zIndex: "120" }}
-    >
+      style={{ backgroundColor: "white", width: 100 + "%", zIndex: "120" }}>
       <button
         onClick={history.goBack}
         className="item"
-        style={{ width: 10 + "%" }}
-      >
+        style={{ width: "6%", paddingRight: "1%" }}>
         <div>
-          <i className="arrow alternate circle left icon"></i>
-          Back
+          <i className="angle left icon"></i>
         </div>
       </button>
-      <Link to="/" className="item" href=" " style={{ width: 10 + "%" }}>
-        Home
-      </Link>
       <Link
-        to={`/MyMatches/${userProfile._id}`}
+        to="/"
         className="item"
-        style={{ width: 20 + "%" }}
-      >
-        <div>My Matches</div>
+        href=" "
+        style={{ width: "3%", paddingRight: "1%" }}>
+        <i className="home icon"></i>
       </Link>
-      <div className="right menu" style={{ width: 50 + "%" }}>
+      {myMatchesButton()}
+      <div className="right menu">
         <Link
           to={`/Profile/${userProfile._id}`}
           className="item"
           href=" "
-          style={{ width: 25 + "%" }}
-        >
+          style={{ width: "35%", paddingRight: "1%" }}>
           {userProfile.username}
         </Link>
-        <button
-          onClick={openModal}
-          className="item"
-          style={{ width: 25 + "%" }}
-        >
+        <button onClick={openModal} className="item" style={{ width: "5%" }}>
           <i className="envelope outline icon"></i>
         </button>
         {logoutButton()}
@@ -107,7 +108,6 @@ const NavBar = ({ userProfile, signOut }) => {
     </div>
   );
 };
-
 const mapStateToProps = (state) => {
   return {
     userProfile: state.profileReducer,
