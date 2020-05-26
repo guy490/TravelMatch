@@ -99,8 +99,8 @@ const setUserCredentialsInLocalStorage = (userCredentials) => {
   );
 };
 
-const uploadProfileImage = async (event) => {
-  const profileImageFile = event.target.querySelector("[name=profile_image]")
+const uploadProfileImage = async ({ target }) => {
+  const profileImageFile = target.querySelector("[name=profile_image]")
     .files[0];
   let tempImageData = new FormData();
   tempImageData.append("image", profileImageFile);
