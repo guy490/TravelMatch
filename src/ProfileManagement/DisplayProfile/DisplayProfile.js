@@ -44,9 +44,8 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
           to={{
             pathname: `/Chat/${userProfile._id}&${userProfile.username}`,
           }}
-          className="ui button green match-buttons"
-        >
-          Chat
+          className="profile-btn">
+          <div className="profile-btn-title">Message</div>
         </Link>
       );
     }
@@ -55,32 +54,30 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
         to={{
           pathname: `/Edit/${userProfile._id}`,
         }}
-        className="ui button green match-buttons"
-      >
-        Edit
+        className="profile-btn">
+        <div className="profile-btn-title">Edit</div>
       </Link>
     );
   };
 
   return (
-    <div className="ui card profile-card">
-      <div className="image">
-        <img alt="ProfilePicture" src={`${userProfile.profile_image}`} />
-      </div>
-      {renderButtons()}
-      <div className="content profile-content">
-        <h3 href=" " className="header">
+    <div className="card-container">
+      <div className="card-wrap">
+        <img
+          className="round"
+          alt="ProfilePicture"
+          src={`${userProfile.profile_image}`}
+        />
+        <h3 className="profile-name">
           {`${userProfile.firstname} ${userProfile.lastname}`}
         </h3>
-        <div className="meta">
-          <div className="date">{`<Joined Date>`}</div>
-          <div className="country">{`${userProfile.country}`}</div>
-          <div className="age">{`${userProfile.age}`}</div>
-        </div>
-        <div className="description">{`<About Data>`}</div>
-      </div>
-      <div className="extra content">
-        <span></span>
+        <p className="profile-country-age">
+          {`${userProfile.age}`}, {`${userProfile.country}`}{" "}
+        </p>
+        <p className="profile-about">
+          Hey, my name is __ and i love to travel and explor new location
+        </p>
+        {renderButtons()}
       </div>
     </div>
   );
