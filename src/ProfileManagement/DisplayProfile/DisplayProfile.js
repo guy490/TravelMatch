@@ -44,7 +44,8 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
           to={{
             pathname: `/Chat/${userProfile._id}&${userProfile.username}`,
           }}
-          className="profile-btn">
+          className="profile-btn"
+        >
           <div className="profile-btn-title">Message</div>
         </Link>
       );
@@ -54,7 +55,8 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
         to={{
           pathname: `/Edit/${userProfile._id}`,
         }}
-        className="profile-btn">
+        className="profile-btn"
+      >
         <div className="profile-btn-title">Edit</div>
       </Link>
     );
@@ -75,7 +77,8 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
           {`${userProfile.age}`}, {`${userProfile.country}`}{" "}
         </p>
         <p className="profile-about">
-          Hey, my name is __ and i love to travel and explor new location
+          Hey, my name is {`${userProfile.firstname} ${userProfile.lastname}`}{" "}
+          and i love to travel and explor new location
         </p>
         {renderButtons()}
       </div>
