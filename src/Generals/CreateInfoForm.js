@@ -61,7 +61,8 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
             <form
               className="login-register-validate"
               onSubmit={submitForm}
-              action="/Login">
+              action="/Login"
+            >
               <span className="login-register-title">
                 Sign Up to Travel Match
               </span>
@@ -115,7 +116,8 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                     name="country"
                     value={userCountry}
                     className=" my-select"
-                    onChange={(event) => setUserCountry(event.target.value)}>
+                    onChange={(event) => setUserCountry(event.target.value)}
+                  >
                     {generateCountries()}
                   </select>
                 </div>
@@ -146,7 +148,8 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                   alt="Media Content"
                   height="200px"
                   width="200px"
-                  src={getURL(imgFile)}></img>
+                  src={getURL(imgFile)}
+                ></img>
               ) : null}
 
               <ImageUploader
@@ -156,11 +159,12 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                 onChange={onDrop}
                 singleImage={true}
                 imgExtension={[".jpg", ".jpeg", ".gif", ".png"]}
-                maxFileSize={5242880}
+                maxFileSize={10242880}
               />
               <div
                 className="container-form-btn"
-                style={{ paddingBottom: "10px" }}>
+                style={{ paddingBottom: "10px" }}
+              >
                 <div className="wrap-form-btn">
                   <div className="form-bgbtn"></div>
                   <button className="form-btn" type="submit">

@@ -43,7 +43,6 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
       .post("/match_request", matchUserDetails)
       .then(function (response) {
         socket.emit("newMatchInserted");
-        console.log(response);
         history.push(
           `/Matches/${createURLParameters(matchUserDetails, formData)}`
         );
