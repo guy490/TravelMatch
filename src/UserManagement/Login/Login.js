@@ -13,7 +13,8 @@ const Login = ({ signIn }) => {
 
   const submitForm = async (event) => {
     event.preventDefault();
-    let formData = createDictionaryForm(event);
+    let formData = await createDictionaryForm(event);
+    console.log(formData);
     server
       .post("/login_request", formData)
       .then(function (response) {

@@ -2,23 +2,25 @@ import React from "react";
 import CreateInfoForm from "../../Generals/CreateInfoForm";
 import { server } from "../../api";
 import { useHistory } from "react-router-dom";
-import { createDictionaryForm, uploadProfileImage } from "../../utilities";
+import { createDictionaryForm } from "../../utilities";
 
 const Register = () => {
   let history = useHistory();
 
   const submitForm = async (event) => {
     event.preventDefault();
-
-    let formData = createDictionaryForm(event);
-
+    let formData = {};
     try {
-      formData.profile_image = await uploadProfileImage(event);
-      console.log(formData.profile_image);
-    } catch {
-      alert("You must upload a profile image");
+      formData = await createDictionaryForm(event);
+      if (formData.profile_image instanceof Error) {
+        alert(formData.profile_image);
+        return;
+      }
+    } catch (error) {
+      alert(error);
       return;
     }
+
     server
       .post("/register_request", formData)
       .then(function (response) {

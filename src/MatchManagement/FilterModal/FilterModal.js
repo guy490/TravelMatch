@@ -32,7 +32,7 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
 
   const findMatches = async (event) => {
     event.preventDefault();
-    let formData = createDictionaryForm(event);
+    let formData = await createDictionaryForm(event);
     delete formData[""];
     if (formData.date === "") {
       formData.date = new Date(null);

@@ -78,11 +78,19 @@ const getType = (category) => {
       return null;
   }
 };
-const createDictionaryForm = ({ target }) => {
+const createDictionaryForm = async ({ target }) => {
   let details = {};
   for (let i = 0; target[i].type !== "submit"; i++) {
     let name = target[i].name;
-    let value = target[i].value;
+    let value;
+    if (name === "profile_image") {
+      value = await uploadProfileImage(target[i].files[0]);
+      if (!(value instanceof Error)) {
+        value = value.data.data.link;
+      }
+    } else {
+      value = target[i].value;
+    }
     details[name] = value;
   }
   return details;
@@ -99,22 +107,25 @@ const setUserCredentialsInLocalStorage = (userCredentials) => {
   );
 };
 
-const uploadProfileImage = async ({ target }) => {
-  const profileImageFile = target.querySelector("[name=profile_image]")
-    .files[0];
+const uploadProfileImage = async (profileImageFile) => {
   let tempImageData = new FormData();
   tempImageData.append("image", profileImageFile);
-  const response = await axios.post(
-    "https://api.imgur.com/3/image",
-    tempImageData,
-    {
+  const response = await axios
+    .post("https://api.imgur.com/3/image", tempImageData, {
       headers: {
         Authorization: `Client-ID ${process.env.REACT_APP_IMGUR_CLIENT_ID}`,
         Accept: "application/json",
       },
-    }
-  );
-  return response.data.data.link;
+    })
+    .catch(() => {
+      if (profileImageFile === undefined) {
+        let error = new Error("Image was not uploaded");
+        error.name = "Empty upload";
+        return error;
+      }
+      throw Error("Image file was not acceptible by the upload server");
+    });
+  return response;
 };
 
 export {
@@ -122,5 +133,4 @@ export {
   createDictionaryForm,
   getUserCredentialsFromLocalStorage,
   setUserCredentialsInLocalStorage,
-  uploadProfileImage,
 };
