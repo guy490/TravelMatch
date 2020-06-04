@@ -78,7 +78,7 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
         </p>
         <p className="profile-about">
           Hey, my name is {`${userProfile.firstname} ${userProfile.lastname}`}{" "}
-          and i love to travel and explor new location
+          and {userProfile.about}
         </p>
         {renderButtons()}
       </div>

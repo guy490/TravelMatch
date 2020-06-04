@@ -10,6 +10,7 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
   const [userCountry, setUserCountry] = useState(countries[106].name);
   const [userUsername, setUserUsername] = useState("");
   const [submitButtonName, setSubmitButtonName] = useState("Register");
+  const [aboutText, setAboutText] = useState("");
   const [imgFile, setImgFile] = useState(null);
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
         var file = new File([blob], "imageuploaded");
 
         setImgFile(file);
+        setAboutText(userData.about);
       });
     }
   }, [userData]);
@@ -137,6 +139,19 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                 </div>
               </div>
               {passwordField !== undefined ? passwordField() : ""}
+              <div className="wrap-input validate-input">
+                <span className="label-input">About</span>
+                <div className="focus-input">
+                  <i className="calendar alternate outline icon icons"></i>
+                  <textarea
+                    value={aboutText}
+                    onChange={(event) => setAboutText(event.target.value)}
+                    name="about"
+                    placeholder="Tell about your self"
+                    className="" // <--- need to be filled with textarea class
+                  />
+                </div>
+              </div>
               <div className="label-input">Upload your image</div>
               {imgFile !== null ? (
                 <img

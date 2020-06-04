@@ -54,6 +54,14 @@ let userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  about: {
+    type: String,
+    required: true,
+    validate: {
+      validator: (about) => about.length >= 20,
+      message: "The about section must be a least 20 characters",
+    },
+  },
 });
 
 userSchema.pre("save", function (next) {

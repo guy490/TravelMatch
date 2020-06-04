@@ -107,9 +107,12 @@ const DisplayMatches = ({ match }) => {
             src={`${matchObject.profile_image}`}
           />
           <div className="content">
-            <a href=" " className="header">
+            <Link
+              to={{ pathname: `/Profile/${matchObject._id}` }}
+              className="header"
+            >
               {`${matchObject.firstname} ${matchObject.lastname}`}
-            </a>
+            </Link>
             <div className="description">
               {`${matchObject.age} years old`}
               <br />
