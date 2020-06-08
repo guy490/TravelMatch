@@ -63,8 +63,7 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
             <form
               className="login-register-validate"
               onSubmit={submitForm}
-              action="/Login"
-            >
+              action="/Login">
               <span className="login-register-title">
                 Sign Up to Travel Match
               </span>
@@ -118,8 +117,7 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                     name="country"
                     value={userCountry}
                     className=" my-select"
-                    onChange={(event) => setUserCountry(event.target.value)}
-                  >
+                    onChange={(event) => setUserCountry(event.target.value)}>
                     {generateCountries()}
                   </select>
                 </div>
@@ -139,17 +137,18 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                 </div>
               </div>
               {passwordField !== undefined ? passwordField() : ""}
-              <div className="wrap-input validate-input">
+              <div className=" validate-input">
                 <span className="label-input">About</span>
                 <div className="focus-input">
-                  <i className="calendar alternate outline icon icons"></i>
+                  {/* <i className="calendar alternate outline icon icons"></i> */}
                   <textarea
                     value={aboutText}
                     onChange={(event) => setAboutText(event.target.value)}
                     name="about"
-                    placeholder="Tell about your self"
-                    className="" // <--- need to be filled with textarea class
+                    placeholder="Tell about yourself"
+                    className="my-textarea" // <--- need to be filled with textarea class
                   />
+                  <i className="comment outline icon textarea-icon"></i>
                 </div>
               </div>
               <div className="label-input">Upload your image</div>
@@ -163,8 +162,7 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                   alt="Media Content"
                   height="200px"
                   width="200px"
-                  src={getURL(imgFile)}
-                ></img>
+                  src={getURL(imgFile)}></img>
               ) : null}
 
               <ImageUploader
@@ -178,8 +176,7 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
               />
               <div
                 className="container-form-btn"
-                style={{ paddingBottom: "10px" }}
-              >
+                style={{ paddingBottom: "10px" }}>
                 <div className="wrap-form-btn">
                   <div className="form-bgbtn"></div>
                   <button className="form-btn" type="submit">
