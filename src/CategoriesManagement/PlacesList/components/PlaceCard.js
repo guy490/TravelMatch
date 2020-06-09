@@ -67,23 +67,26 @@ const PlaceCard = ({ place }) => {
         />
       </div>
       <div className="content">
-        <div className="header">{place.name}</div>
+        <div className="header">
+          {place.name} {checkOpennings(place)}
+        </div>
         <div className="meta">
           <span className="cinema">{place.vicinity}</span>
         </div>
-        <div className="extra">
-          {checkOpennings(place)}
-          <div className="ui label">
-            {place.rating}
-            <Rating
-              icon="star"
-              rating={`${place.rating}`}
-              maxRating={5}
-              disabled
-            />
-          </div>
+        <div className="extra" style={{ marginBottom: "10px" }}>
+          {place.rating}
+          <Rating
+            style={{ marginLeft: "2px" }}
+            icon="star"
+            rating={`${place.rating}`}
+            maxRating={5}
+            disabled
+          />
         </div>
-        <button className="ui button green" onClick={openModal}>
+        <button
+          className="ui basic button floated circular"
+          onClick={openModal}>
+          <i className="search icon"></i>
           Find Match
         </button>
       </div>

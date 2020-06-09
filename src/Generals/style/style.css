@@ -134,7 +134,7 @@
   background: transparent;
 }
 
-.text {
+.or-text {
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -156,7 +156,7 @@
 .card-wrap {
   width: 320px;
   height: 540px;
-  background: #FDFEFF;
+  background: #fdfeff;
   border-radius: 10px;
   padding: 20px 20px 20px 20px;
   box-shadow: 0px 8px 40px 0px rgba(0, 0, 0, 0.2);
@@ -173,11 +173,9 @@
   flex-direction: column;
   justify-content: center;
 
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 100%;
 }
-
-
 
 .card-container .round {
   width: 124px;
@@ -191,15 +189,15 @@
 }
 
 .profie-name {
-  color: #2D354A;
+  color: #2d354a;
   font-size: 24px;
   font-weight: 600;
   text-align: center;
 }
 
 .profile-country-age {
-  color: #7C8097;
-  font-size: .75em;
+  color: #7c8097;
+  font-size: 0.75em;
   font-weight: 300;
   text-align: center;
   /* padding-top: .5em; */
@@ -214,11 +212,9 @@
   font-weight: 300;
   text-align: center;
   margin-bottom: 10em;
-
 }
 
 .profile-btn {
-
   color: #fff;
   width: 130px;
   height: 42px;
@@ -230,13 +226,12 @@
   margin-left: auto;
   margin-right: auto;
   border-radius: 70px;
-  box-shadow: 0 13px 26px rgba(#000, .16), 0 3px 6px rgba(#000, .16);
+  box-shadow: 0 13px 26px rgba(#000, 0.16), 0 3px 6px rgba(#000, 0.16);
   background: linear-gradient(to right,
       #00a1d6 25%,
       rgba(0, 161, 214, 0.4) 46%,
       rgba(0, 161, 214, 0) 100%),
     linear-gradient(to right, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
-
 }
 
 .profile-btn-title {
@@ -252,14 +247,14 @@
   border-radius: 10px;
   outline: none;
   text-align: start;
-  position: relative
+  position: relative;
 }
 
 .textarea-icon {
   position: absolute;
   right: 2px;
   bottom: 34px;
-  color: #adadad
+  color: #adadad;
 }
 
 .my-textarea::placeholder {
@@ -269,4 +264,11 @@
   color: #333333;
   opacity: 0.8;
   letter-spacing: 0.8px;
+}
+
+.image-item-placecard {
+  height: 20vh !important;
+  width: 20vh !important;
+  margin-left: 10px;
+
 }

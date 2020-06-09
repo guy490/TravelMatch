@@ -69,7 +69,7 @@ const Login = ({ signIn }) => {
                 </button>
               </div>
             </div>
-            <div className="text">OR</div>
+            <div className="or-text">OR</div>
             <Link to="/Register">
               <div className="container-form-btn">
                 <div className="wrap-form-btn">
