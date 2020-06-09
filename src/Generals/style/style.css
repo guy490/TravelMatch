@@ -13,10 +13,12 @@
   background-position: center;
   background-size: cover;
   background: #00a1d6;
-  background: linear-gradient(-180deg,
+  background: linear-gradient(
+      -180deg,
       #00a1d6 25%,
       rgba(0, 161, 214, 0.4) 46%,
-      rgba(0, 161, 214, 0) 100%),
+      rgba(0, 161, 214, 0) 100%
+    ),
     linear-gradient(-180deg, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
   overflow-y: hidden;
 }
@@ -108,10 +110,12 @@
   width: 300%;
   height: 100%;
   background: #00a1d6;
-  background: linear-gradient(to right,
+  background: linear-gradient(
+      to right,
       #00a1d6 25%,
       rgba(0, 161, 214, 0.4) 46%,
-      rgba(0, 161, 214, 0) 100%),
+      rgba(0, 161, 214, 0) 100%
+    ),
     linear-gradient(to right, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
 
   top: 0;
@@ -227,10 +231,12 @@
   margin-right: auto;
   border-radius: 70px;
   box-shadow: 0 13px 26px rgba(#000, 0.16), 0 3px 6px rgba(#000, 0.16);
-  background: linear-gradient(to right,
+  background: linear-gradient(
+      to right,
       #00a1d6 25%,
       rgba(0, 161, 214, 0.4) 46%,
-      rgba(0, 161, 214, 0) 100%),
+      rgba(0, 161, 214, 0) 100%
+    ),
     linear-gradient(to right, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
 }
 
@@ -270,5 +276,4 @@
   height: 20vh !important;
   width: 20vh !important;
   margin-left: 10px;
-
 }
