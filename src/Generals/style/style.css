@@ -13,12 +13,10 @@
   background-position: center;
   background-size: cover;
   background: #00a1d6;
-  background: linear-gradient(
-      -180deg,
+  background: linear-gradient(-180deg,
       #00a1d6 25%,
       rgba(0, 161, 214, 0.4) 46%,
-      rgba(0, 161, 214, 0) 100%
-    ),
+      rgba(0, 161, 214, 0) 100%),
     linear-gradient(-180deg, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
   overflow-y: hidden;
 }
@@ -110,12 +108,10 @@
   width: 300%;
   height: 100%;
   background: #00a1d6;
-  background: linear-gradient(
-      to right,
+  background: linear-gradient(to right,
       #00a1d6 25%,
       rgba(0, 161, 214, 0.4) 46%,
-      rgba(0, 161, 214, 0) 100%
-    ),
+      rgba(0, 161, 214, 0) 100%),
     linear-gradient(to right, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
 
   top: 0;
@@ -176,7 +172,6 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-
   font-family: "Open Sans", sans-serif;
   font-size: 100%;
 }
@@ -231,12 +226,10 @@
   margin-right: auto;
   border-radius: 70px;
   box-shadow: 0 13px 26px rgba(#000, 0.16), 0 3px 6px rgba(#000, 0.16);
-  background: linear-gradient(
-      to right,
+  background: linear-gradient(to right,
       #00a1d6 25%,
       rgba(0, 161, 214, 0.4) 46%,
-      rgba(0, 161, 214, 0) 100%
-    ),
+      rgba(0, 161, 214, 0) 100%),
     linear-gradient(to right, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
 }
 
@@ -276,4 +269,31 @@
   height: 20vh !important;
   width: 20vh !important;
   margin-left: 10px;
+}
+
+.modal-div {
+  box-sizing: border-box;
+}
+
+.modal {
+  position: fixed;
+  overflow-y: scroll;
+  background: white;
+  box-shadow: 1px 2px 4px 2px #888888;
+  max-height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: auto;
+  width: 90%;
+}
+
+.my-filter-form {
+  padding: 20px;
+}
+
+.match-filter-label {
+  padding-bottom: 5px;
+  font-family: "Open Sans", sans-serif !important;
+  font-weight: 500;
 }

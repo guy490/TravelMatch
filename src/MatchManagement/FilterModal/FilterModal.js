@@ -96,7 +96,7 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
   };
 
   const inputHandler = (event) => {
-    const siblings = getNextSiblings(event.target, "inputs");
+    const siblings = getNextSiblings(event.target, "my-input");
     siblings.forEach((el) => {
       el.disabled = !event.target.checked;
     });
@@ -105,67 +105,84 @@ const FilterModal = ({ userCredentials, location, placeID, ...props }) => {
   return (
     <Modal className="modal" {...props}>
       <div className="modal-div">
-        <form className="ui form" onSubmit={findMatches}>
+        <div className="ui message" style={{ margin: "7px" }}>
+          <div className="header">Matches Filter</div>
+          <ul className="list">
+            <li>You can select several filtering options </li>
+            <li>You can click "Find Match" without filtering options</li>
+          </ul>
+        </div>
+        <form className="ui form my-filter-form" onSubmit={findMatches}>
           <div className="field">
-            <label>Age range:</label>
-            <input type="checkbox" onChange={inputHandler} />
-            <div>from</div>
-            <input
-              className="inputs"
-              type="number"
-              name="fromAge"
-              placeholder="From Age"
-              defaultValue={0}
-              disabled
-            />
-            <div>to</div>
-            <input
-              className="inputs"
-              type="number"
-              name="toAge"
-              placeholder="To Age"
-              defaultValue={0}
-              disabled
-            />
+            <div className="ui checkbox">
+              <input type="checkbox" onChange={inputHandler} />
+              <label className="match-filter-label">Age</label>
+              <div>From</div>
+              <input
+                className="my-input"
+                type="number"
+                name="fromAge"
+                placeholder="From Age"
+                defaultValue={0}
+                disabled
+              />
+              <div>To</div>
+              <input
+                className="my-input"
+                type="number"
+                name="toAge"
+                placeholder="To Age"
+                defaultValue={0}
+                disabled
+              />
+            </div>
           </div>
           <div className="field">
-            <label>Gender</label>
-            <input type="checkbox" onChange={inputHandler} />
-            <select className="inputs" name="gender" disabled>
-              <option key="None" value="None">
-                None
-              </option>
-              <option key="Male" value="Male">
-                Male
-              </option>
-              <option key="Female" value="Female">
-                Female
-              </option>
-            </select>
+            <div className="ui checkbox">
+              <input type="checkbox" onChange={inputHandler} />
+              <label className="match-filter-label">Gender</label>
+              <select className="my-input" name="gender" disabled>
+                <option key="None" value="None">
+                  None
+                </option>
+                <option key="Male" value="Male">
+                  Male
+                </option>
+                <option key="Female" value="Female">
+                  Female
+                </option>
+              </select>
+            </div>
           </div>
           <div className="field">
-            <label>Country</label>
-            <input type="checkbox" onChange={inputHandler} />
-            <select className="inputs" name="country" disabled>
-              <option key="None" value="None">
-                None
-              </option>
-              {generateCountries()}
-            </select>
+            <div className="ui checkbox">
+              <input type="checkbox" onChange={inputHandler} />
+              <label className="match-filter-label">Country</label>
+              <select className="my-input" name="country" disabled>
+                <option key="None" value="None">
+                  None
+                </option>
+                {generateCountries()}
+              </select>
+            </div>
           </div>
           <div className="field">
-            <label>Pick a date</label>
-            <DatePicker
-              autoComplete="off"
-              name="date"
-              selected={date}
-              onChange={(date) => setDate(date)}
-              minDate={new Date()}
-              maxDate={addDays(new Date(), 7)}
-              placeholderText="Select a date"
-            />
+            <div className="ui checkbox">
+              <input type="checkbox" onChange={inputHandler} />
+              <label className="match-filter-label">Pick a date</label>
+              <DatePicker
+                autoComplete="off"
+                name="date"
+                selected={date}
+                onChange={(date) => setDate(date)}
+                minDate={new Date()}
+                maxDate={addDays(new Date(), 7)}
+                placeholderText="Select a date"
+              />
+            </div>
           </div>
-          <button className="ui button green" type="submit">
+          <button className="ui black button floated circular" type="submit">
+            <i className="search icon"></i>
             Find Match
           </button>
         </form>

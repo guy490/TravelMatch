@@ -2,7 +2,7 @@ import "./DisplayMyMatches.css";
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { server, socket } from "../../api";
-import { SegmentInline } from "semantic-ui-react";
+// import { SegmentInline } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const DisplayMyMatches = ({ match }) => {
@@ -78,13 +78,19 @@ const DisplayMyMatches = ({ match }) => {
           const month = placeObject[key].getMonth();
           const fullYear = placeObject[key].getFullYear();
           filters.push(
-            <span key={key} className="ui tag label">
+            <span
+              key={key}
+              className="ui tag label"
+              style={{ transform: "translate(-10px, 15px)" }}>
               {key}:{`${day}/${month}/${fullYear}`}
             </span>
           );
         } else {
           filters.push(
-            <span key={key} className="ui tag label">
+            <span
+              key={key}
+              className="ui tag label"
+              style={{ transform: "translate(-10px, 15px)" }}>
               {key}: {placeObject[key]}
             </span>
           );
@@ -100,25 +106,35 @@ const DisplayMyMatches = ({ match }) => {
 
     return placesMatchList.map((place) => {
       return (
-        <Link
-          to={{
-            pathname: `/Matches/${match.params.userID}&${place.place_id}&${
-              place.latitude
-            }&${place.longitude}&${place.attributes.fromAge}&${
-              place.attributes.toAge
-            }&${place.attributes.gender}&${
-              place.attributes.country
-            }&${encodeURIComponent(place.attributes.date)}`,
-          }}
+        <div
+          className="ui clearing segment"
           key={place.place_id}
-          style={{ display: SegmentInline }}
-          className="item"
-        >
-          {/* <img
+          style={{ margin: "10px" }}>
+          <Link
+            to={{
+              pathname: `/Matches/${match.params.userID}&${place.place_id}&${
+                place.latitude
+              }&${place.longitude}&${place.attributes.fromAge}&${
+                place.attributes.toAge
+              }&${place.attributes.gender}&${
+                place.attributes.country
+              }&${encodeURIComponent(place.attributes.date)}`,
+            }}
+            key={place.place_id}
+            //style={{ display: SegmentInline }}
+            //className="ui clearing segment"
+          >
+            <div
+              style={{
+                transform: "translate(10px, 10px)",
+              }}>{`${place.name}`}</div>
+            <span>{renderFilters(place.attributes)}</span>
+
+            {/* <img
             alt=" "
             className="ui avatar image profile-image"
             src="https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
-          /> */}
+          /> }
           <div className="content">
             <span className="header">{`${place.name}`}</span>
           </div>
@@ -126,12 +142,19 @@ const DisplayMyMatches = ({ match }) => {
           <div className="buttons-div">
             <button
               onClick={() => deleteMatch(place.place_id)}
-              className="ui button red match-buttons"
-            >
+              className="ui button red match-buttons">
               Delete
             </button>
-          </div>
-        </Link>
+          </div>*/}
+          </Link>
+
+          <button
+            className="ui circular red icon right floated button"
+            style={{ transform: "translate(10px, -15px)" }}
+            onClick={() => deleteMatch(place.place_id)}>
+            <i className="trash alternate icon"></i>
+          </button>
+        </div>
       );
     });
   };
@@ -148,9 +171,8 @@ const DisplayMyMatches = ({ match }) => {
             pathname: `/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`,
           }}
           key={taxi._id}
-          style={{ display: SegmentInline }}
-          className="item"
-        >
+          // style={{ display: SegmentInline }}
+          className="item">
           <div className="content">
             <span className="header">Taxi Request from:</span>
             <div>
