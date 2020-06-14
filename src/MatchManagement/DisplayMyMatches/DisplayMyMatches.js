@@ -78,10 +78,7 @@ const DisplayMyMatches = ({ match }) => {
           const month = placeObject[key].getMonth();
           const fullYear = placeObject[key].getFullYear();
           filters.push(
-            <span
-              key={key}
-              className="ui label"
-              style={{ transform: "translate(-10px, 15px)" }}>
+            <span key={key} className="ui label filter-label">
               <i className="calendar alternate outline icon"></i>
               {`${day}/${month}/${fullYear}`}
             </span>
@@ -89,10 +86,7 @@ const DisplayMyMatches = ({ match }) => {
         } else if (key === "fromAge") {
           const fromAge = placeObject[key];
           filters.push(
-            <span
-              key={key}
-              className="ui label"
-              style={{ transform: "translate(-10px, 15px)" }}>
+            <span key={key} className="ui label filter-label">
               <i className="sort numeric down icon"></i>
               from {fromAge} years old
             </span>
@@ -100,10 +94,7 @@ const DisplayMyMatches = ({ match }) => {
         } else if (key === "toAge") {
           const toAge = placeObject[key];
           filters.push(
-            <span
-              key={key}
-              className="ui label"
-              style={{ transform: "translate(-10px, 15px)" }}>
+            <span key={key} className="ui label filter-label">
               <i className="sort numeric down icon"></i>
               to {toAge} years old
             </span>
@@ -111,22 +102,15 @@ const DisplayMyMatches = ({ match }) => {
         } else if (key === "country") {
           const country = placeObject[key];
           filters.push(
-            <span
-              key={key}
-              className="ui label"
-              style={{ transform: "translate(-10px, 15px)" }}>
-              <i className="map marker alternate icon"></i>
+            <span key={key} className="ui label filter-label">
+              <i className="globe icon"></i>
               {country}
             </span>
           );
         } else if (key === "gender") {
           const gender = placeObject[key];
           filters.push(
-            <span
-              key={key}
-              className="ui label"
-              style={{ transform: "translate(-10px, 15px)" }}>
-              {" "}
+            <span key={key} className="ui label filter-label">
               <i className="venus mars icon"></i>
               {gender}
             </span>
@@ -144,7 +128,7 @@ const DisplayMyMatches = ({ match }) => {
     return placesMatchList.map((place) => {
       return (
         <div
-          className="ui clearing segment"
+          className="ui raised segment"
           key={place.place_id}
           style={{ margin: "10px" }}>
           <Link
@@ -157,14 +141,8 @@ const DisplayMyMatches = ({ match }) => {
                 place.attributes.country
               }&${encodeURIComponent(place.attributes.date)}`,
             }}
-            key={place.place_id}
-            //style={{ display: SegmentInline }}
-            //className="ui clearing segment"
-          >
-            <div
-              style={{
-                transform: "translate(10px, 10px)",
-              }}>{`${place.name}`}</div>
+            key={place.place_id}>
+            <div className="header-link">{`${place.name}`} </div>
             <span>{renderFilters(place.attributes)}</span>
 
             {/* <img
@@ -187,7 +165,7 @@ const DisplayMyMatches = ({ match }) => {
 
           <button
             className="ui circular red icon right floated button"
-            style={{ transform: "translate(10px, -15px)" }}
+            style={{ transform: "translate(20%, -75%)" }}
             onClick={() => deleteMatch(place.place_id)}>
             <i className="trash alternate icon"></i>
           </button>
@@ -203,26 +181,46 @@ const DisplayMyMatches = ({ match }) => {
 
     return locationMatchList.map((taxi) => {
       return (
-        <Link
-          to={{
-            pathname: `/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`,
-          }}
+        <div
+          className="ui raised segment"
           key={taxi._id}
-          // style={{ display: SegmentInline }}
-          className="item">
-          <div className="content">
-            <span className="header">Taxi Request from:</span>
-            <div>
-              Latitude: {taxi.source.lat.toFixed(2)}, Longitude:{" "}
-              {taxi.source.lng.toFixed(2)}
+          style={{ margin: "10px" }}>
+          <Link
+            to={{
+              pathname: `/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`,
+            }}
+            key={taxi._id}>
+            <div className="header-link">Texi Request </div>
+            <div className="from-to-text">
+              From
+              <span className="ui label location-label">
+                <i className="map marker alternate icon "></i>(
+                {taxi.source.lat.toFixed(2)} , {taxi.source.lng.toFixed(2)})
+              </span>
             </div>
-            <span className="header">To:</span>
-            <div>
-              Latitude: {taxi.destination.lat.toFixed(2)}, Longitude:{" "}
-              {taxi.destination.lng.toFixed(2)}
+            <div className="from-to-text">
+              To
+              <span className="ui label location-label">
+                <i className="map marker alternate icon"></i>(
+                {taxi.destination.lat.toFixed(2)} , {taxi.source.lng.toFixed(2)}
+                )
+              </span>
             </div>
-          </div>
-          {/* <div className="buttons-div">
+
+            {/* <div className="content">
+              <span className="header">Taxi Request from:</span>
+              <div>
+                Latitude: {taxi.source.lat.toFixed(2)}, Longitude:{" "}
+                {taxi.source.lng.toFixed(2)}
+              </div>
+              <span className="header">To:</span>
+              <div>
+                Latitude: {taxi.destination.lat.toFixed(2)}, Longitude:{" "}
+                {taxi.destination.lng.toFixed(2)}
+              </div>
+            </div> */}
+
+            {/* <div className="buttons-div">
             <button
               onClick={() => deleteMatch(place.place_id)}
               className="ui button red match-buttons"
@@ -230,7 +228,8 @@ const DisplayMyMatches = ({ match }) => {
               Delete
             </button>
           </div> */}
-        </Link>
+          </Link>
+        </div>
       );
     });
   };
