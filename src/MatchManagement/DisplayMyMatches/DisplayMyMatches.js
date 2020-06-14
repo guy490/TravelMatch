@@ -80,18 +80,55 @@ const DisplayMyMatches = ({ match }) => {
           filters.push(
             <span
               key={key}
-              className="ui tag label"
+              className="ui label"
               style={{ transform: "translate(-10px, 15px)" }}>
-              {key}:{`${day}/${month}/${fullYear}`}
+              <i className="calendar alternate outline icon"></i>
+              {`${day}/${month}/${fullYear}`}
             </span>
           );
-        } else {
+        } else if (key === "fromAge") {
+          const fromAge = placeObject[key];
           filters.push(
             <span
               key={key}
-              className="ui tag label"
+              className="ui label"
               style={{ transform: "translate(-10px, 15px)" }}>
-              {key}: {placeObject[key]}
+              <i className="sort numeric down icon"></i>
+              from {fromAge} years old
+            </span>
+          );
+        } else if (key === "toAge") {
+          const toAge = placeObject[key];
+          filters.push(
+            <span
+              key={key}
+              className="ui label"
+              style={{ transform: "translate(-10px, 15px)" }}>
+              <i className="sort numeric down icon"></i>
+              to {toAge} years old
+            </span>
+          );
+        } else if (key === "country") {
+          const country = placeObject[key];
+          filters.push(
+            <span
+              key={key}
+              className="ui label"
+              style={{ transform: "translate(-10px, 15px)" }}>
+              <i className="map marker alternate icon"></i>
+              {country}
+            </span>
+          );
+        } else if (key === "gender") {
+          const gender = placeObject[key];
+          filters.push(
+            <span
+              key={key}
+              className="ui label"
+              style={{ transform: "translate(-10px, 15px)" }}>
+              {" "}
+              <i className="venus mars icon"></i>
+              {gender}
             </span>
           );
         }
