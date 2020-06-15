@@ -83,9 +83,7 @@ const PlaceCard = ({ place }) => {
             disabled
           />
         </div>
-        <button
-          className="ui basic button floated circular"
-          onClick={openModal}>
+        <button className="ui gray button floated circular" onClick={openModal}>
           <i className="search icon"></i>
           Find Match
         </button>
