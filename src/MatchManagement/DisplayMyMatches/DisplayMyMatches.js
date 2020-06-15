@@ -2,13 +2,11 @@ import "./DisplayMyMatches.css";
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { server, socket } from "../../api";
-// import { SegmentInline } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const DisplayMyMatches = ({ match }) => {
   const [placesMatchList, setPlacesMatchList] = useState([]);
   const [locationMatchList, setLocationMatchList] = useState([]);
-
   const componentIsMounted = useRef(true);
 
   useEffect(() => {
@@ -127,10 +125,7 @@ const DisplayMyMatches = ({ match }) => {
 
     return placesMatchList.map((place) => {
       return (
-        <div
-          className="ui raised segment"
-          key={place.place_id}
-          style={{ margin: "10px" }}>
+        <div className="ui raised segment my-segment" key={place.place_id}>
           <Link
             to={{
               pathname: `/Matches/${match.params.userID}&${place.place_id}&${
@@ -144,23 +139,6 @@ const DisplayMyMatches = ({ match }) => {
             key={place.place_id}>
             <div className="header-link">{`${place.name}`} </div>
             <span>{renderFilters(place.attributes)}</span>
-
-            {/* <img
-            alt=" "
-            className="ui avatar image profile-image"
-            src="https://legacytaylorsville.com/wp-content/uploads/2015/07/No-Image-Available1-300x300.png"
-          /> }
-          <div className="content">
-            <span className="header">{`${place.name}`}</span>
-          </div>
-          {renderFilters(place.attributes)}
-          <div className="buttons-div">
-            <button
-              onClick={() => deleteMatch(place.place_id)}
-              className="ui button red match-buttons">
-              Delete
-            </button>
-          </div>*/}
           </Link>
 
           <button
@@ -181,10 +159,7 @@ const DisplayMyMatches = ({ match }) => {
 
     return locationMatchList.map((taxi) => {
       return (
-        <div
-          className="ui raised segment"
-          key={taxi._id}
-          style={{ margin: "10px" }}>
+        <div className="ui raised segment my-segment" key={taxi._id}>
           <Link
             to={{
               pathname: `/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`,
@@ -206,28 +181,6 @@ const DisplayMyMatches = ({ match }) => {
                 )
               </span>
             </div>
-
-            {/* <div className="content">
-              <span className="header">Taxi Request from:</span>
-              <div>
-                Latitude: {taxi.source.lat.toFixed(2)}, Longitude:{" "}
-                {taxi.source.lng.toFixed(2)}
-              </div>
-              <span className="header">To:</span>
-              <div>
-                Latitude: {taxi.destination.lat.toFixed(2)}, Longitude:{" "}
-                {taxi.destination.lng.toFixed(2)}
-              </div>
-            </div> */}
-
-            {/* <div className="buttons-div">
-            <button
-              onClick={() => deleteMatch(place.place_id)}
-              className="ui button red match-buttons"
-            >
-              Delete
-            </button>
-          </div> */}
           </Link>
         </div>
       );
@@ -236,6 +189,10 @@ const DisplayMyMatches = ({ match }) => {
 
   return (
     <div className="ui celled list">
+      <div className="page-title">
+        My Matches
+        <hr />
+      </div>
       {renderPlaceMatches()}
       {renderTaxiMatches()}
     </div>

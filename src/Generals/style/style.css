@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500&display=swap');
+
 
 .login-register-containter {
   font-family: "Rubik", sans-serif;
@@ -298,6 +300,11 @@
   font-weight: 500;
 }
 
+.my-segment {
+  border-radius: 12px !important;
+  margin: 10px !important;
+}
+
 .filter-label {
   transform: translate(-10px, 15px) !important;
   margin: 3px !important;
@@ -306,7 +313,8 @@
 
 .header-link {
   text-decoration: none;
-  color: black;
+  color: #000000ba;
+
   font-family: "Rubik", sans-serif;
   font-size: 15px;
   font-weight: bold;
@@ -315,7 +323,7 @@
 
 .from-to-text {
   text-decoration: none;
-  color: black;
+  color: #000000ba;
   font-family: "Rubik", sans-serif;
   font-size: 12px;
   margin-bottom: 1px
@@ -323,4 +331,40 @@
 
 .location-label {
   margin-left: 5px !important;
+}
+
+.page-title {
+  font-family: "Rubik", sans-serif;
+  display: block;
+  font-size: 40px;
+  color: #000000ba;
+  line-height: 1.2;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  font-weight: bolder;
+  text-shadow: 1px 3px 7px rgba(72, 78, 84, 0.54);
+}
+
+hr {
+  margin: 6px auto;
+  width: 20%;
+  border: 1px solid hsla(0, 0%, 45.9%, .8);
+  border-radius: 50%;
+}
+
+.match-buttons-div {
+  text-align: center;
+  float: right;
+  transform: translate(0px, 10px)
+}
+
+.match-profile-image {
+  width: 8vh !important;
+  height: 8vh !important;
+}
+
+.match-button-icon {
+  padding-right: 3px !important;
+  box-sizing: initial !important;
 }

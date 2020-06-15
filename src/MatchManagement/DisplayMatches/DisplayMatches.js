@@ -98,41 +98,37 @@ const DisplayMatches = ({ match }) => {
       return (
         <div
           key={matchObject._id}
-          style={{ display: SegmentInline }}
-          className="item"
-        >
+          style={{ margin: "5px", paddingTop: "10px" }}
+          className="item">
           <img
-            alt=" "
-            className="ui avatar image profile-image"
+            alt=""
+            className="ui avatar image match-profile-image"
             src={`${matchObject.profile_image}`}
           />
           <div className="content">
-            <Link
+            <div
               to={{ pathname: `/Profile/${matchObject._id}` }}
-              className="header"
-            >
+              className="header-link">
               {`${matchObject.firstname} ${matchObject.lastname}`}
-            </Link>
+            </div>
             <div className="description">
               {`${matchObject.age} years old`}
               <br />
               {`${matchObject.country}`}
             </div>
           </div>
-          <div className="buttons-div">
+          <div className="match-buttons-div">
             <Link
               to={{ pathname: `/Profile/${matchObject._id}` }}
-              className="ui button blue match-buttons"
-            >
-              Profile
+              className="ui circular icon basic button">
+              <i class="user circle icon"></i> Profile
             </Link>
             <Link
               to={{
                 pathname: `/Chat/${matchObject._id}&${matchObject.username}`,
               }}
-              className="ui button green match-buttons"
-            >
-              Chat
+              className="ui circular icon basic button">
+              <i class="comments outline icon match-button-icon"></i> Chat
             </Link>
           </div>
         </div>
@@ -140,7 +136,15 @@ const DisplayMatches = ({ match }) => {
     });
   };
 
-  return <div className="ui celled list">{renderMatches()}</div>;
+  return (
+    <div>
+      <div className="page-title">
+        Matches
+        <hr />
+      </div>
+      <div className="ui divided list">{renderMatches()}</div>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
