@@ -2,7 +2,6 @@ import "./DisplayMatches.css";
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import { server, socket } from "../../api";
-import { SegmentInline } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 const DisplayMatches = ({ match }) => {
