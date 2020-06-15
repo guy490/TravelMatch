@@ -24,23 +24,25 @@ const Comment = (props) => {
         <img
           src={props.image}
           alt=""
-          style={{ borderRadius: "50%", width: "30px", height: "30px" }}
+          style={{ borderRadius: "50%", width: "40px", height: "40px" }}
         />
       </div>
     );
   };
   return (
-    <div className="comment">
-      <div className="content">
+    <div class="ui segment" style={{ borderRadius: "40px" }}>
+      <div className="comment">
         {renderAvatar()}
-        <a className="author" href="www.walla.com">
-          {props.name}
-        </a>
-        <div className="metadata">
-          <div>{date}</div>
-        </div>
-        <div className="text">
-          <p>{props.text}</p>
+        <div className="content">
+          <span className="author" href="">
+            {props.name}
+          </span>
+          <div className="metadata">
+            <div>{date}</div>
+          </div>
+          <div className="text">
+            <p>{props.text}</p>
+          </div>
         </div>
       </div>
     </div>
