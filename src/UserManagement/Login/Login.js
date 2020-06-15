@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { server, socket } from "../../api";
 import {
@@ -7,28 +7,33 @@ import {
 } from "../../utilities";
 import { connect } from "react-redux";
 import { signIn } from "../../Redux/Actions";
+import FlashMessage from "react-flash-message";
 
 const Login = ({ signIn }) => {
+  const [showMsg, setshowMsg] = useState(false);
   let history = useHistory();
 
   const submitForm = async (event) => {
     event.preventDefault();
     let formData = await createDictionaryForm(event);
     server
+
       .post("/login_request", formData)
       .then(function (response) {
         const userCredentials = response.data;
         setUserCredentialsInLocalStorage(userCredentials);
         socket.emit("updateClientList", userCredentials._id);
-
         signIn(userCredentials);
         console.log(response);
-        alert("Login Successful");
+        setshowMsg(false);
+        // alert("Login Successful");
         history.push("/Category");
       })
       .catch((error) => {
-        alert(error.request.responseText);
+        setshowMsg(true);
+        // alert(error.request.responseText);
       });
+    setshowMsg(false);
   };
 
   const createForm = () => {
@@ -81,6 +86,19 @@ const Login = ({ signIn }) => {
               </div>
             </Link>
           </form>
+          {showMsg ? (
+            <div>
+              <FlashMessage duration={7000}>
+                <div
+                  className="ui small negative message"
+                  style={{ marginTop: "5px" }}>
+                  <div>Username or Password is incorrect</div>
+                </div>
+              </FlashMessage>
+            </div>
+          ) : (
+            <span></span>
+          )}
         </div>
       </div>
     );
