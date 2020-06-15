@@ -1,9 +1,11 @@
 import "../styles/TextArea.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { socket } from "../../api";
 import { connect } from "react-redux";
 
 const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
+  const [textMessage, setTextMessage] = useState("");
+
   useEffect(() => {
     const participants = {
       senderName: userProfile.username,
@@ -20,14 +22,26 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
         receiverID: destinationUserID,
         receiverName: destinationUsername,
         date: new Date(),
-        text: event.target.value,
+        text: textMessage,
         image: userProfile.profile_image,
       };
-      event.target.value = "";
+      setTextMessage("");
       socket.emit("sendMessage", JSON.stringify(message));
     }
   };
-  const onSend = () => {};
+  const onSend = () => {
+    const message = {
+      senderID: userProfile.userID,
+      senderName: userProfile.username,
+      receiverID: destinationUserID,
+      receiverName: destinationUsername,
+      date: new Date(),
+      text: textMessage,
+      image: userProfile.profile_image,
+    };
+    setTextMessage("");
+    socket.emit("sendMessage", JSON.stringify(message));
+  };
 
   return (
     <div>
@@ -37,6 +51,8 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
           placeholder="Chat"
           className="input-sizing"
           onKeyPress={onSubmit}
+          value={textMessage}
+          onChange={(e) => setTextMessage(e.target.value)}
         />
       </div>
       <button
