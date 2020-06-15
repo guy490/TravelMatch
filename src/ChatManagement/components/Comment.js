@@ -30,7 +30,7 @@ const Comment = (props) => {
     );
   };
   return (
-    <div class="ui segment" style={{ borderRadius: "40px" }}>
+    <div className="ui segment" style={{ borderRadius: "40px" }}>
       <div className="comment">
         {renderAvatar()}
         <div className="content">

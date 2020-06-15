@@ -120,14 +120,14 @@ const DisplayMatches = ({ match }) => {
             <Link
               to={{ pathname: `/Profile/${matchObject._id}` }}
               className="ui circular icon basic button">
-              <i class="user circle icon"></i> Profile
+              <i className="user circle icon"></i> Profile
             </Link>
             <Link
               to={{
                 pathname: `/Chat/${matchObject._id}&${matchObject.username}`,
               }}
               className="ui circular icon basic button">
-              <i class="comments outline icon match-button-icon"></i> Chat
+              <i className="comments outline icon match-button-icon"></i> Chat
             </Link>
           </div>
         </div>

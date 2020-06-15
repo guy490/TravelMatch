@@ -27,15 +27,25 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
       socket.emit("sendMessage", JSON.stringify(message));
     }
   };
+  const onSend = () => {};
 
   return (
-    <div className="ui container fluid focus input">
-      <input
-        type="text"
-        placeholder="Chat"
-        className="input-sizing"
-        onKeyPress={onSubmit}
-      />
+    <div>
+      <div className="ui container fluid focus input">
+        <input
+          type="text"
+          placeholder="Chat"
+          className="input-sizing"
+          onKeyPress={onSubmit}
+        />
+      </div>
+      <button
+        className="ui grey button"
+        style={{ marginTop: "15px" }}
+        onClick={onSend}>
+        <i className="reply icon"></i>
+        Send
+      </button>
     </div>
   );
 };
