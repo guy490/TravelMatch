@@ -74,8 +74,7 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
       <Marker
         onClick={() => testFunction(textContent)}
         position={[lat, lng]}
-        ref={openTooltip}
-      >
+        ref={openTooltip}>
         <Tooltip>{textContent}</Tooltip>
       </Marker>
     );
@@ -102,8 +101,12 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
           center: [sourceMarker.lat, sourceMarker.lng],
           zoom: 14,
         }}
-        style={{ width: "100%", height: "550px" }}
-      >
+        style={{
+          width: "100%",
+          height: "900px",
+          position: "relative ",
+          zIndex: "10",
+        }}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -124,16 +127,23 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
           destinationMarker.lng,
           "Destination"
         )}
+        <Link
+          to={{
+            pathname: `/Matches/${profile._id}&${sourceMarker.lat}&${sourceMarker.lng}&${destinationMarker.lat}&${destinationMarker.lng}`,
+          }}>
+          <button
+            className="ui circular twitter button"
+            onClick={findMatches}
+            style={{
+              position: "absolute",
+              zIndex: "400",
+              transform: "translate(40px, 20px)",
+            }}>
+            <i className="search icon"></i>
+            Find Match
+          </button>
+        </Link>
       </Map>
-      <Link
-        to={{
-          pathname: `/Matches/${profile._id}&${sourceMarker.lat}&${sourceMarker.lng}&${destinationMarker.lat}&${destinationMarker.lng}`,
-        }}
-      >
-        <button className="ui button green" onClick={findMatches}>
-          Find Match
-        </button>
-      </Link>
     </div>
   );
 };
