@@ -4,11 +4,11 @@ import Modal from "react-modal";
 import { socket } from "../../api";
 import { Link } from "react-router-dom";
 
-const WaitingMessages = ({ closeModal, receiverName, ...props }) => {
+const WaitingMessages = ({ closeModal, currentUsername, ...props }) => {
   Modal.setAppElement("#root");
   const [conversations, setConversations] = useState([]);
   useEffect(() => {
-    socket.emit("getConversationsByReceiver", JSON.stringify(receiverName));
+    socket.emit("getConversationsByUser", JSON.stringify(currentUsername));
 
     socket.on("receiveConversations", (receiverConversations) => {
       setConversations(JSON.parse(receiverConversations));
@@ -16,14 +16,13 @@ const WaitingMessages = ({ closeModal, receiverName, ...props }) => {
     return () => {
       socket.off("receiveConversations");
     };
-  }, [receiverName]);
+  }, [currentUsername]);
 
   const createConversationList = () => {
     const conversationList = conversations.map((conversation, index) => {
       const lastMessage =
         conversation.messages[conversation.messages.length - 1];
       const lastMessageDate = new Date(lastMessage.date);
-
       const date =
         lastMessageDate.getDate() +
         "/" +
@@ -40,18 +39,17 @@ const WaitingMessages = ({ closeModal, receiverName, ...props }) => {
       return (
         <Link
           to={{
-            pathname: `/Chat/${lastMessage.senderID}&${lastMessage.senderName}`,
+            pathname: `/Chat/${lastMessage.receiverID}&${lastMessage.receiverName}`,
           }}
           className="event waiting-message"
           onClick={() => closeModal()}
-          key={index}>
+          key={index}
+        >
           <div className="content">
-            {lastMessage.senderName === receiverName ? (
+            {lastMessage.senderName === currentUsername ? (
               <div className="summary">
                 You sent a message to
-                {"  "}
                 <span className="ui blue image label">
-                  {/* <img src="/images/avatar/small/veronika.jpg" /> */}
                   {lastMessage.receiverName}
                 </span>
                 <div className="date">{date}</div>
@@ -59,10 +57,8 @@ const WaitingMessages = ({ closeModal, receiverName, ...props }) => {
             ) : (
               <div className="summary">
                 <span className="ui blue image label">
-                  {/* <img src="/images/avatar/small/veronika.jpg" /> */}
                   {lastMessage.senderName}
                 </span>
-                {"  "}
                 sent you a message
                 <div className="date">{date}</div>
               </div>

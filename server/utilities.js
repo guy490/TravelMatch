@@ -45,12 +45,12 @@ const getMessagesByParticipants = (senderName, receiverName) => {
   return messageList[index].messages;
 };
 
-const getConversationByReceiver = (receiverName) => {
+const getConversationByUser = (currentUserName) => {
   const conversationList = [];
   messageList.forEach((conversation) => {
     if (
-      conversation.participants.user2 === receiverName ||
-      conversation.participants.user1 === receiverName
+      conversation.participants.user2 === currentUserName ||
+      conversation.participants.user1 === currentUserName
     ) {
       conversationList.push(conversation);
     }
@@ -115,5 +115,5 @@ module.exports = {
   removeSocketIDBySocketID,
   calcMatchByRadius,
   removeSocketIDByUserID,
-  getConversationByReceiver,
+  getConversationByUser,
 };

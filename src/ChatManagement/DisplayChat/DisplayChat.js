@@ -9,6 +9,9 @@ const DisplayChat = ({ match }) => {
       <div className="ui chat">
         <div className="ui placeholder segment">
           <div className="head-view">
+            <span style={{ fontWeight: "bold" }}>
+              Conversation with {match.params.username}
+            </span>
             <MessageArea />
           </div>
           <div className="ui divider"></div>

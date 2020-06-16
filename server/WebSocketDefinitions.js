@@ -5,7 +5,7 @@ module.exports = (io) => {
     getMessagesByParticipants,
     removeSocketIDBySocketID,
     removeSocketIDByUserID,
-    getConversationByReceiver,
+    getConversationByUser,
     updateSocketID,
   } = require("./utilities");
 
@@ -21,11 +21,11 @@ module.exports = (io) => {
       );
     });
 
-    client.on("getConversationsByReceiver", (receiver) => {
-      let receiverName = JSON.parse(receiver);
+    client.on("getConversationsByUser", (currentUser) => {
+      let currentUserName = JSON.parse(currentUser);
       client.emit(
         "receiveConversations",
-        JSON.stringify(getConversationByReceiver(receiverName))
+        JSON.stringify(getConversationByUser(currentUserName))
       );
     });
 
@@ -42,7 +42,7 @@ module.exports = (io) => {
       );
       io.to(client.id).emit(
         "receiveConversations",
-        JSON.stringify(getConversationByReceiver(receiverName))
+        JSON.stringify(getConversationByUser(senderName))
       );
 
       if (receiverSocketID !== -1) {
@@ -53,7 +53,7 @@ module.exports = (io) => {
 
         io.to(receiverSocketID).emit(
           "receiveConversations",
-          JSON.stringify(getConversationByReceiver(receiverName))
+          JSON.stringify(getConversationByUser(receiverName))
         );
       }
     });

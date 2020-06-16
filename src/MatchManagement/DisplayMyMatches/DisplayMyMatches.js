@@ -115,7 +115,6 @@ const DisplayMyMatches = ({ match }) => {
           );
         }
     }
-    console.log(filters);
     return <div className="ui">{filters}</div>;
   };
   const renderPlaceMatches = () => {
@@ -136,7 +135,8 @@ const DisplayMyMatches = ({ match }) => {
                 place.attributes.country
               }&${encodeURIComponent(place.attributes.date)}`,
             }}
-            key={place.place_id}>
+            key={place.place_id}
+          >
             <div className="header-link">{`${place.name}`} </div>
             <span>{renderFilters(place.attributes)}</span>
           </Link>
@@ -144,7 +144,8 @@ const DisplayMyMatches = ({ match }) => {
           <button
             className="ui circular red icon right floated button"
             style={{ transform: "translate(20%, -75%)" }}
-            onClick={() => deleteMatch(place.place_id)}>
+            onClick={() => deleteMatch(place.place_id)}
+          >
             <i className="trash alternate icon"></i>
           </button>
         </div>
@@ -164,7 +165,8 @@ const DisplayMyMatches = ({ match }) => {
             to={{
               pathname: `/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`,
             }}
-            key={taxi._id}>
+            key={taxi._id}
+          >
             <div className="header-link">Texi Request </div>
             <div className="from-to-text">
               From
