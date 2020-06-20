@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./WaitingMessages.css";
+// import "./WaitingMessages.css";
 import Modal from "react-modal";
 import { socket } from "../../api";
 import { Link } from "react-router-dom";
@@ -37,15 +37,39 @@ const WaitingMessages = ({ closeModal, currentUsername, ...props }) => {
         lastMessageDate.getSeconds();
 
       return (
-        <Link
-          to={{
-            pathname: `/Chat/${lastMessage.receiverID}&${lastMessage.receiverName}`,
-          }}
-          className="event waiting-message"
-          onClick={() => closeModal()}
-          key={index}
-        >
-          <div className="content">
+        <div className="ui segment waiting-message">
+          <Link
+            to={{
+              pathname: `/Chat/${lastMessage.receiverID}&${lastMessage.receiverName}`,
+            }}
+            onClick={() => closeModal()}
+            key={index}>
+            <div className="ui feed">
+              <div className="event">
+                <div className="content">
+                  <div className="date">{date}</div>
+                  <div className="summary">
+                    {lastMessage.senderName === currentUsername ? (
+                      <span>
+                        You sent a message to{" "}
+                        <span className="ui black basic label">
+                          {lastMessage.receiverName}
+                        </span>
+                      </span>
+                    ) : (
+                      <span>
+                        <span className="ui black basic label">
+                          {lastMessage.senderName}
+                        </span>
+                        <span>sent you a message</span>
+                      </span>
+                    )}
+                  </div>
+                  <div className="extra text">{lastMessage.text}</div>
+                </div>
+              </div>
+            </div>
+            {/* <div className="content">
             {lastMessage.senderName === currentUsername ? (
               <div className="summary">
                 You sent a message to
@@ -65,8 +89,9 @@ const WaitingMessages = ({ closeModal, currentUsername, ...props }) => {
             )}
 
             <div className="extra text">{lastMessage.text}</div>
-          </div>
-        </Link>
+          </div> */}
+          </Link>
+        </div>
       );
     });
 
