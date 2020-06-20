@@ -15,8 +15,7 @@ const Category = ({ linkTo, content, backgroundURL, gradientColors }) => {
       <div className="link">
         <div
           className="background"
-          style={createCategoryStyle(backgroundURL, gradientColors)}
-        ></div>
+          style={createCategoryStyle(backgroundURL, gradientColors)}></div>
         <div className="text text-category">{content}</div>
       </div>
     </Link>

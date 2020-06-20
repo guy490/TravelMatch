@@ -44,8 +44,7 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
           to={{
             pathname: `/Chat/${userProfile._id}&${userProfile.username}`,
           }}
-          className="profile-btn"
-        >
+          className="profile-btn">
           <div className="profile-btn-title">Message</div>
         </Link>
       );
@@ -55,8 +54,7 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
         to={{
           pathname: `/Edit/${userProfile._id}`,
         }}
-        className="profile-btn"
-      >
+        className="profile-btn">
         <div className="profile-btn-title">Edit</div>
       </Link>
     );

@@ -11,7 +11,7 @@ const App = () => {
   return (
     <BrowserRouter basename={`${process.env.PUBLIC_URL}/`}>
       <NavBar />
-      <div style={{ paddingTop: 45 + "px" }}>
+      <div style={{ paddingTop: "6vh" }}>
         <CategoryApp />
         <UserManagementApp />
         <MatchManagementApp />

@@ -65,7 +65,12 @@ const NavBar = ({ userProfile, signOut }) => {
   return (
     <div
       className="ui secondary menu fixed"
-      style={{ backgroundColor: "white", width: 100 + "%", zIndex: "120" }}>
+      style={{
+        backgroundColor: "white",
+        width: "100%",
+        height: "4vh",
+        zIndex: "120",
+      }}>
       <button
         onClick={history.goBack}
         className="item"

@@ -60,7 +60,9 @@ const ShowPlaces = ({ match, updateLocation, location }) => {
 
   return (
     <div className="ui container">
-      <div className="ui divided items unstackable">
+      <div
+        className="ui divided items unstackable"
+        style={{ paddingTop: "2vh" }}>
         {renderList(listOfPlaces)}
       </div>
     </div>
