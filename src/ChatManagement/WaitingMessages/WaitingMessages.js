@@ -37,13 +37,12 @@ const WaitingMessages = ({ closeModal, currentUsername, ...props }) => {
         lastMessageDate.getSeconds();
 
       return (
-        <div className="ui segment waiting-message">
+        <div key={index} className="ui segment waiting-message">
           <Link
             to={{
               pathname: `/Chat/${lastMessage.receiverID}&${lastMessage.receiverName}`,
             }}
-            onClick={() => closeModal()}
-            key={index}>
+            onClick={() => closeModal()}>
             <div className="ui feed">
               <div className="event">
                 <div className="content">
