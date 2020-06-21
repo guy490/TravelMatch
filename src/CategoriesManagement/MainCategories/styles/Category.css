@@ -1,16 +1,17 @@
-.background {
+@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Alata&display=swap");
+
+/* .background {
     position: absolute;
     height: 23.5vh;
     width: 100%;
     border: 0;
-    /* -webkit-filter: blur(1px); */
-    /* filter: blur(1px); */
+     -webkit-filter: blur(1px); 
+     filter: blur(1px); 
     transition: 1s;
     z-index: 0;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Alata&display=swap");
 
 .text-category {
     top: 50%;
@@ -18,17 +19,17 @@
     position: relative;
     font-size: 5vh;
     font-weight: 900;
-    /* text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, */
-    /* 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; */
+     text-shadow: 2px 0 0 #000, -2px 0 0 #000, 0 2px 0 #000, 0 -2px 0 #000, 
+     1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; 
     color: white;
-    /* font-family: 'Alata', sans-serif; */
+     font-family: 'Alata', sans-serif; 
     font-family: "Rubik", sans-serif;
 }
 
 .link {
     height: 23.5vh;
     transition: 1s;
-}
+} */
 
 /* .link:hover {
     background-color: white;

@@ -137,10 +137,14 @@ const DisplayMatches = ({ match }) => {
 
   return (
     <div>
-      <div className="page-title">
+      {/* <div className="page-title">
         Matches
         <hr />
-      </div>
+      </div> */}
+      <h3 className="page-title ui horizontal divider header">
+        <i className="street view icon"></i>
+        Matches
+      </h3>
       <div className="ui divided list">{renderMatches()}</div>
     </div>
   );

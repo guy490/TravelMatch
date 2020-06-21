@@ -49,12 +49,12 @@ const DisplayMyMatches = ({ match }) => {
           ...placesMatchList.slice(0, index),
           ...placesMatchList.slice(index + 1, placesMatchList.length),
         ]);
-        alert("Deletion Successful");
+        //alert("Deletion Successful");
         socket.emit("matchDeleted");
       })
       .catch((error) => {
         console.log(error);
-        alert("Deletion failed");
+        //alert("Deletion failed");
       });
   };
 
@@ -135,8 +135,7 @@ const DisplayMyMatches = ({ match }) => {
                 place.attributes.country
               }&${encodeURIComponent(place.attributes.date)}`,
             }}
-            key={place.place_id}
-          >
+            key={place.place_id}>
             <div className="header-link">{`${place.name}`} </div>
             <span>{renderFilters(place.attributes)}</span>
           </Link>
@@ -144,8 +143,7 @@ const DisplayMyMatches = ({ match }) => {
           <button
             className="ui circular red icon right floated button"
             style={{ transform: "translate(20%, -75%)" }}
-            onClick={() => deleteMatch(place.place_id)}
-          >
+            onClick={() => deleteMatch(place.place_id)}>
             <i className="trash alternate icon"></i>
           </button>
         </div>
@@ -165,8 +163,7 @@ const DisplayMyMatches = ({ match }) => {
             to={{
               pathname: `/Matches/${match.params.userID}&${taxi.source.lat}&${taxi.source.lng}&${taxi.destination.lat}&${taxi.destination.lng}`,
             }}
-            key={taxi._id}
-          >
+            key={taxi._id}>
             <div className="header-link">Texi Request </div>
             <div className="from-to-text">
               From
@@ -191,10 +188,14 @@ const DisplayMyMatches = ({ match }) => {
 
   return (
     <div className="ui celled list">
-      <div className="page-title">
+      {/* <div className="page-title">
         My Matches
         <hr />
-      </div>
+      </div> */}
+      <h3 className="page-title ui horizontal divider header">
+        <i className="bookmark icon"></i>
+        My Matches
+      </h3>
       {renderPlaceMatches()}
       {renderTaxiMatches()}
     </div>
