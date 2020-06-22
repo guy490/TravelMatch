@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-// import "./WaitingMessages.css";
 import Modal from "react-modal";
 import { socket } from "../../api";
 import { Link } from "react-router-dom";
+import "./WaitingMessages.css";
 
 const WaitingMessages = ({ closeModal, currentUsername, ...props }) => {
   Modal.setAppElement("#root");
@@ -68,27 +68,6 @@ const WaitingMessages = ({ closeModal, currentUsername, ...props }) => {
                 </div>
               </div>
             </div>
-            {/* <div className="content">
-            {lastMessage.senderName === currentUsername ? (
-              <div className="summary">
-                You sent a message to
-                <span className="ui blue image label">
-                  {lastMessage.receiverName}
-                </span>
-                <div className="date">{date}</div>
-              </div>
-            ) : (
-              <div className="summary">
-                <span className="ui blue image label">
-                  {lastMessage.senderName}
-                </span>
-                sent you a message
-                <div className="date">{date}</div>
-              </div>
-            )}
-
-            <div className="extra text">{lastMessage.text}</div>
-          </div> */}
           </Link>
         </div>
       );

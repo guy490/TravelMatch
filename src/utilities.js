@@ -6,7 +6,7 @@ const getType = (category) => {
       return {
         subCategoryColor: "#3498DB",
         subCategoryBackground:
-          "linear-gradient(to bottom right, rgba(0, 255, 255, 0.8), rgba(173, 255, 255, 0.6) 60%),url(https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)",
+          "linear-gradient(to bottom right,rgba(0, 255, 255, 0.7), rgba(173, 255, 255, 0.9) 60%),url(https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80)",
         subCategoryList: [
           {
             categoryName: "restaurant",

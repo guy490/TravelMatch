@@ -1,4 +1,3 @@
-import "./styles/ShowPlaces.css";
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import PlaceCard from "./components/PlaceCard";

@@ -1,14 +1,14 @@
 import "./styles/ShowSubCategories.css";
 import React, { useEffect, useState } from "react";
 import SubCategory from "./components/SubCategory";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { getType } from "../../utilities";
 
 const ShowSubCategories = ({ match }) => {
   const [subCategoryDict, setSubCategoryDict] = useState({
     subCategoryList: [],
     subCategoryBackground: "",
-    subCategoryColor: ""
+    subCategoryColor: "",
   });
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const ShowSubCategories = ({ match }) => {
   }, [match]);
 
   const renderCategories = () => {
-    return subCategoryDict.subCategoryList.map(subCategory => (
+    return subCategoryDict.subCategoryList.map((subCategory) => (
       <SubCategory
         key={subCategory.categoryName}
         category={match.params.category}
@@ -31,14 +31,14 @@ const ShowSubCategories = ({ match }) => {
     <div
       className="background-cover"
       style={{
-        backgroundImage: `${subCategoryDict.subCategoryBackground}`
+        backgroundImage: `${subCategoryDict.subCategoryBackground}`,
       }}>
-      <Link to="/" className="ui labeled button basic">
+      {/* <Link to="/" className="ui labeled button basic">
         <div>
           <i className="arrow alternate circle left icon"></i>
           Back
         </div>
-      </Link>
+      </Link> */}
       {renderCategories()}
     </div>
   );

@@ -1,0 +1,9 @@
+.match-profile-image {
+    width: 8vh !important;
+    height: 8vh !important;
+}
+
+.match-button-icon {
+    padding-right: 3px !important;
+    box-sizing: initial !important;
+}

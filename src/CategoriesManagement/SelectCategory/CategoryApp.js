@@ -1,11 +1,10 @@
-import "./styles/CategoryApp.css";
 import React from "react";
 import { Switch } from "react-router-dom";
-import ShowCategories from "../CategoriesManagement/MainCategories/ShowCategories";
-import ShowSubCategories from "../CategoriesManagement/SubCategories/ShowSubCategories";
-import ShowPlaces from "../CategoriesManagement/PlacesList/ShowPlaces";
-import ShowTaxies from "../CategoriesManagement/ShowTaxies";
-import { ProtectedRoute } from "../Generals/ProtectedRoute";
+import ShowCategories from "../MainCategories/ShowCategories";
+import ShowSubCategories from "../SubCategories/ShowSubCategories";
+import ShowPlaces from "../PlacesList/ShowPlaces";
+import ShowTaxies from "../ShowTaxies";
+import { ProtectedRoute } from "../../Generals/ProtectedRoute";
 
 const CategoryApp = () => {
   return (

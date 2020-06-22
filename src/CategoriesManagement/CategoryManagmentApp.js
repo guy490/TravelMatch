@@ -1,4 +1,3 @@
-import "./CategoryManagmentApp.css";
 import React from "react";
 import { Switch } from "react-router-dom";
 import ShowCategories from "./MainCategories/ShowCategories";

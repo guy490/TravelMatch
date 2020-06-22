@@ -8,6 +8,7 @@ import {
 import { connect } from "react-redux";
 import { signIn } from "../../Redux/Actions";
 import FlashMessage from "react-flash-message";
+import "../style/loginAndRegister.css";
 
 const Login = ({ signIn }) => {
   const [showMsg, setshowMsg] = useState(false);

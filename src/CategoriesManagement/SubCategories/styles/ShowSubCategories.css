@@ -1,12 +1,13 @@
 .sub-category {
     height: 13vh;
-    width: 70%;
+    width: 80%;
     margin: auto;
     margin-bottom: 2vh;
+    margin-top: 10px;
 }
 
 .category-set {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 35px;
     height: 100%;
     vertical-align: middle;
@@ -16,6 +17,7 @@
 .title {
     margin: auto auto auto 0;
     font-size: 4vh;
+    font-weight: bold;
 }
 
 .icon-view {
@@ -26,7 +28,7 @@
 
 .background-cover {
     height: 94vh;
-    padding-top: 2%;
+    padding-top: 5%;
     background-size: 100% 100%;
 
 }

@@ -1,8 +1,8 @@
-import "./DisplayProfile.css";
 import React, { useEffect, useState, useRef } from "react";
 import { server } from "../../api";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import "./DisplayProfile.css";
 
 const DisplayProfile = ({ match, currentUserProfile }) => {
   const [userProfile, setUserProfile] = useState({
@@ -74,10 +74,7 @@ const DisplayProfile = ({ match, currentUserProfile }) => {
         <p className="profile-country-age">
           {`${userProfile.age}`}, {`${userProfile.country}`}{" "}
         </p>
-        <p className="profile-about">
-          Hey, my name is {`${userProfile.firstname} ${userProfile.lastname}`}{" "}
-          and {userProfile.about}
-        </p>
+        <p className="profile-about">{userProfile.about}</p>
         {renderButtons()}
       </div>
     </div>

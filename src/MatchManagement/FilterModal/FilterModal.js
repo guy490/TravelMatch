@@ -1,4 +1,4 @@
-// import "./FilterModal.css";
+import "./FilterModal.css";
 import "react-datepicker/dist/react-datepicker.css";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";

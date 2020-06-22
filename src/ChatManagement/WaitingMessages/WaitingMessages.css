@@ -1,8 +1,26 @@
-/* .waiting-message {
+.modal-div {
+    box-sizing: border-box;
+}
+
+.modal {
+    position: fixed;
+    overflow-y: scroll;
+    background: white;
+    box-shadow: 1px 2px 4px 2px #888888;
+    max-height: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: 90%;
+    padding-top: 5px
+}
+
+.waiting-message {
     padding: 10% !important;
     padding-top: 5% !important;
     padding-bottom: 5% !important;
     margin-top: 5px !important;
-    color: blue !important;
-
-} */
+    margin: 10px !important;
+    border-radius: 40px !important;
+}

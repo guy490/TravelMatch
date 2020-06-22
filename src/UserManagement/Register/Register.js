@@ -3,6 +3,7 @@ import CreateInfoForm from "../../Generals/CreateInfoForm";
 import { server } from "../../api";
 import { useHistory } from "react-router-dom";
 import { createDictionaryForm } from "../../utilities";
+import "../style/loginAndRegister.css";
 
 const Register = () => {
   let history = useHistory();
