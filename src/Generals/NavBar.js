@@ -70,6 +70,8 @@ const NavBar = ({ userProfile, signOut }) => {
         width: "100%",
         height: "4vh",
         zIndex: "120",
+        fontFamily: "Rubik, sans-serif",
+        fontSize: "13px",
       }}>
       <button
         onClick={history.goBack}

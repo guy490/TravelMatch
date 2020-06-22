@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Alata&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
 
 .background {
     position: absolute;
@@ -15,13 +17,13 @@
     top: 50%;
     text-align: center;
     position: relative;
-    font-size: 5vh;
-    font-weight: 900;
-
-    color: white;
-    font-family: 'Alata', sans-serif;
+    font-size: 5.5vh;
+    /* font-weight: 900; */
+    color: #ffffffe0;
+    /* font-family: 'Alata', sans-serif; */
     /* font-family: "Rubik", sans-serif; */
-    letter-spacing: 1.5px;
+    font-family: 'Fredoka One', cursive;
+    letter-spacing: 0.8px;
 }
 
 .link {
