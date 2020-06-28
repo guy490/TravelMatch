@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { connect } from "react-redux";
 import PlaceCard from "./components/PlaceCard";
 import { server } from "../../api";
@@ -7,6 +7,14 @@ import { updateLocation } from "../../Redux/Actions";
 const ShowPlaces = ({ match, updateLocation, location }) => {
   const componentIsMounted = useRef(true);
   const [listOfPlaces, setListOfPlaces] = useState([]);
+  const getCurrentLocationOfUser = useCallback(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      updateLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
+    });
+  }, [updateLocation]);
 
   useEffect(() => {
     return () => {
@@ -15,16 +23,8 @@ const ShowPlaces = ({ match, updateLocation, location }) => {
   }, []);
 
   useEffect(() => {
-    const getCurrentLocationOfUser = () => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        updateLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
-    };
     getCurrentLocationOfUser();
-  }, [updateLocation]);
+  }, [getCurrentLocationOfUser]);
 
   useEffect(() => {
     let type = match.params.subCategory;
@@ -61,7 +61,8 @@ const ShowPlaces = ({ match, updateLocation, location }) => {
     <div className="ui container">
       <div
         className="ui divided items unstackable"
-        style={{ paddingTop: "2vh" }}>
+        style={{ paddingTop: "2vh" }}
+      >
         {renderList(listOfPlaces)}
       </div>
     </div>

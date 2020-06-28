@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { connect } from "react-redux";
 import { server, socket } from "../api";
 import { Link } from "react-router-dom";
@@ -16,6 +16,14 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
     lat: 0,
     lng: 0,
   });
+  const getCurrentLocationOfUser = useCallback(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      updateLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
+    });
+  }, [updateLocation]);
 
   useEffect(() => {
     setSourceMarker({
@@ -29,16 +37,8 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
   }, [location]);
 
   useEffect(() => {
-    const getCurrentLocationOfUser = () => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        updateLocation({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      });
-    };
     getCurrentLocationOfUser();
-  }, [updateLocation]);
+  }, [getCurrentLocationOfUser]);
 
   const findMatches = () => {
     const matchUserDetails = {
@@ -74,7 +74,8 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
       <Marker
         onClick={() => testFunction(textContent)}
         position={[lat, lng]}
-        ref={openTooltip}>
+        ref={openTooltip}
+      >
         <Tooltip>{textContent}</Tooltip>
       </Marker>
     );
@@ -106,7 +107,8 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
           height: "900px",
           position: "relative ",
           zIndex: "10",
-        }}>
+        }}
+      >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -130,7 +132,8 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
         <Link
           to={{
             pathname: `/Matches/${profile._id}&${sourceMarker.lat}&${sourceMarker.lng}&${destinationMarker.lat}&${destinationMarker.lng}`,
-          }}>
+          }}
+        >
           <button
             className="ui circular twitter button"
             onClick={findMatches}
@@ -138,7 +141,8 @@ const ShowTaxies = ({ updateLocation, location, profile }) => {
               position: "absolute",
               zIndex: "400",
               transform: "translate(40px, 20px)",
-            }}>
+            }}
+          >
             <i className="search icon"></i>
             Find Match
           </button>

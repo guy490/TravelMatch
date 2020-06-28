@@ -1,23 +1,25 @@
 import "../styles/TextArea.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { socket } from "../../api";
 import { connect } from "react-redux";
 
 const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
   const [textMessage, setTextMessage] = useState("");
-
-  useEffect(() => {
-    const participants = {
+  const participants = useMemo(() => {
+    return {
       senderName: userProfile.username,
       receiverName: destinationUsername,
     };
-    socket.emit("getMessages", JSON.stringify(participants));
   }, [userProfile, destinationUsername]);
+
+  useEffect(() => {
+    socket.emit("getMessages", JSON.stringify(participants));
+  }, [participants]);
 
   const onSubmit = (event) => {
     if (event.key === "Enter") {
       const message = {
-        senderID: userProfile.userID,
+        senderID: userProfile.userID || userProfile._id,
         senderName: userProfile.username,
         receiverID: destinationUserID,
         receiverName: destinationUsername,
@@ -31,7 +33,7 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
   };
   const onSend = () => {
     const message = {
-      senderID: userProfile.userID,
+      senderID: userProfile.userID || userProfile._id,
       senderName: userProfile.username,
       receiverID: destinationUserID,
       receiverName: destinationUsername,
@@ -58,7 +60,8 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
       <button
         className="ui grey button"
         style={{ marginTop: "15px" }}
-        onClick={onSend}>
+        onClick={onSend}
+      >
         <i className="reply icon"></i>
         Send
       </button>

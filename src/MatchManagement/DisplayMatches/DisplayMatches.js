@@ -98,7 +98,8 @@ const DisplayMatches = ({ match }) => {
         <div
           key={matchObject._id}
           style={{ margin: "5px", paddingTop: "10px" }}
-          className="item">
+          className="item"
+        >
           <img
             alt=""
             className="ui avatar image match-profile-image"
@@ -107,7 +108,8 @@ const DisplayMatches = ({ match }) => {
           <div className="content">
             <div
               to={{ pathname: `/Profile/${matchObject._id}` }}
-              className="header-link">
+              className="header-link"
+            >
               {`${matchObject.firstname} ${matchObject.lastname}`}
             </div>
             <div className="description">
@@ -119,14 +121,16 @@ const DisplayMatches = ({ match }) => {
           <div className="match-buttons-div">
             <Link
               to={{ pathname: `/Profile/${matchObject._id}` }}
-              className="ui circular icon basic button">
+              className="ui circular icon basic button"
+            >
               <i className="user circle icon"></i> Profile
             </Link>
             <Link
               to={{
                 pathname: `/Chat/${matchObject._id}&${matchObject.username}`,
               }}
-              className="ui circular icon basic button">
+              className="ui circular icon basic button"
+            >
               <i className="comments outline icon match-button-icon"></i> Chat
             </Link>
           </div>
@@ -137,10 +141,6 @@ const DisplayMatches = ({ match }) => {
 
   return (
     <div>
-      {/* <div className="page-title">
-        Matches
-        <hr />
-      </div> */}
       <h3 className="page-title ui horizontal divider header">
         <i className="street view icon"></i>
         Matches

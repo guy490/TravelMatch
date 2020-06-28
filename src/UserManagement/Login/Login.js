@@ -27,12 +27,10 @@ const Login = ({ signIn }) => {
         signIn(userCredentials);
         console.log(response);
         setshowMsg(false);
-        // alert("Login Successful");
         history.push("/Category");
       })
       .catch((error) => {
         setshowMsg(true);
-        // alert(error.request.responseText);
       });
     setshowMsg(false);
   };
@@ -92,7 +90,8 @@ const Login = ({ signIn }) => {
               <FlashMessage duration={7000}>
                 <div
                   className="ui small negative message"
-                  style={{ marginTop: "5px" }}>
+                  style={{ marginTop: "5px" }}
+                >
                   <div>Username or Password is incorrect</div>
                 </div>
               </FlashMessage>
