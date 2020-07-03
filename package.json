@@ -1,5 +1,4 @@
 {
-    "homepage": "https://guy490.github.io/TravelMatch/",
     "name": "travelmatch",
     "version": "0.1.0",
     "private": true,
@@ -49,7 +48,6 @@
         ]
     },
     "devDependencies": {
-        "dotenv": "^8.2.0",
-        "gh-pages": "^2.2.0"
+        "dotenv": "^8.2.0"
     }
 }
