@@ -86,7 +86,11 @@ const NavBar = ({ userProfile, signOut }) => {
         className="item"
         href=" "
         style={{ width: "3%", paddingRight: "1%" }}>
-        <img src="/logo.png" alt="" style={{ width: "22px", height: "22px" }} />
+        <img
+          src="./logo.png"
+          alt=""
+          style={{ width: "22px", height: "22px" }}
+        />
       </Link>
       {myMatchesButton()}
       <div className="right menu">
