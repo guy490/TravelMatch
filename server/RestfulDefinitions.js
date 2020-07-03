@@ -22,7 +22,7 @@ module.exports = (app) => {
     // Website you wish to allow to connect
     const allowedOrigins = [
       "http://localhost:3000",
-      "https://guy490.github.io",
+      "https://travel-match-app.herokuapp.com",
     ];
     const origin = req.headers.origin;
     if (allowedOrigins.indexOf(origin) > -1) {
