@@ -17,7 +17,7 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
   }, [participants]);
 
   const onSubmit = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && textMessage !== "") {
       const message = {
         senderID: userProfile.userID || userProfile._id,
         senderName: userProfile.username,
@@ -32,17 +32,19 @@ const TextArea = ({ destinationUserID, destinationUsername, userProfile }) => {
     }
   };
   const onSend = () => {
-    const message = {
-      senderID: userProfile.userID || userProfile._id,
-      senderName: userProfile.username,
-      receiverID: destinationUserID,
-      receiverName: destinationUsername,
-      date: new Date(),
-      text: textMessage,
-      image: userProfile.profile_image,
-    };
-    setTextMessage("");
-    socket.emit("sendMessage", JSON.stringify(message));
+    if (textMessage !== "") {
+      const message = {
+        senderID: userProfile.userID || userProfile._id,
+        senderName: userProfile.username,
+        receiverID: destinationUserID,
+        receiverName: destinationUsername,
+        date: new Date(),
+        text: textMessage,
+        image: userProfile.profile_image,
+      };
+      setTextMessage("");
+      socket.emit("sendMessage", JSON.stringify(message));
+    }
   };
 
   return (
