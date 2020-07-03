@@ -39,8 +39,11 @@ const Login = ({ signIn }) => {
     return (
       <div className="login-register-containter">
         <div className="login-register-wrap">
-          <form className="login-register-validate" onSubmit={submitForm}>
-            <span className="login-register-title">Login to Travel Match</span>
+          <div className="main-logo">
+            <img className="main-logo-image" src="./text_logo.png" alt="" />
+          </div>
+          <form onSubmit={submitForm}>
+            <span className="login-register-title">Login</span>
             <div className="wrap-input validate-input">
               <span className="label-input">Username</span>
               <div className="focus-input">
@@ -90,8 +93,7 @@ const Login = ({ signIn }) => {
               <FlashMessage duration={7000}>
                 <div
                   className="ui small negative message"
-                  style={{ marginTop: "5px" }}
-                >
+                  style={{ marginTop: "5px" }}>
                   <div>Username or Password is incorrect</div>
                 </div>
               </FlashMessage>

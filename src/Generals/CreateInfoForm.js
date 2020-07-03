@@ -60,13 +60,14 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
       <div>
         <div className="login-register-containter">
           <div className="login-register-wrap" style={{ overflowY: "scroll" }}>
+            <div className="main-logo">
+              <img className="main-logo-image" src="./text_logo.png" alt="" />
+            </div>
             <form
               className="login-register-validate"
               onSubmit={submitForm}
               action="/Login">
-              <span className="login-register-title">
-                Sign Up to Travel Match
-              </span>
+              <span className="login-register-title">Sign Up</span>
               <div className="wrap-input validate-input">
                 <span className="label-input">First Name</span>
                 <div className="focus-input">
