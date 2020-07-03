@@ -93,13 +93,14 @@ const Login = ({ signIn }) => {
               <FlashMessage duration={7000}>
                 <div
                   className="ui small negative message"
-                  style={{ marginTop: "5px" }}>
+                  style={{ marginTop: "5px" }}
+                >
                   <div>Username or Password is incorrect</div>
                 </div>
               </FlashMessage>
             </div>
           ) : (
-            <span></span>
+            <div></div>
           )}
         </div>
       </div>

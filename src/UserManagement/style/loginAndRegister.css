@@ -11,12 +11,8 @@
     background-position: center;
     background-size: cover;
     background: #00a1d6;
-    background: linear-gradient(-180deg,
-            #00a1d6 25%,
-            rgba(0, 161, 214, 0.4) 46%,
-            rgba(0, 161, 214, 0) 100%),
-        linear-gradient(-180deg, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
-    overflow-y: hidden;
+    background: linear-gradient(-180deg, #00a1d6 25%, rgba(0, 161, 214, 0.4) 46%, rgba(0, 161, 214, 0) 100%), linear-gradient(-180deg, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
+    overflow-y: auto;
 }
 
 .login-register-wrap {
@@ -24,10 +20,9 @@
     height: 80vh;
     background: #fff;
     border-radius: 10px;
-    overflow: hidden;
+    overflow-y: auto;
     padding-left: 15px;
     padding-right: 15px;
-    /* overflow-y: scroll; */
 }
 
 .main-logo {
@@ -50,7 +45,7 @@
     color: #333333;
     line-height: 1.2;
     text-align: center;
-    padding-bottom: 15%;
+    padding-bottom: 30px;
     font-weight: bolder;
 }
 
@@ -119,12 +114,7 @@
     width: 300%;
     height: 100%;
     background: #00a1d6;
-    background: linear-gradient(to right,
-            #00a1d6 25%,
-            rgba(0, 161, 214, 0.4) 46%,
-            rgba(0, 161, 214, 0) 100%),
-        linear-gradient(to right, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
-
+    background: linear-gradient(to right, #00a1d6 25%, rgba(0, 161, 214, 0.4) 46%, rgba(0, 161, 214, 0) 100%), linear-gradient(to right, #00a1d6 32%, rgba(40, 163, 204, 0.5) 100%);
     top: 0;
     left: -100%;
 }

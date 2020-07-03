@@ -59,14 +59,15 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
     return (
       <div>
         <div className="login-register-containter">
-          <div className="login-register-wrap" style={{ overflowY: "scroll" }}>
+          <div className="login-register-wrap" style={{ overflowY: "auto" }}>
             <div className="main-logo">
               <img className="main-logo-image" src="./text_logo.png" alt="" />
             </div>
             <form
               className="login-register-validate"
               onSubmit={submitForm}
-              action="/Login">
+              action="/Login"
+            >
               <span className="login-register-title">Sign Up</span>
               <div className="wrap-input validate-input">
                 <span className="label-input">First Name</span>
@@ -118,7 +119,8 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                     name="country"
                     value={userCountry}
                     className=" my-select"
-                    onChange={(event) => setUserCountry(event.target.value)}>
+                    onChange={(event) => setUserCountry(event.target.value)}
+                  >
                     {generateCountries()}
                   </select>
                 </div>
@@ -163,7 +165,8 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
                   alt="Media Content"
                   height="200px"
                   width="200px"
-                  src={getURL(imgFile)}></img>
+                  src={getURL(imgFile)}
+                ></img>
               ) : null}
 
               <ImageUploader
@@ -177,7 +180,8 @@ const CreateInfoForm = ({ submitForm, userData, passwordField }) => {
               />
               <div
                 className="container-form-btn"
-                style={{ paddingBottom: "10px" }}>
+                style={{ paddingBottom: "10px" }}
+              >
                 <div className="wrap-form-btn">
                   <div className="form-bgbtn"></div>
                   <button className="form-btn" type="submit">
