@@ -8,11 +8,15 @@ Benel Aharon - https://github.com/benel2606
 
 This project is on continues development and NOT finished yet, updates will be added from time to time.
 
-## Link to the project 
+## Link to the project
 
- The website is developed for Mobile usage only (For now...) so its not PC resposive!
- 
- `<link>` : https://guy490.github.io/TravelMatch/
+The website is developed for Mobile usage only (For now...) so its not PC resposive!
+
+`<link>` : https://travel-match-app.herokuapp.com/
+
+or download our app from: (In the future it will upload to google play)
+
+https://us-central1-pwa2apk.cloudfunctions.net/pwa2apk/download/apk-file/bLhv2TJpEudmw5v3YQ99
 
 ## How to use:
 
