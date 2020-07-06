@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 import ShowCategories from "./MainCategories/ShowCategories";
 import ShowSubCategories from "./SubCategories/ShowSubCategories";
 import ShowPlaces from "./PlacesList/ShowPlaces";
-import ShowTaxies from "./ShowTaxies";
+import ShowTaxies from "./ShowTaxies/ShowTaxies";
 import ProtectedRoute from "../Generals/ProtectedRoute";
 
 const CategoryApp = () => {
