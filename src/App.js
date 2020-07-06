@@ -6,6 +6,7 @@ import NavBar from "./Generals/NavBar";
 import MatchManagementApp from "./MatchManagement/MatchManagementApp";
 import ProfileManagementApp from "./ProfileManagement/ProfileManagementApp";
 import ChatManagmentApp from "./ChatManagement/ChatManagementApp";
+import "./App.css";
 const App = () => {
   return (
     <BrowserRouter basename={`${process.env.PUBLIC_URL}/`}>
