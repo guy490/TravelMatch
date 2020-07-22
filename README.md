@@ -1,12 +1,10 @@
-## Final Poject (TravelMatch) - On development process
+## Final Poject (TravelMatch)
 
-We are two students of software engineering and this is our **final project**:
+We are Graduatedof software engineering and this is our **final project**:
 
 Guy Cohen - https://github.com/guy490
 
 Benel Aharon - https://github.com/benel2606
-
-This project is on continues development and NOT finished yet, updates will be added from time to time.
 
 ## Link to the project
 
@@ -26,8 +24,6 @@ https://us-central1-pwa2apk.cloudfunctions.net/pwa2apk/download/apk-file/bLhv2TJ
 - The match is began!
 
 ## What is the project about?
-
-The final distination is to build a PWA website with React that will display as application.
 
 This application is going to match people abroad with similar interests (Like Resturants, Clubs, Bars, Attractions and more...).
 
